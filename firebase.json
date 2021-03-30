@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "apiKey": "AIzaSyBmfHVU1wjqQwh9CCwoLmqKkxowAkSFWOM",
+  "authDomain": "tahchegando.firebaseapp.com",
+  "projectId": "tahchegando",
+  "storageBucket": "tahchegando.appspot.com",
+  "messagingSenderId": "306913427734",
+  "appId": "1:306913427734:web:ceda2d912f8ea9a2949037",
+  "measurementId": "G-0X4238D0W9"
+}

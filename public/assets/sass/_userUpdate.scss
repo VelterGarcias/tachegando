@@ -1,0 +1,32 @@
+@use "components";
+@use "colors";
+@use "mixins";
+@use "vars";
+@use "form";
+@use "sass:color";
+
+#auth {
+  #form-update {
+    #photo-preview {
+      margin-top: var(--space);
+      margin-left: calc(50% - 75px);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+    #file {
+      display: none;
+    }
+    .choose-photo {
+      margin-top: var(--space);
+      @include components.button;
+    }
+    &.cropping {
+      img {
+        height: auto;
+        border-radius: 0;
+        margin-top: 0;
+      }
+    }
+  }
+}

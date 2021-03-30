@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Projeto Hburger do Hcode Lab" />
+    <title>Login - OBurguer</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo-favicon-blue.svg"
+      type="image/x-icon"
+    />
+  </head>
+  <body id="auth" class="auth">
+    <header>
+      <a href="index.html">
+        <img
+          src="assets/images/logo-icon-blue.svg"
+          alt="Logo Icone"
+          id="logo-icon"
+        />
+        <img
+          src="assets/images/logo-text-blue.svg"
+          alt="Logo Texto"
+          id="logo-text"
+        />
+      </a>
+    </header>
+
+    <main>
+      <ul id="form-tabs">
+        <li class="active"><a href="login.html">Login</a></li>
+        <li><a href="register.html">Cadastro</a></li>
+      </ul>
+
+      <form id="form-login">
+        <input type="email" name="email" placeholder="E-mail" required />
+        <input type="password" name="password" placeholder="Senha" required />
+
+        <footer>
+          <a href="forget.html">Esqueceu a senha?</a>
+          <button type="submit">Enviar</button>
+        </footer>
+      </form>
+
+      <!-- <button id="login-facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2500" viewBox="126.445 2.281 589 589"><circle cx="420.945" cy="296.781" r="294.5" fill="#fff"/><path d="M516.704 92.677h-65.239c-38.715 0-81.777 16.283-81.777 72.402.189 19.554 0 38.281 0 59.357H324.9v71.271h46.174v205.177h84.847V294.353h56.002l5.067-70.117h-62.531s.14-31.191 0-40.249c0-22.177 23.076-20.907 24.464-20.907 10.981 0 32.332.032 37.813 0V92.677h-.032z" fill="#4e6cab"/></svg>
+        Login com Facebook
+      </button> -->
+    </main>
+
+    <div id="alert" class="hide"></div>
+
+    <script src="bundle.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+@use "components";
+@use "colors";
+
+#auth {
+  background-color: colors.$bgLogin;
+  background-image: url("../images/bg.svg");
+  header {
+    @include components.header;
+  }
+  main {
+    align-items: center;
+  }
+  #form-tabs {
+    @include components.tabs;
+    width: 100%;
+    li {
+      width: 175px;
+    }
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      text-decoration: none;
+      color: var(--dark);
+    }
+  }
+  #login-facebook {
+    @include components.button;
+    align-items: center;
+    display: flex;
+    background-color: #4e6cab;
+    margin-top: 20px;
+    &:hover,
+    &:active {
+      background-color: #314776;
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+  }
+  form {
+    background-color: var(--primary);
+    padding: var(--space);
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    width: 350px;
+    input {
+      @include components.input;
+    }
+    form {
+      background-color: var(--primary);
+      padding: var(--space);
+      padding-top: 5rem;
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+      width: 350px;
+      input {
+        @include components.input;
+      }
+      label + label {
+        margin-top: var(--space);
+      }
+      footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: var(--space);
+        position: relative;
+        min-height: var(--space);
+        a {
+          color: var(--white);
+          font-size: 14px;
+        }
+        button {
+          @include components.button;
+        }
+      }
+    }
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space);
+      position: relative;
+      min-height: var(--space);
+      a {
+        color: var(--white);
+        font-size: 14px;
+      }
+      button {
+        @include components.button;
+      }
+    }
+  }
+}

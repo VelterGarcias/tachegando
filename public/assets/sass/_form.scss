@@ -1,0 +1,33 @@
+@mixin panel {
+  padding: var(--space);
+}
+
+@mixin fields {
+  flex-direction: row;
+  .field {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .field + .field {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+}
+
+@mixin field {
+  height: 50px;
+  width: 100%;
+  border: #b5b5b5 1px solid;
+  border-radius: var(--radius);
+  color: #b5b5b5;
+  font-size: 16px;
+  padding: 0 var(--space);
+  outline: none;
+  background: transparent;
+  &::placeholder {
+    color: #b5b5b5;
+  }
+  &:focus {
+    border-color: var(--primary);
+  }
+}
