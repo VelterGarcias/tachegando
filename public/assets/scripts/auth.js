@@ -83,7 +83,7 @@ document.querySelectorAll("#auth").forEach((page) => {
     });
   }
 
-  //==================   Cadastro  =====================
+  //==================   Cadastro  ======================
   const formAuthRegister = document.querySelector("#form-register");
 
   if (formAuthRegister) {
