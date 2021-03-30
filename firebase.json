@@ -1,7 +1,11 @@
 {
   "hosting": {
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   },
   "apiKey": "AIzaSyBmfHVU1wjqQwh9CCwoLmqKkxowAkSFWOM",
   "authDomain": "tahchegando.firebaseapp.com",
