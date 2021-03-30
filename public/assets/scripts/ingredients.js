@@ -48,7 +48,7 @@ document.querySelectorAll("#burguer").forEach((page) => {
   const db = firebase.firestore();
 
   auth.onAuthStateChanged((user) => {
-    //console.log(user);
+    // console.log(user);
     db.collection("bread").onSnapshot((snapshot) => {
       const breadOptions = [];
 

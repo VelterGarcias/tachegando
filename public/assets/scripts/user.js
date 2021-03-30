@@ -22,7 +22,7 @@ document.querySelectorAll("#app").forEach((page) => {
         <h3>${user.displayName}</h3>
         <img src="assets/images/close.svg" alt="" />
         <ul>
-            <li><a href="./updateUser.html">Editar Dados</a></li>
+            <li><a href="./updateBusiness.html">Editar Dados</a></li>
             <li><a href="./orders.html">Pedidos Realizados</a></li>
             <li>${user.email}</li>
         </ul>

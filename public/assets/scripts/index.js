@@ -5,4 +5,4 @@ import "./ingredients";
 import "./orders";
 import "./burger";
 import "./payment";
-import "./update-profile";
+import "./update-business";

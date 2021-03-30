@@ -35,24 +35,27 @@
         <li></li>
       </ul>
       <form id="form-update">
-        <h3>Sua Foto de Perfil</h3>
+        <h3>Logotipo da Empresa</h3>
         <div>
           <img src="assets/images/user.svg" alt="photo" id="photo-preview" style="max-width: 300px; max-height: 300px" />
           <input type="file" name="photo" id="file" />
   
-          <button type="button" class="choose-photo">Escolher Foto</button>
+          <button type="button" class="choose-photo">Alterar Logotipo</button>
         </div>
         
-        <h3>Edite seus dados</h3>
-        <input type="text" name="name" placeholder="Nome" required />
+        <h3>Edite os dados da Empresa</h3>
+        <input type="text" name="name" placeholder="Nome da Empresa" required />
+        <input type="text" name="category" placeholder="Categoria da Empresa" />
         <input type="email" name="email" placeholder="E-mail" required />
-        <input type="tel" name="phone" placeholder="Tel:" required />
+        <input type="tel" name="phone" placeholder="WhatsApp Comercial" required />
+        <input type="text" name="message" placeholder="Slogam" />
 
-        <h3>Endereço para Entrega</h3>
+        <h3>Endereço da Empresa</h3>
         <input type="text" name="adress" placeholder="Rua" />
         <input type="number" name="number" placeholder="Número" />
         <input type="text" name="district" placeholder="Bairro" />
         <input type="text" name="city" placeholder="Cidade" />
+        <input type="text" name="cep" placeholder="CEP" />
 
         <footer>
           <button type="submit">Atualizar</button>
