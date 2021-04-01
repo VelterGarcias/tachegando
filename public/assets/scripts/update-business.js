@@ -2,7 +2,7 @@ import Cropper from "cropperjs";
 import IMask from "imask";
 
 import firebase from "./firebase-app";
-import { showAlert, getFormValues } from "./utils";
+import { showAlert, getFormValues, setFormValues } from "./utils";
 
 //======================== Atualizar Dados ====================================
 document.querySelectorAll("#form-update").forEach((form) => {
@@ -16,16 +16,15 @@ document.querySelectorAll("#form-update").forEach((form) => {
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
 
-  const inputName = form.querySelector('[name="name"]');
-  const inputEmail = form.querySelector('[name="email"]');
   const inputPhone = form.querySelector('[name="phone"]');
-  const inputAdress = form.querySelector('[name="adress"]');
-  const inputNumber = form.querySelector('[name="number"]');
-  const inputDistrict = form.querySelector('[name="district"]');
-  const inputCity = form.querySelector('[name="city"]');
+  const inputCep = form.querySelector('[name="cep"]');
 
   new IMask(inputPhone, {
     mask: "(00) [0]0000-0000)",
+  });
+
+  new IMask(inputCep, {
+    mask: "00000-000",
   });
 
   const bodyElement = document.body;
@@ -54,29 +53,29 @@ document.querySelectorAll("#form-update").forEach((form) => {
     }
   };
 
+  const userDate = [];
   auth.onAuthStateChanged((user) => {
+    console.log(user);
     if (user) {
       userGlobal = user;
-      db.collection("users")
+      db.collection("companies")
         .where("userId", "==", userGlobal.uid)
         .onSnapshot((snapshot) => {
-          const userDate = [];
+          userDate.length = 0;
 
           snapshot.forEach((item) => {
             userDate.push(item.data());
-
-            inputAdress.value = userDate[0].adress;
-            inputCity.value = userDate[0].city;
-            inputPhone.value = userDate[0].phone;
-            inputNumber.value = userDate[0].number;
-            inputDistrict.value = userDate[0].district;
           });
-
           console.log("userDate", userDate);
+          if (userDate.length == 0 ) {
+            userDate.push({
+              name: user.displayName,
+              email: user.email,
+            });
+          }
+          setFormValues(form, ...userDate);
+          
         });
-
-      inputName.value = user.displayName;
-      inputEmail.value = user.email;
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {
       auth.signOut();
@@ -98,23 +97,20 @@ document.querySelectorAll("#form-update").forEach((form) => {
     btnSubmit.innerHTML = "Salvando...";
 
     if (cropper) {
-    }
+    } 
+    const companyData = getFormValues(form)
 
-    db.collection("users")
+    companyData.photo = userGlobal.photoURL
+    companyData.userId = userGlobal.uid
+
+    console.log(companyData);
+    console.log(userDate[0].name)
+
+    db.collection("companies")
       .doc(userGlobal.uid)
-      .set({
-        name: inputName.value,
-        email: inputEmail.value,
-        phone: inputPhone.value,
-        adress: inputAdress.value,
-        number: inputNumber.value,
-        district: inputDistrict.value,
-        city: inputCity.value,
-        userId: userGlobal.uid,
-        photo: userGlobal.photoURL,
-      })
-      .then(() => userGlobal.updateProfile({ displayName: inputName.value}))
-      .then(() => userGlobal.updateEmail(inputEmail.value))
+      .set(companyData)
+      .then(() => userGlobal.updateProfile({ displayName: userDate[0].name}))
+      .then(() => userGlobal.updateEmail(userDate[0].email))
       .then(() => showAlert("Usuário atualizado com sucesso"))
       .catch((err) => {
         console.log(err);
@@ -125,7 +121,6 @@ document.querySelectorAll("#form-update").forEach((form) => {
         btnSubmit.innerHTML = "Salvar";
       })
 
-    //  const res = dbUser.update(dbUser);
   });
 
   imageElement.addEventListener("click", (e) => {
@@ -149,6 +144,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
           .then(() => {
             imageElement.src = userGlobal.photoURL;
             showAlert("A sua foto foi atualizada");
+            btnSubmit.click();
           });
 
         cropper.destroy();

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Projeto Hburger do Hcode Lab" />
+    <title>Cadastro - OBurguer</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/cropper.min.css" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo-favicon-blue.svg"
+      type="image/x-icon"
+    />
+  </head>
+  <body id="admin" class="auth">
+    <header>
+      <a href="index.html">
+        <img
+          src="assets/images/logo-icon-blue.svg"
+          alt="Logo Icone"
+          id="logo-icon"
+        />
+        <img
+          src="assets/images/logo-text-blue.svg"
+          alt="Logo Texto"
+          id="logo-text"
+        />
+      </a>
+      <div id="menu">
+        <small id="userName"></small>
+        <div id="userMenu"></div>
+        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+        <nav></nav>
+      </div>  
+    </header>
+
+    <main>
+      <ul id="form-tabs">
+        <li class="active"><a href="updateBusiness.html">Empresa</a></li>
+        <li></li>
+      </ul>
+      <form id="form-update">
+        <h3>Logotipo da Empresa</h3>
+        <div>
+          <img src="assets/images/user.svg" alt="photo" id="photo-preview" style="max-width: 300px; max-height: 300px" />
+          <input type="file" name="photo" id="file" />
+  
+          <button type="button" class="choose-photo">Alterar Logotipo</button>
+        </div>
+        
+        <h3>Edite os dados da Empresa</h3>
+        <label for="name">Nome da Empresa</label>
+        <input type="text" name="name" placeholder="Nome da Empresa" required />
+        <label for="category">Categoria da Empresa</label>
+        <input type="text" name="category" placeholder="Categoria da Empresa" />
+        <label for="email">E-mail</label>
+        <input type="email" name="email" placeholder="E-mail" required />
+        <label for="phone">WhatsApp Comercial</label>
+        <input type="tel" name="phone" placeholder="WhatsApp Comercial" required />
+        <label for="message">Slogam</label>
+        <input type="text" name="message" placeholder="Slogam" />
+        <label for="rash">Link único da empresa</label>
+        <input type="text" name="rash" placeholder="Link único da empresa" />
+
+        <h3>Endereço da Empresa</h3>
+        <label for="adress">Rua</label>
+        <input type="text" name="adress" placeholder="Rua" />
+        <label for="number">Número</label>
+        <input type="number" name="number" placeholder="Número" />
+        <label for="district">Bairro</label>
+        <input type="text" name="district" placeholder="Bairro" />
+        <label for="city">Cidade</label>
+        <input type="text" name="city" placeholder="Cidade" />
+        <label for="cep">CEP</label>
+        <input type="text" name="cep" placeholder="CEP" />
+
+        <footer>
+          <button type="submit">Atualizar</button>
+        </footer>
+        
+      </form>
+    </main>
+
+    <div id="alert" class="hide"></div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
