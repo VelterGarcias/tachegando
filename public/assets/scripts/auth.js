@@ -1,7 +1,7 @@
 import firebase from "./firebase-app";
 import { getFormValues, getQueryString, showAlert } from "./utils";
 
-document.querySelectorAll("#auth").forEach((page) => {
+document.querySelectorAll(".auth").forEach((page) => {
   const auth = firebase.auth();
 
   //==================   Login  =====================
@@ -24,7 +24,7 @@ document.querySelectorAll("#auth").forEach((page) => {
         .then((response) => {
           showAlert("Logado com Sucesso!");
           setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "/orders.html";
           }, 3000);
         })
         .catch((err) => {
@@ -64,7 +64,7 @@ document.querySelectorAll("#auth").forEach((page) => {
               );
             });
           setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "/orders.html";
           }, 2000);
         })
         .catch((error) => {

@@ -67,14 +67,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
             userDate.push(item.data());
           });
           console.log("userDate", userDate);
-          if (userDate.length == 0 ) {
-            userDate.push({
-              name: user.displayName,
-              email: user.email,
-            });
-          }
           setFormValues(form, ...userDate);
-          
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {
@@ -144,7 +137,6 @@ document.querySelectorAll("#form-update").forEach((form) => {
           .then(() => {
             imageElement.src = userGlobal.photoURL;
             showAlert("A sua foto foi atualizada");
-            btnSubmit.click();
           });
 
         cropper.destroy();
