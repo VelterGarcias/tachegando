@@ -31,6 +31,33 @@ export function getFormValues(form) {
   return values;
 }
 
+export function setFormValues(form, values) {
+
+  Object.keys(values).forEach(key => {
+      const field = form.querySelector(`[name=${key}]`)
+      if (field) {
+        switch (field.type) {
+            case "select":
+                field.querySelector(`option[value=${values[key]}]`).selected = true
+                break;
+
+            case "radio":
+            case "checkbox":
+                form.querySelector(`name=${key}[value=${values[key]}]`).checked = true
+                break;
+            case "file":
+                break;
+            default:
+                field.value = values[key]
+                break;
+        }
+      }
+      
+  })
+
+  
+}
+
 export function showAlertError() {
   return (error) => {
     const alertDanger = document.querySelector("#alert");
@@ -102,9 +129,9 @@ export function appendTemplate(element, tagName, html) {
 
 export function onSnapshotError(err) {
   showAlertError()(err);
-  // console.error(err);
+  console.error(err);
   setTimeout(() => {
-    window.location.href = "/login.html";
+    // window.location.href = "/login.html";
   }, 2000);
 }
 
