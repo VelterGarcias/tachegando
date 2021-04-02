@@ -7,3 +7,4 @@ import "./orders";
 import "./burger";
 import "./payment";
 import "./update-business";
+import "./update-products";

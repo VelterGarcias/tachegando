@@ -2,10 +2,10 @@ import Cropper from "cropperjs";
 import IMask from "imask";
 
 import firebase from "./firebase-app";
-import { showAlert, getFormValues, setFormValues } from "./utils";
+import { showAlert, getFormValues, setFormValues, getQueryString } from "./utils";
 
 //======================== Atualizar Dados ====================================
-document.querySelectorAll("#form-update").forEach((form) => {
+document.querySelectorAll("#form-product").forEach((form) => {
   const auth = firebase.auth();
   const db = firebase.firestore();
 
@@ -13,19 +13,17 @@ document.querySelectorAll("#form-update").forEach((form) => {
   let userGlobal = null;
   const imageElement = document.querySelector("#photo-preview");
   const buttonElement = document.querySelector(".choose-photo");
+  
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
 
-  const inputPhone = form.querySelector('[name="phone"]');
-  const inputCep = form.querySelector('[name="cep"]');
+  // new IMask(inputPhone, {
+  //   mask: "(00) [0]0000-0000)",
+  // });
 
-  new IMask(inputPhone, {
-    mask: "(00) [0]0000-0000)",
-  });
-
-  new IMask(inputCep, {
-    mask: "00000-000",
-  });
+  // new IMask(inputCep, {
+  //   mask: "00000-000",
+  // });
 
   const bodyElement = document.body;
 
@@ -54,18 +52,25 @@ document.querySelectorAll("#form-update").forEach((form) => {
   };
 
   const userDate = [];
+  const { produto } = getQueryString()
   auth.onAuthStateChanged((user) => {
     console.log(user);
     if (user) {
       userGlobal = user;
-      db.collection("companies")
-        .where("userId", "==", userGlobal.uid)
+
+      console.log("produto", produto);
+
+      db.collection("products")
+        .doc(produto)
         .onSnapshot((snapshot) => {
           userDate.length = 0;
 
-          snapshot.forEach((item) => {
-            userDate.push(item.data());
-          });
+          userDate.push(snapshot.data());
+
+          // snapshot.forEach((item) => {
+          //   console.log(item.id);
+          //   userDate.push(item.data());
+          // });
           console.log("userDate", userDate);
           setFormValues(form, ...userDate);
         });
@@ -91,20 +96,18 @@ document.querySelectorAll("#form-update").forEach((form) => {
 
     if (cropper) {
     } 
-    const companyData = getFormValues(form)
+    const productData = getFormValues(form)
 
-    companyData.photo = userGlobal.photoURL
-    companyData.userId = userGlobal.uid
+    productData.photo = userGlobal.photoURL
+    productData.companyId = userGlobal.uid
 
-    console.log(companyData);
+    console.log(productData);
     console.log(userDate[0].name)
 
-    db.collection("companies")
-      .doc(userGlobal.uid)
-      .set(companyData)
-      .then(() => userGlobal.updateProfile({ displayName: userDate[0].name}))
-      .then(() => userGlobal.updateEmail(userDate[0].email))
-      .then(() => showAlert("Usuário atualizado com sucesso"))
+    db.collection("products")
+      .doc(produto)
+      .set(productData)
+      .then(() => showAlert("Produto salvo com sucesso"))
       .catch((err) => {
         console.log(err);
         showAlert(err.message, true)

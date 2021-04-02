@@ -93,6 +93,8 @@ document.querySelectorAll("#list-products").forEach((page) => {
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  const btnNewProduct = document.querySelector('#new-product')
+
   auth.onAuthStateChanged(async (user) => {
 
     if (!user) {
@@ -101,21 +103,39 @@ document.querySelectorAll("#list-products").forEach((page) => {
         window.location.href = "/login.html";
       }, 3000);
     }
-
+    const products = [];
     db.collection("products")
-      .where("user_id", "==", user.uid)
+      .where("companyId", "==", user.uid)
       .onSnapshot((getProducts) => {
-        const products = [];
-
+ 
+        
         getProducts.forEach((product) => {
           const productData = product.data();
           productData.firebaseId = product.id;
           products.push(productData);
         });
-
         
+        page.querySelector('p').innerHTML = products[0].name
+        console.log(products);
       }, onSnapshotError);
+      
 
-      page.querySelector('p').innerHTML = "vai ter algo aqui..."
+      btnNewProduct.addEventListener("click", (e) => {
+        console.log("novo");
+
+        db.collection("products")
+        .add({name: "Novo Produto"})
+        .then((res) => {
+          console.log(res.id)
+          window.location.href = `/product.html?produto=${res.id}`
+        })
+        .catch((err) => {
+          console.log(err);
+          showAlert(err.message, true)
+        })
+
+      });
+      
+      
   });
 });

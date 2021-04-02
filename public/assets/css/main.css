@@ -1226,10 +1226,10 @@ label {
   height: 150px;
   border-radius: 50%;
 }
-.auth #form-update #file {
+.auth #form-update #file, .auth #form-product #file {
   display: none;
 }
-.auth #form-update .choose-photo {
+.auth #form-update .choose-photo, .auth #form-product .choose-photo {
   margin-top: var(--space);
   background-color: #101d1d;
   border: none;
@@ -1245,21 +1245,21 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-.auth #form-update .choose-photo:hover {
+.auth #form-update .choose-photo:hover, .auth #form-product .choose-photo:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-.auth #form-update .choose-photo:active {
+.auth #form-update .choose-photo:active, .auth #form-product .choose-photo:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-.auth #form-update .choose-photo:disabled {
+.auth #form-update .choose-photo:disabled, .auth #form-product .choose-photo:disabled {
   background-color: var(--light);
   cursor: progress;
 }
-.auth #form-update.cropping img {
+.auth #form-update.cropping img, .auth #form-product.cropping img {
   height: auto;
   border-radius: 0;
   margin-top: 0;

@@ -13,6 +13,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   let userGlobal = null;
   const imageElement = document.querySelector("#photo-preview");
   const buttonElement = document.querySelector(".choose-photo");
+  const linkShop = document.querySelector("#link-shop");
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
 
@@ -74,7 +75,9 @@ document.querySelectorAll("#form-update").forEach((form) => {
             });
           }
           setFormValues(form, ...userDate);
-          
+          const hash = `${window.location.origin}#${userDate[0].rash}`
+          linkShop.innerHTML = hash
+          linkShop.href = hash
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {
