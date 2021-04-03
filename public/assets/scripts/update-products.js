@@ -71,10 +71,12 @@ document.querySelectorAll("#form-product").forEach((form) => {
           //   console.log(item.id);
           //   userDate.push(item.data());
           // });
-          console.log("userDate", userDate);
+          
           setFormValues(form, ...userDate);
+          imageElement.src = userDate[0].photo || "./assets/images/user.svg";
         });
-      imageElement.src = user.photoURL || "./assets/images/user.svg";
+        console.log("userDate1", userDate);
+      
     } else {
       auth.signOut();
       window.location.href = "/login.html";
@@ -131,14 +133,17 @@ document.querySelectorAll("#form-product").forEach((form) => {
       cropper.getCroppedCanvas().toBlob((blob) => {
         const storage = firebase.storage();
 
-        const fileRef = storage.ref().child(`photos/${userGlobal.uid}.png`);
+        const fileRef = storage.ref().child(`photos/${userGlobal.uid}/${produto}.png`);
 
         fileRef
           .put(blob)
           .then((snapshot) => snapshot.ref.getDownloadURL())
-          .then((photoURL) => userGlobal.updateProfile({ photoURL }))
-          .then(() => {
-            imageElement.src = userGlobal.photoURL;
+          // .then((photoURL) => userGlobal.updateProfile({ photoURL }))
+          .then((photo) => {
+            console.log("photo", photo);
+            db.collection("products").doc(produto).update({photo: photo});
+
+            imageElement.src = photo;
             showAlert("A sua foto foi atualizada");
           });
 

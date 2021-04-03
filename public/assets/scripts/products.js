@@ -8,38 +8,41 @@ import {
   getOrderId,
 } from "./utils";
 
-const renderOrders = (targetElement, orderOptions) => {
+const renderProductsAdmin = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
 
-  orderOptions.forEach((item) => {
+  productOptions.forEach((item) => {
+    
     appendTemplate(
       targetElement,
       "li",
       `
-        <div class="id">#${item.order_id}</div>
+        <div class="id">
+        <img src=${item.photo} alt="Foto do Produto"/>
+        </div>
         <div class="content">
-          <div class="title">Detalhes do Pedido</div>
+          <div class="title">Detalhes do Produto</div>
           <ul>
             <li>
-              <span>Data:</span>
-              <span>${item.created_at}</span>
+              <span>Nome:</span>
+              <span>${item.name}</span>
             </li>
             <li>
               <span>Valor:</span>
-              <span>${formatCurrency(item.orderTotal)}</span>
+              <span>${formatCurrency(item.price)}</span>
             </li>
             <li>
-              <span>Itens:</span>
-              <span>${item.burguers.length}</span>
+              <span>Categoria:</span>
+              <span>${item.category}</span>
             </li>
             <li>
-              <span>N°:</span>
-              <span>${item.order_id}</span>
+              <span>Descrição:</span>
+              <span>${item.description}</span>
             </li>
           </ul>
         </div>
         <div class="actions" id="${item.firebaseId}" data-order="${
-        item.order_id
+        item.firebaseId
       }">
           <button class="share" type="button" aria-label="Share" title="Compartilhar">
             <svg
@@ -69,6 +72,7 @@ const renderOrders = (targetElement, orderOptions) => {
               />
             </svg>
           </button>
+          <a href="/product.html?produto=${item.firebaseId}">Editar</a>
           <button class="delete" type="button" aria-label="Excluir" title="Excluir">
             <svg
               width="24"
@@ -88,6 +92,8 @@ const renderOrders = (targetElement, orderOptions) => {
     );
   });
 };
+
+
 
 document.querySelectorAll("#list-products").forEach((page) => {
   const auth = firebase.auth();
@@ -115,8 +121,12 @@ document.querySelectorAll("#list-products").forEach((page) => {
           products.push(productData);
         });
         
-        page.querySelector('p').innerHTML = products[0].name
+        // page.querySelector('p').innerHTML = products[0].name
         console.log(products);
+
+        renderProductsAdmin(page, products);
+
+
       }, onSnapshotError);
       
 

@@ -601,6 +601,37 @@ label {
   color: var(--primary);
   font-weight: bold;
 }
+#app > section main > header #new-product {
+  background-color: #101d1d;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 1rem;
+  min-width: 110px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+}
+#app > section main > header #new-product:hover {
+  background-color: #142626;
+  box-shadow: 0 0 10px var(--primary);
+}
+#app > section main > header #new-product:active {
+  background-color: var(--light);
+  color: var(--dark);
+  transition-duration: 0.05s;
+  box-shadow: 0 0 5px var(--primary);
+}
+#app > section main > header #new-product:disabled {
+  background-color: var(--light);
+  cursor: progress;
+}
 #app > section main > section {
   overflow: auto;
   min-height: 200px;
@@ -1102,6 +1133,118 @@ label {
 #admin > header #avatar:hover {
   opacity: 0.8;
   filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.5));
+}
+
+#list-products, #products {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding: var(--space);
+  overflow: auto;
+}
+#list-products::-webkit-scrollbar, #products::-webkit-scrollbar {
+  width: 10px;
+}
+#list-products::-webkit-scrollbar-track, #products::-webkit-scrollbar-track {
+  background: #070d0d;
+}
+#list-products::-webkit-scrollbar-thumb, #products::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.25);
+}
+#list-products:hover::-webkit-scrollbar-thumb, #products:hover::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.5);
+}
+#list-products:hover::-webkit-scrollbar-thumb:hover, #products:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 59, 229, 0.75);
+}
+#list-products:hover::-webkit-scrollbar-thumb:active, #products:hover::-webkit-scrollbar-thumb:active {
+  background: #1f3be5;
+}
+#list-products > li, #products > li {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  flex-direction: row;
+  display: flex;
+  color: var(--dark);
+}
+#list-products > li > div, #products > li > div {
+  padding: 10px;
+}
+#list-products > li .id, #products > li .id {
+  width: 25%;
+  max-width: 200px;
+  min-width: 150px;
+}
+#list-products > li .content, #products > li .content {
+  flex: 1;
+  font-size: 14px;
+}
+#list-products > li .content .title, #products > li .content .title {
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: bold;
+  padding: 10px var(--space);
+  text-align: center;
+  text-transform: uppercase;
+}
+#list-products > li .content ul, #products > li .content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#list-products > li .content ul li, #products > li .content ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 32px;
+  align-items: center;
+}
+#list-products > li .actions, #products > li .actions {
+  justify-content: center;
+  border-left: var(--dark) 1px dashed;
+  margin-left: 10px;
+}
+#list-products > li .actions button, #products > li .actions button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+#list-products > li .actions button:hover, #products > li .actions button:hover {
+  opacity: 0.75;
+  background-color: var(--gray);
+}
+#list-products > li .actions button:active, #products > li .actions button:active {
+  opacity: 1;
+  background-color: var(--primary);
+}
+#list-products > li .actions button:active path, #products > li .actions button:active path {
+  fill: var(--primaryText);
+}
+#list-products > li + li, #products > li + li {
+  margin-top: var(--space);
+}
+@media (min-width: 768px) {
+  #list-products, #products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: var(--space);
+  }
+  #list-products > li + li, #products > li + li {
+    margin-top: 0;
+  }
+}
+@media (min-width: 1152px) {
+  #list-products, #products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1536px) {
+  #list-products, #products {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 #list-orders {

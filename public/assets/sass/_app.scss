@@ -85,6 +85,11 @@
       > header {
         @include components.horizontalTitle;
         width: 100%;
+        #new-product {
+          @include components.button;
+          position: absolute;
+          right: 10px;
+        }
       }
       > section {
         overflow: auto;

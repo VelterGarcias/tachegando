@@ -1,7 +1,7 @@
 import firebase from "./firebase-app";
 import { showMenu } from "./utils";
 
-document.querySelectorAll("#menu").forEach((page) => {
+document.querySelectorAll("#menu-admin").forEach((page) => {
   const auth = firebase.auth();
 
   auth.onAuthStateChanged((user) => {
