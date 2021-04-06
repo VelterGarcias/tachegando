@@ -100,7 +100,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     } 
     const productData = getFormValues(form)
 
-    productData.photo = userGlobal.photoURL
+    productData.photo = imageElement.src
     productData.companyId = userGlobal.uid
 
     console.log(productData);
@@ -108,7 +108,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     db.collection("products")
       .doc(produto)
-      .set(productData)
+      .update(productData)
       .then(() => showAlert("Produto salvo com sucesso"))
       .catch((err) => {
         console.log(err);

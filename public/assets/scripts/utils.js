@@ -2,6 +2,7 @@ export function getFormValues(form) {
   const values = {};
 
   form.querySelectorAll("[name]").forEach((field) => {
+    console.log(field.name, field.value, field.type);
     switch (field.type) {
       case "select":
         values[field.name] = field.querySelector("option:selected")?.value;
@@ -14,12 +15,20 @@ export function getFormValues(form) {
         break;
 
       case "checkbox":
-        values[field.name] = [];
-        form
-          .querySelectorAll(`[name=${field.name}]:checked`)
-          .forEach((checkbox) => {
-            values[field.name].push(checkbox.value);
-          });
+        if(field.name.startsWith('is')) {
+          if(form.querySelector(`[name=${field.name}]:checked`) ) {
+            values[field.name] = true;
+          } else {
+            values[field.name] = false;
+          }
+        } else {
+          values[field.name] = [];
+          form
+            .querySelectorAll(`[name=${field.name}]:checked`)
+            .forEach((checkbox) => {
+              values[field.name].push(checkbox.value);
+            });
+        }
         break;
 
       default:
@@ -43,7 +52,14 @@ export function setFormValues(form, values) {
 
             case "radio":
             case "checkbox":
-                form.querySelector(`name=${key}[value=${values[key]}]`).checked = true
+                if(field.name.startsWith('is')) {
+
+                  form.querySelector(`[name=${key}]`).checked = values[key]
+
+                } else {
+                  form.querySelector(`[name=${key}][value="${values[key]}"]`).checked = true
+                }
+                
                 break;
             case "file":
                 break;

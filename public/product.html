@@ -48,7 +48,8 @@
   
           <button type="button" class="choose-photo">Alterar Logotipo</button>
         </div>
-        
+        <label for="is_online">Produto Online?</label>
+        <input type="checkbox" name="is_online" value="1" />
         <label for="name">Nome do Produto</label>
         <input type="text" name="name" placeholder="Nome do Produto" required />
         <label for="category">Categoria da Produto</label>
@@ -57,6 +58,13 @@
         <input type="text" name="price" placeholder="Valor do Produto" required />
         <label for="description">Descrição</label>
         <input type="text" name="description" placeholder="Descrição" />
+        
+        <div id="form-categories">
+          <h3>Opções</h3>
+          <label for="adicionais">Adicionais</label>
+          <input type="text" name="adicionais" data-category="" />
+
+        </div>
 
         <footer>
           <button type="submit">Atualizar</button>
