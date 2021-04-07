@@ -86,12 +86,20 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       .get();
 
     const productData = [];
+
     products.forEach((item) => {
       const product = item.data();
-      if (product.is_online) productData.push(item.data());
-      // console.log("product", product.is_online);
+      if (product.is_online) {
+        productData[item.id] = product
+        productData.push(item.data())
+      }
+      console.log("product", product.is_online, productData );
     });
+
+    console.log("product",  productData );
     await renderProducts(page.querySelector("#products"), productData);
+    sessionStorage.setItem("products", JSON.stringify(productData));
+    console.log(JSON.parse(sessionStorage.getItem("products")))
 
     const body = document.querySelector("body");
     body.classList.remove("loading");
@@ -99,6 +107,11 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     document.querySelectorAll("button").forEach((btn) => {
       btn.style = `background-color: ${company[0].second_color}`;
     });
+  } else {
+    console.log("sem hash");
+    setTimeout(() => {
+      window.location.href = '/products.html'
+    }, 2000);
   }
 
   // auth.onAuthStateChanged((user) => {
