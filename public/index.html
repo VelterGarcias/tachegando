@@ -12,33 +12,53 @@
       type="image/x-icon"
     />
   </head>
-  <body id="app">
+  <body id="app" class="loading">
+    <div id="loading">
+      <span>tahChegando...</span>
+    </div>
     <section>
-      <header>
+      <header >
         <a href="index.html">
           <img
-            src="assets/images/logo-icon-blue.svg"
             alt="Logo Icone"
             id="logo-icon"
           />
         </a>
+        <div id="company">
+          <h1>Monte o seu <span>Oburger</span></h1>
+          <span>O melhor burger da cidade!</span>
+        </div>
       </header>
 
       <main id="shop">
-        <header id="company">
+        <!-- <header >
           <h1>Monte o seu <span>Oburger</span></h1>
           <span>O melhor burger da cidade!</span>
-        </header>
+        </header> -->
         <section>
           <div class="category">
             <h2>Escolha o seu...</h2>
             <ul id="products"></ul>
+            <!-- <ul>
+              <li>
+                <img class="image-product" src="assets/images/a.png" alt="">
+                <div class="content-product" >
+                  <h3>Hamburguer de Calabresa</h3>
+                  <span>R$ 25,00</span>
+                </div>
+                <div class="options-product" >
+                  <button>+</button>
+                  <input type="number" name="qtd">
+                  <button>-</button>
+                </div>
+              </li>
+            </ul> -->
           </div>
         </section>
       </main>
 
       <!--<footer class="show">-->
-      <footer>
+      <!-- <footer>
         <button
           type="button"
           aria-label="Salvar Hamburguer"
@@ -46,7 +66,7 @@
         >
           Adicionar a bandeja
         </button>
-      </footer>
+      </footer> -->
     </section>
 
     <!--<aside class="open">-->

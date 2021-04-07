@@ -78,6 +78,10 @@ document.querySelectorAll("#form-update").forEach((form) => {
           const hash = `${window.location.origin}#${userDate[0].rash}`
           linkShop.innerHTML = hash
           linkShop.href = hash
+          form.style = `background-color: ${userDate[0].main_color}`
+          form.querySelectorAll('button').forEach((btn)=>{
+            btn.style = `background-color: ${userDate[0].second_color}`
+          })
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {

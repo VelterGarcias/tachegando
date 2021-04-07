@@ -113,7 +113,7 @@ document.querySelectorAll("#list-products").forEach((page) => {
     db.collection("products")
       .where("companyId", "==", user.uid)
       .onSnapshot((getProducts) => {
- 
+        products.length = 0;
         
         getProducts.forEach((product) => {
           const productData = product.data();

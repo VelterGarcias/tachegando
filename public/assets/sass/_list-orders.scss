@@ -2,11 +2,10 @@
 @use "vars";
 @use "components";
 
-#list-products, #products {
+#list-products {
   @include mixins.reset-list;
   @include components.scrollbar;
   padding: var(--space);
-  overflow: auto;
   > li {
     background-color: var(--white);
     border-radius: var(--radius);
