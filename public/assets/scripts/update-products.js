@@ -102,6 +102,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     productData.photo = imageElement.src
     productData.companyId = userGlobal.uid
+    productData.price = productData.price.replace(',','.')
+
+    
 
     console.log(productData);
     console.log(userDate[0].name)

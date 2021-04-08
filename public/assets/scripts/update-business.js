@@ -75,7 +75,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
             });
           }
           setFormValues(form, ...userDate);
-          const hash = `${window.location.origin}#${userDate[0].rash}`
+          const hash = `${window.location.origin}#${userDate[0].hash}`
           linkShop.innerHTML = hash
           linkShop.href = hash
           form.style = `background-color: ${userDate[0].main_color}`

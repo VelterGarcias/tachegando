@@ -83,52 +83,64 @@ label {
 }
 
 #modal {
+  display: none;
+}
+#modal > div {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  width: 100%;
+}
+#modal > div > #overlay {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #000000bd;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: none;
-  display: none;
 }
-#modal > div {
-  width: 70%;
+#modal > div > .modal-content {
+  width: 90%;
   background-color: #fff;
   border-radius: 10px;
   padding: 2rem;
   color: #000;
   min-height: 12rem;
   max-height: 90vh;
-  max-width: 25rem;
+  max-width: 600px;
   position: relative;
   overflow: auto;
 }
-#modal > div img {
+#modal > div > .modal-content .close {
   position: absolute;
   top: 5px;
   right: 5px;
   height: 30px;
   cursor: pointer;
 }
-#modal > div h3 {
+#modal > div > .modal-content .image-prod-modal {
+  width: 250px;
+}
+#modal > div > .modal-content h3 {
   margin: 0;
   margin-bottom: 15px;
   font-size: 1.5rem;
   width: 100%;
   text-align: center;
 }
-#modal > div p {
+#modal > div > .modal-content p {
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
 }
-#modal > div p a,
-#modal > div p button {
+#modal > div > .modal-content p a,
+#modal > div > .modal-content p button {
   background-color: var(--primary);
   text-align: center;
   color: #ffffff;
@@ -138,17 +150,18 @@ label {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.9rem;
+  cursor: pointer;
 }
-#modal > div p a:first-child {
+#modal > div > .modal-content p a:first-child {
   margin-top: 0.5rem;
 }
-#modal > div > ul {
+#modal > div > .modal-content > ul {
   padding: 0;
   border-bottom: 1px solid;
   padding-bottom: 5px;
   margin: 10px 0;
 }
-#modal > div > ul > li {
+#modal > div > .modal-content > ul > li {
   display: flex;
   justify-content: space-between;
 }
@@ -526,7 +539,10 @@ label {
   font-size: 40px;
   font-weight: bold;
 }
-#app.loading > section, #app.loading > footer, #app.loading > main, #app.loading > aside {
+#app.loading > section,
+#app.loading > footer,
+#app.loading > main,
+#app.loading > aside {
   display: none;
 }
 #app.no-footer > section main {
@@ -711,6 +727,7 @@ label {
   color: rgba(27, 154, 246, 0.7);
 }
 #app > section main .category ul li {
+  position: relative;
   background-color: var(--white);
   border: 3px solid white;
   border-radius: 20px;
@@ -719,36 +736,54 @@ label {
   color: var(--dark);
   overflow: hidden;
   box-shadow: 1px 1px 16px -2px black;
+  margin: 0 auto;
   margin-bottom: 25px;
+  max-width: 400px;
 }
 #app > section main .category ul li:hover, #app > section main .category ul li:active {
   border: 3px solid #e8e8e8;
   background-color: #e8e8e8;
   cursor: pointer;
 }
+#app > section main .category ul li > .content {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
 #app > section main .category ul li .image-product {
-  width: 33%;
+  width: 40%;
 }
 #app > section main .category ul li .options-product {
   width: 15%;
+  justify-content: flex-end;
+  position: absolute;
+  height: 80%;
+  bottom: 0;
+  right: 0;
 }
 #app > section main .category ul li .options-product > button {
   flex: 1;
   outline: none;
   border: none;
+  max-height: 50%;
+  border-top-left-radius: 20px;
+  cursor: pointer;
+}
+#app > section main .category ul li .options-product > button:hover {
+  filter: grayscale(0.5);
 }
 #app > section main .category ul li .options-product > input {
   flex: 1;
   margin: 5px 0;
   text-align: center;
 }
-#app > section main .category ul li .content-product {
+#app > section main .category ul li .data-product {
   align-items: center;
   justify-content: space-around;
   padding: 3px 7px;
   flex: 1;
 }
-#app > section main .category ul li .content-product > h3 {
+#app > section main .category ul li .data-product > h3 {
   margin: 0;
   text-align: center;
 }

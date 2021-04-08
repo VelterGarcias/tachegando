@@ -192,12 +192,18 @@ export function showModal(content) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = "";
   modal.classList.add("open");
-  appendTemplate(modal, "div", content);
+  appendTemplate(modal, "div", `<div id="overlay"></div><div class="modal-content">${content}</div>`);
 
-  const closeBtn = modal.querySelector("img");
+  const closeBtn = modal.querySelector(".close");
+  const overlay = modal.querySelector("#overlay");
 
+  overlay.addEventListener("click", () => {
+    modal.classList.remove("open");
+    modal.innerHTML = "";
+  });
   closeBtn.addEventListener("click", () => {
     modal.classList.remove("open");
+    modal.innerHTML = "";
   });
 }
 

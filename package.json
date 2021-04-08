@@ -17,7 +17,8 @@
     "axios": "^0.21.1",
     "cropperjs": "^1.5.11",
     "firebase": "^8.2.9",
-    "imask": "^6.0.7"
+    "imask": "^6.0.7",
+    "js-cookie": "^2.2.1"
   },
   "devDependencies": {
     "sass": "^1.32.5",
