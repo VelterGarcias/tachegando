@@ -1,56 +1,8 @@
 import firebase from "./firebase-app";
 import { getFormValues, getQueryString, showAlert } from "./utils";
 
-document.querySelectorAll("#auth").forEach((page) => {
+document.querySelectorAll(".auth").forEach((page) => {
   const auth = firebase.auth();
-
-  
-  //==================   Tratamento das informações após o Redirect do Facebook  =====================
-  // auth
-  //   .getRedirectResult()
-  //   .then(async (result) => {
-  //     if (result.user) {
-  //       const user = result.user;
-  //       const credential = result.credential;
-  //       const token = credential.accessToken;
-
-  //       if (user.photoURL.indexOf("firebasestorage") === -1) {
-  //         const urlPhotoFace =
-  //           result.user.providerData[0].photoURL + `?access_token=${token}`;
-
-  //         // console.log(urlPhotoFace);
-
-  //         const blob = await fetch(urlPhotoFace).then((r) => r.blob());
-
-  //         // console.log("blob", blob);
-
-  //         const storage = firebase.storage();
-
-  //         const fileRef = storage.ref().child(`photos/${user.uid}.png`);
-
-  //         fileRef
-  //           .put(blob)
-  //           .then((snapshot) => snapshot.ref.getDownloadURL())
-  //           .then((photoURL) => user.updateProfile({ photoURL }));
-  //         // .then(() => {
-  //         //   console.log("foto atualizada");
-  //         // });
-  //       }
-
-  //       showAlert(`Bem-vindo ${user.displayName}!`);
-
-  //       setTimeout(() => {
-  //         window.location.href = "/";
-  //       }, 4000);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     const errorMessage = error.message;
-  //     showAlert(errorMessage, true);
-  //   });
-
-
-
 
   //==================   Login  =====================
   const formAuthLogin = document.querySelector("#form-login");
@@ -72,7 +24,7 @@ document.querySelectorAll("#auth").forEach((page) => {
         .then((response) => {
           showAlert("Logado com Sucesso!");
           setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "/orders.html";
           }, 3000);
         })
         .catch((err) => {
@@ -83,7 +35,7 @@ document.querySelectorAll("#auth").forEach((page) => {
     });
   }
 
-  //==================   Cadastro  =====================
+  //==================   Cadastro  ======================
   const formAuthRegister = document.querySelector("#form-register");
 
   if (formAuthRegister) {
@@ -101,6 +53,7 @@ document.querySelectorAll("#auth").forEach((page) => {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((response) => {
           const { user } = response;
+          console.log(values);
           user
             .updateProfile({
               displayName: values.name,
@@ -111,7 +64,7 @@ document.querySelectorAll("#auth").forEach((page) => {
               );
             });
           setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "/orders.html";
           }, 2000);
         })
         .catch((error) => {
@@ -184,35 +137,5 @@ document.querySelectorAll("#auth").forEach((page) => {
         });
     });
   }
-
-  //==================   Login com Facebook  =====================
-
-  // const btnFacebook = document.querySelector("#login-facebook");
-
-  // if (btnFacebook) {
-  //   btnFacebook.addEventListener("click", (e) => {
-  //     //console.log("clicou");
-
-  //     const provider = new firebase.auth.FacebookAuthProvider();
-
-  //     auth.signInWithRedirect(provider);
-
-  //     // auth
-  //     //   .signInWithPopup(provider)
-  //     //   .then((res)=> {
-  //     //     showAlert(`Bem-vindo ${res.user.displayName}!`)
-
-  //     //     setTimeout(() => {
-  //     //       window.location.href = "/"
-  //     //     }, 4000);
-
-  //     //   })
-  //     //   .catch((err) => showAlert(err, true));
-  //   });
-  // }
-
- 
-
-
 
 });

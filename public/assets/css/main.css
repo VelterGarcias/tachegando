@@ -45,7 +45,7 @@ $secondary: rgba(#A1EB73, .7); */
 body {
   margin: 0;
   background-color: var(--dark);
-  color: var(--white);
+  color: black;
 }
 
 body,
@@ -83,52 +83,64 @@ label {
 }
 
 #modal {
+  display: none;
+}
+#modal > div {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  width: 100%;
+}
+#modal > div > #overlay {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #000000bd;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: none;
-  display: none;
 }
-#modal > div {
-  width: 70%;
+#modal > div > .modal-content {
+  width: 90%;
   background-color: #fff;
   border-radius: 10px;
   padding: 2rem;
   color: #000;
   min-height: 12rem;
   max-height: 90vh;
-  max-width: 25rem;
+  max-width: 600px;
   position: relative;
   overflow: auto;
 }
-#modal > div img {
+#modal > div > .modal-content .close {
   position: absolute;
   top: 5px;
   right: 5px;
   height: 30px;
   cursor: pointer;
 }
-#modal > div h3 {
+#modal > div > .modal-content .image-prod-modal {
+  width: 250px;
+}
+#modal > div > .modal-content h3 {
   margin: 0;
   margin-bottom: 15px;
   font-size: 1.5rem;
   width: 100%;
   text-align: center;
 }
-#modal > div p {
+#modal > div > .modal-content p {
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
 }
-#modal > div p a,
-#modal > div p button {
+#modal > div > .modal-content p a,
+#modal > div > .modal-content p button {
   background-color: var(--primary);
   text-align: center;
   color: #ffffff;
@@ -138,17 +150,18 @@ label {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.9rem;
+  cursor: pointer;
 }
-#modal > div p a:first-child {
+#modal > div > .modal-content p a:first-child {
   margin-top: 0.5rem;
 }
-#modal > div > ul {
+#modal > div > .modal-content > ul {
   padding: 0;
   border-bottom: 1px solid;
   padding-bottom: 5px;
   margin: 10px 0;
 }
-#modal > div > ul > li {
+#modal > div > .modal-content > ul > li {
   display: flex;
   justify-content: space-between;
 }
@@ -234,46 +247,45 @@ label {
   display: flex;
 }
 
-#auth {
+.auth {
   background-color: #08182b;
   background-image: url("../images/bg.svg");
 }
-#auth header {
+.auth header {
   justify-content: center;
   align-items: center;
   height: 180px;
 }
-#auth header a {
+.auth header a {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
-#auth header a #logo-icon {
+.auth header a #logo-icon {
   width: 100px;
-  height: 127px;
 }
-#auth header a #logo-text {
+.auth header a #logo-text {
   margin-top: var(--space);
   width: 220px;
   height: 60px;
 }
 @media (min-width: 768px) {
-  #auth header a {
+  .auth header a {
     flex-direction: row;
   }
-  #auth header a #logo-icon {
+  .auth header a #logo-icon {
     width: initial;
   }
-  #auth header a #logo-text {
+  .auth header a #logo-text {
     margin-left: var(--space);
     width: initial;
   }
 }
-#auth main {
+.auth main {
   align-items: center;
 }
-#auth #form-tabs {
+.auth #form-tabs {
   margin: 0;
   padding: 0;
   background-color: #202f3f;
@@ -284,7 +296,7 @@ label {
   list-style: none;
   width: 100%;
 }
-#auth #form-tabs li {
+.auth #form-tabs li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -298,17 +310,17 @@ label {
   font-size: 22px;
   cursor: pointer;
 }
-#auth #form-tabs li:hover {
+.auth #form-tabs li:hover {
   background-color: rgba(31, 59, 229, 0.5);
 }
-#auth #form-tabs li.active {
+.auth #form-tabs li.active {
   background-color: var(--primary);
   cursor: default;
 }
-#auth #form-tabs li {
+.auth #form-tabs li {
   width: 175px;
 }
-#auth #form-tabs a {
+.auth #form-tabs a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -316,7 +328,7 @@ label {
   text-decoration: none;
   color: var(--dark);
 }
-#auth #login-facebook {
+.auth #login-facebook {
   background-color: #101d1d;
   border: none;
   border-radius: var(--radius);
@@ -335,36 +347,41 @@ label {
   background-color: #4e6cab;
   margin-top: 20px;
 }
-#auth #login-facebook:hover {
+.auth #login-facebook:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-#auth #login-facebook:active {
+.auth #login-facebook:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-#auth #login-facebook:disabled {
+.auth #login-facebook:disabled {
   background-color: var(--light);
   cursor: progress;
 }
-#auth #login-facebook:hover, #auth #login-facebook:active {
+.auth #login-facebook:hover, .auth #login-facebook:active {
   background-color: #314776;
 }
-#auth #login-facebook svg {
+.auth #login-facebook svg {
   width: 30px;
   height: 30px;
   margin-right: 10px;
 }
-#auth form {
+.auth form {
   background-color: var(--primary);
   padding: var(--space);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   width: 350px;
 }
-#auth form input {
+.auth form label {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.auth form input {
   height: 50px;
   border-radius: var(--radius);
   border: none;
@@ -372,13 +389,18 @@ label {
   padding: var(--space);
   outline: none;
 }
-#auth form input:focus {
+.auth form input:focus {
   background-color: rgba(255, 255, 255, 0.9);
 }
-#auth form input + input {
+.auth form input + input {
   margin-top: var(--space);
 }
-#auth form form {
+.auth form input[type=color] {
+  padding: 0;
+  height: revert;
+  border-radius: initial;
+}
+.auth form form {
   background-color: var(--primary);
   padding: var(--space);
   padding-top: 5rem;
@@ -386,7 +408,7 @@ label {
   border-bottom-right-radius: var(--radius);
   width: 350px;
 }
-#auth form form input {
+.auth form form input {
   height: 50px;
   border-radius: var(--radius);
   border: none;
@@ -394,16 +416,21 @@ label {
   padding: var(--space);
   outline: none;
 }
-#auth form form input:focus {
+.auth form form input:focus {
   background-color: rgba(255, 255, 255, 0.9);
 }
-#auth form form input + input {
+.auth form form input + input {
   margin-top: var(--space);
 }
-#auth form form label + label {
+.auth form form input[type=color] {
+  padding: 0;
+  height: revert;
+  border-radius: initial;
+}
+.auth form form label + label {
   margin-top: var(--space);
 }
-#auth form form footer {
+.auth form form footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -412,11 +439,11 @@ label {
   position: relative;
   min-height: var(--space);
 }
-#auth form form footer a {
+.auth form form footer a {
   color: var(--white);
   font-size: 14px;
 }
-#auth form form footer button {
+.auth form form footer button {
   background-color: #101d1d;
   border: none;
   border-radius: var(--radius);
@@ -431,21 +458,21 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-#auth form form footer button:hover {
+.auth form form footer button:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-#auth form form footer button:active {
+.auth form form footer button:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-#auth form form footer button:disabled {
+.auth form form footer button:disabled {
   background-color: var(--light);
   cursor: progress;
 }
-#auth form footer {
+.auth form footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -454,11 +481,11 @@ label {
   position: relative;
   min-height: var(--space);
 }
-#auth form footer a {
+.auth form footer a {
   color: var(--white);
   font-size: 14px;
 }
-#auth form footer button {
+.auth form footer button {
   background-color: #101d1d;
   border: none;
   border-radius: var(--radius);
@@ -473,21 +500,51 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-#auth form footer button:hover {
+.auth form footer button:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-#auth form footer button:active {
+.auth form footer button:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-#auth form footer button:disabled {
+.auth form footer button:disabled {
   background-color: var(--light);
   cursor: progress;
 }
 
+#app #loading {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+#app.loading {
+  background-color: white;
+}
+#app.loading #loading {
+  height: 100vh;
+  width: 100vw;
+  opacity: 1;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+#app.loading #loading span {
+  font-size: 40px;
+  font-weight: bold;
+}
+#app.loading > section,
+#app.loading > footer,
+#app.loading > main,
+#app.loading > aside {
+  display: none;
+}
 #app.no-footer > section main {
   padding-bottom: 0;
 }
@@ -498,53 +555,57 @@ label {
   flex: 1;
 }
 #app > section > header {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  height: 180px;
+  align-items: stretch;
+  background-color: #1f2525;
+  color: white;
   width: 100%;
   position: relative;
+  box-shadow: 1px 3px 9px -1px black;
 }
-#app > section > header a {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#app > section > header a #logo-icon {
+#app > section > header #logo-icon {
   width: 100px;
-  height: 127px;
 }
-#app > section > header a #logo-text {
+#app > section > header #logo-text {
   margin-top: var(--space);
   width: 220px;
   height: 60px;
 }
 @media (min-width: 768px) {
-  #app > section > header a {
+  #app > section > header {
     flex-direction: row;
   }
-  #app > section > header a #logo-icon {
+  #app > section > header #logo-icon {
     width: initial;
   }
-  #app > section > header a #logo-text {
+  #app > section > header #logo-text {
     margin-left: var(--space);
     width: initial;
   }
 }
-#app > section > header::before {
-  position: absolute;
-  top: 0;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-position: top center;
-  background-image: linear-gradient(180deg, rgba(7, 13, 13, 0.5) 50.52%, #070d0d 100%), url("../images/photo-blue.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: brightness(0.8);
+#app > section > header #company {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+}
+#app > section > header #company h1 {
+  font-weight: 500;
+  font-size: 30px;
+  margin: 0;
+  text-align: center;
+  line-height: 1;
+}
+#app > section > header #company h1 span {
+  color: var(--primary);
+  font-weight: bold;
 }
 #app > section > header a {
   position: relative;
+  display: flex;
 }
 #app > section > header #userName {
   color: var(--white);
@@ -581,25 +642,54 @@ label {
   width: 100%;
 }
 #app > section main > header {
-  background-color: var(--white10);
-  height: 60px;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 #app > section main > header h1 {
-  font-weight: 100;
-  font-size: 32px;
+  font-weight: 500;
+  font-size: 30px;
   margin: 0;
+  text-align: center;
+  line-height: 1;
 }
 #app > section main > header h1 span {
   color: var(--primary);
   font-weight: bold;
 }
+#app > section main > header #new-product {
+  background-color: #101d1d;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 1rem;
+  min-width: 110px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+}
+#app > section main > header #new-product:hover {
+  background-color: #142626;
+  box-shadow: 0 0 10px var(--primary);
+}
+#app > section main > header #new-product:active {
+  background-color: var(--light);
+  color: var(--dark);
+  transition-duration: 0.05s;
+  box-shadow: 0 0 5px var(--primary);
+}
+#app > section main > header #new-product:disabled {
+  background-color: var(--light);
+  cursor: progress;
+}
 #app > section main > section {
-  overflow: auto;
-  min-height: 200px;
-  max-height: calc(100vh - 304px);
+  padding-bottom: 100px;
 }
 #app > section main > section::-webkit-scrollbar {
   width: 10px;
@@ -635,6 +725,67 @@ label {
 #app > section main .category ul {
   margin-top: var(--space);
   color: rgba(27, 154, 246, 0.7);
+}
+#app > section main .category ul li {
+  position: relative;
+  background-color: var(--white);
+  border: 3px solid white;
+  border-radius: 20px;
+  flex-direction: row;
+  display: flex;
+  color: var(--dark);
+  overflow: hidden;
+  box-shadow: 1px 1px 16px -2px black;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  max-width: 400px;
+}
+#app > section main .category ul li:hover, #app > section main .category ul li:active {
+  border: 3px solid #e8e8e8;
+  background-color: #e8e8e8;
+  cursor: pointer;
+}
+#app > section main .category ul li > .content {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+#app > section main .category ul li .image-product {
+  width: 40%;
+}
+#app > section main .category ul li .options-product {
+  width: 15%;
+  justify-content: flex-end;
+  position: absolute;
+  height: 80%;
+  bottom: 0;
+  right: 0;
+}
+#app > section main .category ul li .options-product > button {
+  flex: 1;
+  outline: none;
+  border: none;
+  max-height: 50%;
+  border-top-left-radius: 20px;
+  cursor: pointer;
+}
+#app > section main .category ul li .options-product > button:hover {
+  filter: grayscale(0.5);
+}
+#app > section main .category ul li .options-product > input {
+  flex: 1;
+  margin: 5px 0;
+  text-align: center;
+}
+#app > section main .category ul li .data-product {
+  align-items: center;
+  justify-content: space-around;
+  padding: 3px 7px;
+  flex: 1;
+}
+#app > section main .category ul li .data-product > h3 {
+  margin: 0;
+  text-align: center;
 }
 #app > section main .category ul label {
   flex-direction: row;
@@ -1068,6 +1219,148 @@ label {
   }
 }
 
+#admin > header #userName {
+  color: var(--white);
+  font-size: 20px;
+  z-index: 3;
+  position: absolute;
+  top: 30px;
+  right: 45px;
+  text-align: right;
+  text-transform: uppercase;
+  background-color: var(--primary);
+  padding: 5px 10px;
+  padding-right: 40px;
+  border-radius: 5px;
+  min-height: 34px;
+}
+#admin > header #avatar {
+  position: absolute;
+  top: var(--space);
+  right: var(--space);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5));
+  cursor: pointer;
+  z-index: 3;
+}
+#admin > header #avatar:hover {
+  opacity: 0.8;
+  filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.5));
+}
+
+#list-products {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding: var(--space);
+}
+#list-products::-webkit-scrollbar {
+  width: 10px;
+}
+#list-products::-webkit-scrollbar-track {
+  background: #070d0d;
+}
+#list-products::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.25);
+}
+#list-products:hover::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.5);
+}
+#list-products:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 59, 229, 0.75);
+}
+#list-products:hover::-webkit-scrollbar-thumb:active {
+  background: #1f3be5;
+}
+#list-products > li {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  flex-direction: row;
+  display: flex;
+  color: var(--dark);
+}
+#list-products > li > div {
+  padding: 10px;
+}
+#list-products > li .id {
+  width: 25%;
+  max-width: 200px;
+  min-width: 150px;
+}
+#list-products > li .content {
+  flex: 1;
+  font-size: 14px;
+}
+#list-products > li .content .title {
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: bold;
+  padding: 10px var(--space);
+  text-align: center;
+  text-transform: uppercase;
+}
+#list-products > li .content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#list-products > li .content ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 32px;
+  align-items: center;
+}
+#list-products > li .actions {
+  justify-content: center;
+  border-left: var(--dark) 1px dashed;
+  margin-left: 10px;
+}
+#list-products > li .actions button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+#list-products > li .actions button:hover {
+  opacity: 0.75;
+  background-color: var(--gray);
+}
+#list-products > li .actions button:active {
+  opacity: 1;
+  background-color: var(--primary);
+}
+#list-products > li .actions button:active path {
+  fill: var(--primaryText);
+}
+#list-products > li + li {
+  margin-top: var(--space);
+}
+@media (min-width: 768px) {
+  #list-products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: var(--space);
+  }
+  #list-products > li + li {
+    margin-top: 0;
+  }
+}
+@media (min-width: 1152px) {
+  #list-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1536px) {
+  #list-products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 #list-orders {
   margin: 0;
   padding: 0;
@@ -1183,17 +1476,17 @@ label {
   }
 }
 
-#auth #form-update #photo-preview {
+.auth #form-update #photo-preview {
   margin-top: var(--space);
   margin-left: calc(50% - 75px);
   width: 150px;
   height: 150px;
   border-radius: 50%;
 }
-#auth #form-update #file {
+.auth #form-update #file, .auth #form-product #file {
   display: none;
 }
-#auth #form-update .choose-photo {
+.auth #form-update .choose-photo, .auth #form-product .choose-photo {
   margin-top: var(--space);
   background-color: #101d1d;
   border: none;
@@ -1209,21 +1502,21 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-#auth #form-update .choose-photo:hover {
+.auth #form-update .choose-photo:hover, .auth #form-product .choose-photo:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-#auth #form-update .choose-photo:active {
+.auth #form-update .choose-photo:active, .auth #form-product .choose-photo:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-#auth #form-update .choose-photo:disabled {
+.auth #form-update .choose-photo:disabled, .auth #form-product .choose-photo:disabled {
   background-color: var(--light);
   cursor: progress;
 }
-#auth #form-update.cropping img {
+.auth #form-update.cropping img, .auth #form-product.cropping img {
   height: auto;
   border-radius: 0;
   margin-top: 0;

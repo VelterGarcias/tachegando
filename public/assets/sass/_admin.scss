@@ -1,0 +1,33 @@
+@use "components";
+@use "colors";
+@use "mixins";
+@use "vars";
+@use "form";
+@use "sass:color";
+
+#admin {
+  > header {
+    #userName {
+      color: var(--white);
+      font-size: 20px;
+      z-index: 3;
+      position: absolute;
+      top: 30px;
+      right: 45px;
+      text-align: right;
+      text-transform: uppercase;
+      background-color: var(--primary);
+      padding: 5px 10px;
+      padding-right: 40px;
+      border-radius: 5px;
+      min-height: 34px;
+    }
+    #avatar {
+      position: absolute;
+      top: var(--space);
+      right: var(--space);
+      @include components.avatar;
+      z-index: 3;
+    }
+  }
+}

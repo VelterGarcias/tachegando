@@ -12,62 +12,54 @@
       type="image/x-icon"
     />
   </head>
-  <body id="app">
+  <body id="app" class="loading">
+    <div id="modal"></div>
+    <div id="loading">
+      <span>tahChegando...</span>
+    </div>
     <section>
-      <header>
+      <header >
         <a href="index.html">
           <img
-            src="assets/images/logo-icon-blue.svg"
             alt="Logo Icone"
             id="logo-icon"
           />
-          <img
-            src="assets/images/logo-text-blue.svg"
-            alt="Logo Texto"
-            id="logo-text"
-          />
         </a>
-        <small id="userName"></small>
-        <div id="userMenu"></div>
-        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+        <div id="company">
+          <h1>Monte o seu <span>Oburger</span></h1>
+          <span>O melhor burger da cidade!</span>
+        </div>
       </header>
 
-      <main id="burguer">
-        <header>
+      <main id="shop">
+        <!-- <header >
           <h1>Monte o seu <span>Oburger</span></h1>
-        </header>
+          <span>O melhor burger da cidade!</span>
+        </header> -->
         <section>
           <div class="category">
-            <h2>Escolha o pão <small>(escolha apenas um)</small></h2>
-            <ul id="breads">
-              <!-- <li>
-                <label>
-                  <input type="radio" name="item" />
-                  <span></span>
-                  <h3>Pão de Batata</h3>
-                  <div>R$ 2,50</div>
-                </label>
-              </li> -->
-            </ul>
-          </div>
-          <div class="category">
-            <h2>Ingredientes</h2>
-            <ul id="ingredients">
-              <!-- <li>
-                <label>
-                  <input type="checkbox" name="item" />
-                  <span></span>
-                  <h3>Carne Bovina 125g</h3>
-                  <div>R$ 3,00</div>
-                </label>
-              </li>               -->
-            </ul>
+            <h2>Escolha o seu...</h2>
+            <ul id="products"></ul>
+            <!-- <ul>
+              <li>
+                <img class="image-product" src="assets/images/a.png" alt="">
+                <div class="content-product" >
+                  <h3>Hamburguer de Calabresa</h3>
+                  <span>R$ 25,00</span>
+                </div>
+                <div class="options-product" >
+                  <button>+</button>
+                  <input type="number" name="qtd">
+                  <button>-</button>
+                </div>
+              </li>
+            </ul> -->
           </div>
         </section>
       </main>
 
       <!--<footer class="show">-->
-      <footer>
+      <!-- <footer>
         <button
           type="button"
           aria-label="Salvar Hamburguer"
@@ -75,7 +67,7 @@
         >
           Adicionar a bandeja
         </button>
-      </footer>
+      </footer> -->
     </section>
 
     <!--<aside class="open">-->
@@ -97,7 +89,7 @@
       </header>
       <section>
         <ul id="orderList">
-          <!-- <li>
+          <li>
             <div>Hamburguer 2</div>
             <div>R$ 15,00</div>
             <button type="button" aria-label="Remover Hamburguer 2">
@@ -114,7 +106,7 @@
                 />
               </svg>
             </button>
-          </li> -->
+          </li>
         </ul>
       </section>
       <footer>

@@ -2,6 +2,7 @@ export function getFormValues(form) {
   const values = {};
 
   form.querySelectorAll("[name]").forEach((field) => {
+    console.log(field.name, field.value, field.type);
     switch (field.type) {
       case "select":
         values[field.name] = field.querySelector("option:selected")?.value;
@@ -14,12 +15,20 @@ export function getFormValues(form) {
         break;
 
       case "checkbox":
-        values[field.name] = [];
-        form
-          .querySelectorAll(`[name=${field.name}]:checked`)
-          .forEach((checkbox) => {
-            values[field.name].push(checkbox.value);
-          });
+        if(field.name.startsWith('is')) {
+          if(form.querySelector(`[name=${field.name}]:checked`) ) {
+            values[field.name] = true;
+          } else {
+            values[field.name] = false;
+          }
+        } else {
+          values[field.name] = [];
+          form
+            .querySelectorAll(`[name=${field.name}]:checked`)
+            .forEach((checkbox) => {
+              values[field.name].push(checkbox.value);
+            });
+        }
         break;
 
       default:
@@ -29,6 +38,40 @@ export function getFormValues(form) {
   });
   //console.log(values);
   return values;
+}
+
+export function setFormValues(form, values) {
+
+  Object.keys(values).forEach(key => {
+      const field = form.querySelector(`[name=${key}]`)
+      if (field) {
+        switch (field.type) {
+            case "select":
+                field.querySelector(`option[value=${values[key]}]`).selected = true
+                break;
+
+            case "radio":
+            case "checkbox":
+                if(field.name.startsWith('is')) {
+
+                  form.querySelector(`[name=${key}]`).checked = values[key]
+
+                } else {
+                  form.querySelector(`[name=${key}][value="${values[key]}"]`).checked = true
+                }
+                
+                break;
+            case "file":
+                break;
+            default:
+                field.value = values[key]
+                break;
+        }
+      }
+      
+  })
+
+  
 }
 
 export function showAlertError() {
@@ -102,9 +145,9 @@ export function appendTemplate(element, tagName, html) {
 
 export function onSnapshotError(err) {
   showAlertError()(err);
-  // console.error(err);
+  console.error(err);
   setTimeout(() => {
-    window.location.href = "/login.html";
+    // window.location.href = "/login.html";
   }, 2000);
 }
 
@@ -149,12 +192,18 @@ export function showModal(content) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = "";
   modal.classList.add("open");
-  appendTemplate(modal, "div", content);
+  appendTemplate(modal, "div", `<div id="overlay"></div><div class="modal-content">${content}</div>`);
 
-  const closeBtn = modal.querySelector("img");
+  const closeBtn = modal.querySelector(".close");
+  const overlay = modal.querySelector("#overlay");
 
+  overlay.addEventListener("click", () => {
+    modal.classList.remove("open");
+    modal.innerHTML = "";
+  });
   closeBtn.addEventListener("click", () => {
     modal.classList.remove("open");
+    modal.innerHTML = "";
   });
 }
 

@@ -6,6 +6,36 @@
 @use "sass:color";
 
 #app {
+  #loading {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+  &.loading {
+    background-color: white;
+    #loading {
+      height: 100vh;
+      width: 100vw;
+      opacity: 1;
+      overflow: hidden;
+      transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      span {
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+    > section,
+    > footer,
+    > main,
+    > aside {
+      display: none;
+    }
+  }
   &.no-footer > section main {
     padding-bottom: 0;
   }
@@ -15,46 +45,56 @@
   > section {
     flex: 1;
     > header {
-      @include components.header;
+      @include components.logo;
+      background-color: #1f2525;
+      color: white;
       width: 100%;
       position: relative;
+      box-shadow: 1px 3px 9px -1px black;
+      #company {
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        @include components.horizontalTitle;
+      }
       &::before {
-        position: absolute;
-        top: 0;
-        content: "";
-        width: 100%;
-        height: 100%;
-        background-position: top center;
-        @if colors.$theme == red {
-          background-image: linear-gradient(
-              180deg,
-              rgba(7, 13, 13, 0.5) 50.52%,
-              colors.$dark 100%
-            ),
-            url("../images/photo-red.jpg");
-        }
-        @if colors.$theme == green {
-          background-image: linear-gradient(
-              180deg,
-              rgba(7, 13, 13, 0.5) 50.52%,
-              colors.$dark 100%
-            ),
-            url("../images/photo-green.jpg");
-        }
-        @if colors.$theme == blue {
-          background-image: linear-gradient(
-              180deg,
-              rgba(7, 13, 13, 0.5) 50.52%,
-              colors.$dark 100%
-            ),
-            url("../images/photo-blue.jpg");
-        }
-        background-repeat: no-repeat;
-        background-size: cover;
-        filter: brightness(0.8);
+        // position: absolute;
+        // top: 0;
+        // content: "";
+        // width: 100%;
+        // height: 100%;
+        // background-position: top center;
+        // @if colors.$theme == red {
+        //   background-image: linear-gradient(
+        //       180deg,
+        //       rgba(7, 13, 13, 0.5) 50.52%,
+        //       colors.$dark 100%
+        //     ),
+        //     url("../images/photo-red.jpg");
+        // }
+        // @if colors.$theme == green {
+        //   background-image: linear-gradient(
+        //       180deg,
+        //       rgba(7, 13, 13, 0.5) 50.52%,
+        //       colors.$dark 100%
+        //     ),
+        //     url("../images/photo-green.jpg");
+        // }
+        // @if colors.$theme == blue {
+        //   background-image: linear-gradient(
+        //       180deg,
+        //       rgba(7, 13, 13, 0.5) 50.52%,
+        //       colors.$dark 100%
+        //     ),
+        //     url("../images/photo-blue.jpg");
+        // }
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        // filter: brightness(0.8);
       }
       a {
         position: relative;
+        display: flex;
       }
       #userName {
         color: var(--white);
@@ -85,11 +125,17 @@
       > header {
         @include components.horizontalTitle;
         width: 100%;
+        #new-product {
+          @include components.button;
+          position: absolute;
+          right: 10px;
+        }
       }
       > section {
-        overflow: auto;
-        min-height: 200px;
-        max-height: calc(100vh - 304px);
+        // overflow: auto;
+        // min-height: 200px;
+        // max-height: calc(100vh - 304px);
+        padding-bottom: 100px;
         @include components.scrollbar;
       }
       .category {
@@ -98,6 +144,68 @@
         ul {
           margin-top: var(--space);
           color: rgba(colors.$secondary, 0.7);
+          li {
+            position: relative;
+            background-color: var(--white);
+            border: 3px solid white;
+            border-radius: 20px;
+            flex-direction: row;
+            display: flex;
+            color: var(--dark);
+            overflow: hidden;
+            box-shadow: 1px 1px 16px -2px black;
+            margin: 0 auto;
+            margin-bottom: 25px;
+            max-width: 400px;
+            &:hover,
+            &:active {
+              border: 3px solid #e8e8e8;
+              background-color: #e8e8e8;
+              cursor: pointer;
+            }
+            > .content {
+              display: flex;
+              flex: 1;
+              flex-direction: row;
+            }
+            .image-product {
+              width: 40%;
+            }
+            .options-product {
+              width: 15%;
+              justify-content: flex-end;
+              position: absolute;
+              height: 80%;
+              bottom: 0;
+              right: 0;
+              > button {
+                flex: 1;
+                outline: none;
+                border: none;
+                max-height: 50%;
+                border-top-left-radius: 20px;
+                cursor: pointer;
+                &:hover {
+                  filter: grayscale(0.5);
+                }
+              }
+              > input {
+                flex: 1;
+                margin: 5px 0;
+                text-align: center;
+              }
+            }
+            .data-product {
+              align-items: center;
+              justify-content: space-around;
+              padding: 3px 7px;
+              flex: 1;
+              > h3 {
+                margin: 0;
+                text-align: center;
+              }
+            }
+          }
           label {
             flex-direction: row;
             justify-content: space-between;
