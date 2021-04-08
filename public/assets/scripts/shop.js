@@ -7,7 +7,7 @@ import {
   showModal,
 } from "./utils";
 
-const prod = false;
+const prod = true;
 
 const renderBreadOptions = (context, breadOptions) => {
   const targetElement = context.querySelector("#breads");
@@ -159,9 +159,20 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     hashName = hashName.substring(1);
     let company = Cookies.getJSON("company");
 
-    if (company.hash === hashName && prod) {
-      console.log("tem", company.name, company);
-    } else {
+    let download = true;
+
+    if(company) {
+      if (company.hash === hashName && prod) {
+        console.log("tem", company.name, company);
+        download = false;
+      } else {
+        Object.keys(Cookies.get()).forEach(function(cookie) {
+          Cookies.remove(cookie);
+        });
+      }
+    } 
+    
+    if (download) {
       company = null;
       console.log("Não tem");
 
@@ -180,6 +191,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
       Cookies.set("company", company, { expires: 0.5 });
     }
+    
 
     const companyName = document.querySelector("#company h1");
     const companySlogam = document.querySelector("#company > span");
