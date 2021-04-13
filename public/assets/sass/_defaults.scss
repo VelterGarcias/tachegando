@@ -78,14 +78,14 @@ label {
       width: 90%;
       background-color: #fff;
       border-radius: 10px;
-      padding: 2rem;
+      padding: 1rem;
       color: #000;
       min-height: 12rem;
       max-height: 90vh;
       max-width: 600px;
       position: relative;
-      overflow: auto;
-      .close {
+      overflow: hidden;
+      img.close {
         position: absolute;
         top: 5px;
         right: 5px;

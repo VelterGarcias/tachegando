@@ -1,79 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Projeto Hburger do Hcode Lab" />
-    <title>Cadastro - OBurguer</title>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/cropper.min.css" />
-    <link
-      rel="shortcut icon"
-      href="assets/images/logo-favicon-blue.svg"
-      type="image/x-icon"
-    />
-  </head>
-  <body id="admin" class="auth">
-    <header>
-      <a href="index.html">
-        <img
-          src="assets/images/logo-icon-blue.svg"
-          alt="Logo Icone"
-          id="logo-icon"
-        />
-        <img
-          src="assets/images/logo-text-blue.svg"
-          alt="Logo Texto"
-          id="logo-text"
-        />
-      </a>
-      <div id="menu-admin">
-        <small id="userName"></small>
-        <div id="userMenu"></div>
-        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
-        <nav></nav>
-      </div>  
-    </header>
 
-    <main>
-      <ul id="form-tabs">
-        <li class="active">Editar</li>
-        <li ><a href="products.html">Voltar</a></li>
-      </ul>
-      <form id="form-product">
-        <h3>Foto do Produto</h3>
-        <div>
-          <img src="assets/images/user.svg" alt="photo" id="photo-preview" />
-          <input type="file" name="photo" id="file" />
-  
-          <button type="button" class="choose-photo">Alterar Logotipo</button>
-        </div>
-        <label for="is_online">Produto Online?</label>
-        <input type="checkbox" name="is_online" value="1" />
-        <label for="name">Nome do Produto</label>
-        <input type="text" name="name" placeholder="Nome do Produto" required />
-        <label for="category">Categoria da Produto</label>
-        <input type="text" name="category" placeholder="Categoria da Produto" />
-        <label for="price">Valor do Produto</label>
-        <input type="text" name="price" placeholder="Valor do Produto" required />
-        <label for="description">Descrição</label>
-        <input type="text" name="description" placeholder="Descrição" />
-        
-        <!-- <div id="form-categories">
-          <h3>Opções</h3>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projeto Hburger do Hcode Lab" />
+  <title>Cadastro - OBurguer</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/cropper.min.css" />
+  <link rel="shortcut icon" href="assets/images/logo-favicon-blue.svg" type="image/x-icon" />
+</head>
+
+<body id="admin" class="auth">
+  <div id="modal"></div>
+  <header>
+    <a href="index.html">
+      <img src="assets/images/logo-icon-blue.svg" alt="Logo Icone" id="logo-icon" />
+      <img src="assets/images/logo-text-blue.svg" alt="Logo Texto" id="logo-text" />
+    </a>
+    <div id="menu-admin">
+      <small id="userName"></small>
+      <div id="userMenu"></div>
+      <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+      <nav></nav>
+    </div>
+  </header>
+
+  <main>
+    <ul id="form-tabs">
+      <li class="active">Editar</li>
+      <li><a href="products.html">Voltar</a></li>
+    </ul>
+    <form id="form-product">
+      <h3>Foto do Produto</h3>
+      <div>
+        <img src="assets/images/user.svg" alt="photo" id="photo-preview" />
+        <input type="file" name="photo" id="file" />
+
+        <button type="button" class="choose-photo">Alterar Logotipo</button>
+      </div>
+      <label for="is_online">Produto Online?</label>
+      <input type="checkbox" name="is_online" value="1" />
+      <label for="name">Nome do Produto</label>
+      <input type="text" name="name" placeholder="Nome do Produto" required />
+      <label for="category">Categoria da Produto</label>
+      <input type="text" name="category" placeholder="Categoria da Produto" />
+      <label for="price">Valor do Produto</label>
+      <input type="text" name="price" placeholder="Valor do Produto" required />
+      <label for="description">Descrição</label>
+      <input type="text" name="description" placeholder="Descrição" />
+
+      <!-- <div id="form-categories">
+          
           <label for="adicionais">Adicionais</label>
           <input type="text" name="adicionais" data-category="" />
 
         </div> -->
 
-        <footer>
-          <button type="submit">Atualizar</button>
-        </footer>
-        
-      </form>
-    </main>
 
-    <div id="alert" class="hide"></div>
-    <script src="bundle.js"></script>
-  </body>
+      <footer>
+        <button type="submit">Atualizar</button>
+      </footer>
+
+
+
+    </form>
+
+
+    <div id="options">
+      <h3>Opções</h3>
+      <ul>
+        <h4 class="option-title">Escolha o sabor da cobertura</h4>
+        <span>Minimo: 0</span>
+        <span>Máximo: 3</span>
+        <button class="btn-edit">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
+          </svg>
+          Editar
+        </button>
+        <li class="row">
+          Chocolate 
+          <span>+ R$ 0,00</span>
+        </li>
+        <li class="row">
+          Morango 
+          <span>+ R$ 0,00</span>
+        </li>
+        <li class="row">
+          Leite Condensado 
+          <span>+ R$ 0,00</span>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+  </main>
+
+  <div id="alert" class="hide"></div>
+  <script src="bundle.js"></script>
+</body>
+
 </html>
+
+
+

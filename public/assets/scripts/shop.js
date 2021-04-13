@@ -246,7 +246,6 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         // console.log(;
         showModal(`
             <h3>${name}</h3>
-            <img class="close" src="assets/images/close.svg" alt="Fechar" />
             <img class="image-prod-modal" src=${photo} alt="Imagem do Produto" />
             <span></span>
             <span>${description}</span>

@@ -109,15 +109,15 @@ label {
   width: 90%;
   background-color: #fff;
   border-radius: 10px;
-  padding: 2rem;
+  padding: 1rem;
   color: #000;
   min-height: 12rem;
   max-height: 90vh;
   max-width: 600px;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
 }
-#modal > div > .modal-content .close {
+#modal > div > .modal-content img.close {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -369,19 +369,20 @@ label {
   height: 30px;
   margin-right: 10px;
 }
-.auth form {
+.auth main form {
   background-color: var(--primary);
   padding: var(--space);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   width: 350px;
+  z-index: 1;
 }
-.auth form label {
+.auth main form label {
   margin-top: 12px;
   margin-bottom: 5px;
   font-size: 14px;
 }
-.auth form input {
+.auth main form input {
   height: 50px;
   border-radius: var(--radius);
   border: none;
@@ -389,18 +390,18 @@ label {
   padding: var(--space);
   outline: none;
 }
-.auth form input:focus {
+.auth main form input:focus {
   background-color: rgba(255, 255, 255, 0.9);
 }
-.auth form input + input {
+.auth main form input + input {
   margin-top: var(--space);
 }
-.auth form input[type=color] {
+.auth main form input[type=color] {
   padding: 0;
   height: revert;
   border-radius: initial;
 }
-.auth form form {
+.auth main form form {
   background-color: var(--primary);
   padding: var(--space);
   padding-top: 5rem;
@@ -408,29 +409,30 @@ label {
   border-bottom-right-radius: var(--radius);
   width: 350px;
 }
-.auth form form input {
+.auth main form form input {
   height: 50px;
   border-radius: var(--radius);
   border: none;
   font-size: 16px;
   padding: var(--space);
   outline: none;
+  box-shadow: 1px 1px 16px -2px #00000063;
 }
-.auth form form input:focus {
+.auth main form form input:focus {
   background-color: rgba(255, 255, 255, 0.9);
 }
-.auth form form input + input {
+.auth main form form input + input {
   margin-top: var(--space);
 }
-.auth form form input[type=color] {
+.auth main form form input[type=color] {
   padding: 0;
   height: revert;
   border-radius: initial;
 }
-.auth form form label + label {
+.auth main form form label + label {
   margin-top: var(--space);
 }
-.auth form form footer {
+.auth main form form footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -439,11 +441,11 @@ label {
   position: relative;
   min-height: var(--space);
 }
-.auth form form footer a {
+.auth main form form footer a {
   color: var(--white);
   font-size: 14px;
 }
-.auth form form footer button {
+.auth main form form footer button {
   background-color: #101d1d;
   border: none;
   border-radius: var(--radius);
@@ -458,21 +460,21 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-.auth form form footer button:hover {
+.auth main form form footer button:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-.auth form form footer button:active {
+.auth main form form footer button:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-.auth form form footer button:disabled {
+.auth main form form footer button:disabled {
   background-color: var(--light);
   cursor: progress;
 }
-.auth form footer {
+.auth main form footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -481,11 +483,11 @@ label {
   position: relative;
   min-height: var(--space);
 }
-.auth form footer a {
+.auth main form footer a {
   color: var(--white);
   font-size: 14px;
 }
-.auth form footer button {
+.auth main form footer button {
   background-color: #101d1d;
   border: none;
   border-radius: var(--radius);
@@ -500,19 +502,214 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
 }
-.auth form footer button:hover {
+.auth main form footer button:hover {
   background-color: #142626;
   box-shadow: 0 0 10px var(--primary);
 }
-.auth form footer button:active {
+.auth main form footer button:active {
   background-color: var(--light);
   color: var(--dark);
   transition-duration: 0.05s;
   box-shadow: 0 0 5px var(--primary);
 }
-.auth form footer button:disabled {
+.auth main form footer button:disabled {
   background-color: var(--light);
   cursor: progress;
+}
+.auth #options {
+  background-color: #ffffff;
+  padding: var(--space);
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+  width: 350px;
+  z-index: 0;
+  margin-top: -20px;
+}
+.auth #options h3 {
+  margin: 10px 0;
+}
+.auth #modal form {
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 90px;
+  overflow: auto;
+}
+.auth #modal form::-webkit-scrollbar {
+  width: 10px;
+}
+.auth #modal form::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+.auth #modal form::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.25);
+}
+.auth #modal form:hover::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.5);
+}
+.auth #modal form:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 59, 229, 0.75);
+}
+.auth #modal form:hover::-webkit-scrollbar-thumb:active {
+  background: #1f3be5;
+}
+.auth .options {
+  padding: 0;
+}
+.auth .options .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+.auth .options label {
+  margin: 5px 0;
+}
+.auth .options textarea {
+  border-radius: var(--radius);
+  border: none;
+  font-size: 16px;
+  padding: var(--space);
+  outline: none;
+  box-shadow: 1px 1px 16px -2px #00000063;
+  flex: 1;
+}
+.auth .options textarea:read-only {
+  box-shadow: none;
+  background-color: #ccc;
+}
+.auth .options input {
+  height: 50px;
+  border-radius: var(--radius);
+  border: none;
+  font-size: 16px;
+  padding: var(--space);
+  outline: none;
+  box-shadow: 1px 1px 16px -2px #00000063;
+  flex: 1;
+  font-size: 14px;
+  height: fit-content;
+  padding: 12px;
+}
+.auth .options input:focus {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.auth .options input + input {
+  margin-top: var(--space);
+}
+.auth .options input[type=color] {
+  padding: 0;
+  height: revert;
+  border-radius: initial;
+}
+.auth .options input:read-only {
+  box-shadow: none;
+  background-color: #ccc;
+}
+.auth .options input[name=price] {
+  margin-top: -5px;
+  max-width: 150px;
+}
+.auth .options input[name=min] {
+  width: 80px;
+  margin-right: 10px;
+}
+.auth .options input[name=max] {
+  width: 80px;
+}
+.auth .options li {
+  border-top: 1px solid #00000050;
+}
+.auth .options button {
+  margin: 5px;
+}
+.auth .options button:hover {
+  background-color: #cccccc90;
+}
+.auth .options .btn-remove {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.auth .btn-add {
+  background-color: #101d1d;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 1rem;
+  min-width: 110px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  align-self: center;
+  cursor: pointer;
+}
+.auth .btn-add:hover {
+  background-color: #142626;
+  box-shadow: 0 0 10px var(--primary);
+}
+.auth .btn-add:active {
+  background-color: var(--light);
+  color: var(--dark);
+  transition-duration: 0.05s;
+  box-shadow: 0 0 5px var(--primary);
+}
+.auth .btn-add:disabled {
+  background-color: var(--light);
+  cursor: progress;
+}
+.auth #modal footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 15px 0;
+  border-top: 1px solid #00000050;
+  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: #dadada;
+}
+.auth #modal footer button {
+  background-color: #101d1d;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 1rem;
+  min-width: 110px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+.auth #modal footer button:hover {
+  background-color: #142626;
+  box-shadow: 0 0 10px var(--primary);
+}
+.auth #modal footer button:active {
+  background-color: var(--light);
+  color: var(--dark);
+  transition-duration: 0.05s;
+  box-shadow: 0 0 5px var(--primary);
+}
+.auth #modal footer button:disabled {
+  background-color: var(--light);
+  cursor: progress;
+}
+.auth #modal footer button.close {
+  background-color: #cccccc90;
+  color: #000;
 }
 
 #app #loading {
@@ -695,7 +892,8 @@ label {
   width: 10px;
 }
 #app > section main > section::-webkit-scrollbar-track {
-  background: #070d0d;
+  background: #ffffff;
+  margin: 10px 0;
 }
 #app > section main > section::-webkit-scrollbar-thumb {
   background: rgba(31, 59, 229, 0.25);
@@ -1260,7 +1458,8 @@ label {
   width: 10px;
 }
 #list-products::-webkit-scrollbar-track {
-  background: #070d0d;
+  background: #ffffff;
+  margin: 10px 0;
 }
 #list-products::-webkit-scrollbar-thumb {
   background: rgba(31, 59, 229, 0.25);
@@ -1372,7 +1571,8 @@ label {
   width: 10px;
 }
 #list-orders::-webkit-scrollbar-track {
-  background: #070d0d;
+  background: #ffffff;
+  margin: 10px 0;
 }
 #list-orders::-webkit-scrollbar-thumb {
   background: rgba(31, 59, 229, 0.25);

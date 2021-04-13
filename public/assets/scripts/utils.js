@@ -133,10 +133,19 @@ export function getQueryString() {
   return queryString;
 }
 
-export function appendTemplate(element, tagName, html) {
+export function appendTemplate(element, tag, html) {
+
+  const [ tagName, ...tagAtribute ] = tag.split(' ')
+  console.log(tagName, tagAtribute);
   const wrapElement = document.createElement(tagName);
 
   wrapElement.innerHTML = html;
+  tagAtribute.forEach((atribute) => {
+    
+    const [atributeName, atributeValue] = atribute.split('=')
+    let atributeValueFormated = atributeValue.replace(/^"|"$/g, '').replace(/^'|'$/g, '')
+    wrapElement.setAttribute(atributeName, atributeValueFormated);
+  })
 
   element.append(wrapElement);
 
@@ -192,18 +201,15 @@ export function showModal(content) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = "";
   modal.classList.add("open");
-  appendTemplate(modal, "div", `<div id="overlay"></div><div class="modal-content">${content}</div>`);
+  appendTemplate(modal, "div", `<div id="overlay" class="close"></div><div class="modal-content"><img class="close" src="assets/images/close.svg" alt="Fechar" />${content}</div>`);
 
-  const closeBtn = modal.querySelector(".close");
-  const overlay = modal.querySelector("#overlay");
-
-  overlay.addEventListener("click", () => {
-    modal.classList.remove("open");
-    modal.innerHTML = "";
-  });
-  closeBtn.addEventListener("click", () => {
-    modal.classList.remove("open");
-    modal.innerHTML = "";
+  const closeBtn = modal.querySelectorAll(".close");
+  
+  [...closeBtn].forEach(close => {
+    close.addEventListener("click", () => {
+      modal.classList.remove("open");
+      modal.innerHTML = "";
+    })
   });
 }
 

@@ -41,12 +41,13 @@
       margin-right: 10px;
     }
   }
-  form {
+  main form {
     background-color: var(--primary);
     padding: var(--space);
     border-bottom-left-radius: var(--radius);
     border-bottom-right-radius: var(--radius);
     width: 350px;
+    z-index: 1;
     label {
       margin-top: 12px;
       margin-bottom: 5px;
@@ -64,6 +65,7 @@
       width: 350px;
       input {
         @include components.input;
+        box-shadow: 1px 1px 16px -2px #00000063;
       }
       label + label {
         margin-top: var(--space);
@@ -99,6 +101,116 @@
       }
       button {
         @include components.button;
+      }
+    }
+  }
+  #options {
+    background-color: #ffffff;
+    padding: var(--space);
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    width: 350px;
+    z-index: 0;
+    margin-top: -20px;
+    h3 {
+      margin: 10px 0;
+    }
+    
+  }
+  #modal form {
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 90px;
+    overflow: auto;
+    @include components.scrollbar;
+  }
+  .options {
+    padding: 0;
+    .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 10px 0;
+    }
+    label {
+      margin: 5px 0;
+    }
+    textarea {
+      border-radius: var(--radius);
+      border: none;
+      font-size: 16px;
+      padding: var(--space);
+      outline: none;
+      box-shadow: 1px 1px 16px -2px #00000063;
+      flex: 1;
+      &:read-only {
+        box-shadow: none;
+        background-color: #ccc;
+      }
+    }
+    input {
+      @include components.input;
+      box-shadow: 1px 1px 16px -2px #00000063;
+      flex: 1;
+      font-size: 14px;
+      height: fit-content;
+      padding: 12px;
+      &:read-only {
+        box-shadow: none;
+        background-color: #ccc;
+      }
+      &[name="price"] {
+        margin-top: -5px;
+        max-width: 150px;
+      }
+      &[name="min"] {
+        width: 80px;
+        margin-right: 10px;
+      }
+      &[name="max"] {
+        width: 80px;
+      }
+    }
+    li {
+      border-top: 1px solid #00000050;
+    }
+    button {
+      margin: 5px;
+      &:hover {
+        background-color: #cccccc90;
+      }
+    }
+    .btn-remove {
+      background: none;
+      outline: none;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+  .btn-add {
+    @include components.button;
+    align-self: center;
+    cursor: pointer;
+  }
+  #modal footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px 0;
+    border-top: 1px solid #00000050;
+    margin-top: 10px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #dadada;
+    button {
+      @include components.button;
+      &.close {
+        background-color: #cccccc90;
+        color: #000;
       }
     }
   }
