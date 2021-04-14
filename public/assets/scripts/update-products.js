@@ -10,6 +10,7 @@ import {
   getQueryString,
   showModal,
   appendTemplate,
+  formatCurrency,
 } from "./utils";
 
 //======================== Atualizar Dados ====================================
@@ -24,7 +25,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
-  const btnEditOption = document.querySelector(".btn-edit");
+  
 
   // new IMask(inputPhone, {
   //   mask: "(00) [0]0000-0000)",
@@ -71,46 +72,74 @@ document.querySelectorAll("#form-product").forEach((form) => {
     });
   }
 
-  const editProductOptions = (productOptionId) => {
+  const editProductOptions = (productData) => {
 
-    let contentModal = "";
+    let product = productData
+    let options = ""
+    if (!product.id) {
+      product = {
+        id: productData,
+        max: '',
+        min: '',
+        "option-title": ''
+      }
+      options = `
+              <li class="row">
+                <input type="text" name="option" />
+                <button type="button" class="btn-remove">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+                </svg>
+                </button>
+                <input type="text" name="price" placeholder="R$" >
+            
+              </li>
+              `
+    } else {
+      productData.options.forEach(({option, price}) => {
 
-    contentModal =
-      contentModal +
-      `<form>
-        <ul class="options">
-          <input type="hidden"  name="id" value="${productOptionId}" />
-          <label for="option-title">Título do Adicional</label>
-          <div class="row">  
-            <input type="text"  name="option-title" placeholder="Nome do Adicional" value="Escolha o sabor da cobertura" />
-          </div>
-          <div class="row">  
-            <div>
-              <label for="min">Mínimo</label>
-              <input type="number"  name="min" />
-            </div>
-            <div>
-              <label for="max">Máximo</label>
-              <input type="number"  name="max" />
-            </div>
-          </div>
-          
-          <li class="row">
-            <input type="text" name="option" />
-            <button type="button" class="btn-remove">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
-            </svg>
-            </button>
-            <input type="text" name="price" placeholder="R$"/>
+
+        options += `
+                  <li class="row">
+                    <input type="text" name="option" value="${option}" />
+                    <button type="button" class="btn-remove">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+                    </svg>
+                    </button>
+                    <input type="text" name="price" placeholder="R$" value="${price}" >
+                
+                  </li>
+                  `
         
-          </li>
-        </ul>
-        <button type="button" class="btn-add">Nova Opção</button>
-        <footer >
-        <button type="button" class="close" >Cancelar</button>
-        <button type="submit" >Salvar</button>
-        </footer>
+      });
+    }
+
+    const contentModal =`
+        <form>
+          <ul class="options">
+            <input type="hidden"  name="id" value="${product.id}" />
+            <label for="option-title">Título do Adicional</label>
+            <div class="row">  
+              <input type="text"  name="option-title" placeholder="Nome do Adicional" value="${product["option-title"]}" />
+            </div>
+            <div class="row">  
+              <div>
+                <label for="min">Mínimo</label>
+                <input type="number"  name="min" value="${product.min}" />
+              </div>
+              <div>
+                <label for="max">Máximo</label>
+                <input type="number"  name="max" value="${product.max}" />
+              </div>
+            </div>
+            ${options}
+          </ul>
+          <button type="button" class="btn-add">Nova Opção</button>
+          <footer >
+            <button type="button" class="close" >Cancelar</button>
+            <button type="submit" >Salvar</button>
+          </footer>
         </form>
       `;
 
@@ -153,17 +182,13 @@ document.querySelectorAll("#form-product").forEach((form) => {
       data.options = options;
       delete data.option;
       delete data.price;
-      console.log("data", data)
       let oldProductData = Cookies.getJSON("product")
       
       if (oldProductData.nextProductId) {
         const idExists = oldProductData.aditionals.findIndex((product) => product.id === data.id)
-        console.log("idExists", idExists)
         if (idExists >= 0) {
-          console.log("aqui");
           oldProductData.aditionals[idExists] = data
         } else {
-          console.log("push");
           oldProductData.aditionals.push(data)
         }
         oldProductData.nextProductId = ++oldProductData.nextProductId
@@ -172,43 +197,123 @@ document.querySelectorAll("#form-product").forEach((form) => {
         oldProductData.nextProductId = 2
         oldProductData.aditionals = [data]
       }
+
+      firebaseUpdateProduct(oldProductData);
+
+      const modal = document.querySelector("#modal");
+        modal.classList.remove("open");
+        modal.innerHTML = "";
       
-      const teste = oldProductData.aditionals.findIndex((product) => product.id === data.id)
-      console.log("teste", teste)
+    })
 
-      Cookies.set("product", oldProductData, { expires: 1 });
-      // renderProductValue(); 
+    updateBtnRemove();
+  };
 
+  const renderProductOptions = (product) => {
+    const divOptions = document.querySelector("#options");
+    divOptions.innerHTML = ""
+    
+    appendTemplate(divOptions, 'h3', 'Opções')
+    product.forEach(item => {
+      let options = ""
+      item.options.forEach(({option, price}) => {
 
-      db.collection("products")
+        options += `
+                  <li class="row">
+                    ${option}
+                    <span>+ ${formatCurrency(price)}</span>
+                  </li>
+                  `
+        
+      });
+
+      appendTemplate(
+        divOptions,
+        'ul',
+        `
+          <h4 class="option-title">${item["option-title"]}</h4>
+          <button class="btn-edit" data-id="${item.id}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path
+                d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
+            </svg>
+            Editar
+          </button>
+          <button type="button" class="btn-remove" data-id="${item.id}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+            </svg>
+          </button>
+          <span>Minimo: ${item.min}</span>
+          <span>Máximo: ${item.max}</span>
+          ${options}  
+        `
+      )
+      
+    });
+
+    appendTemplate(
+      divOptions,
+      'div',
+      `<button type="button" id="new-additional">Novo Adicional</button>`
+    )
+
+    document.querySelector("#new-additional").addEventListener("click", (e) => {
+      const {nextProductId} = Cookies.getJSON("product")
+      editProductOptions(nextProductId);
+    });
+      
+  }
+
+  const firebaseUpdateProduct = (productData) => {
+
+    Cookies.set("product", productData, { expires: 1 });
+
+    db.collection("products")
       .doc(produto)
-      .update(oldProductData)
+      .update(productData)
       .then(() => showAlert("Produto salvo com sucesso"))
       .catch((err) => {
         console.log(err);
         showAlert(err.message, true);
       })
       .finally(() => {
-        const modal = document.querySelector("#modal");
-        modal.classList.remove("open");
-        modal.innerHTML = "";
+        
       });
-
-      
-    })
-
-    updateBtnRemove();
-    
-  };
-
-  const renderProductValue = () => {
-    setFormValues(form, Cookies.getJSON("product"));  
-    console.log(Cookies.getJSON("product"));
+      renderProductValue();
   }
 
-  btnEditOption.addEventListener("click", (e) => {
-    editProductOptions(1);
-  });
+  const renderProductValue = () => {
+
+    const productData = Cookies.getJSON("product")
+    setFormValues(form, productData);  
+
+    renderProductOptions(productData.aditionals);
+
+    [...document.querySelectorAll(".btn-edit")].forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const id = productData.aditionals.findIndex((product) => product.id === btn.dataset.id)
+        editProductOptions(productData.aditionals[id]);
+      })
+    });
+
+    [...document.querySelectorAll(".btn-remove")].forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        
+        
+        const newAditionals = productData.aditionals.filter((product) => product.id !== btn.dataset.id);
+        productData.aditionals = newAditionals
+        console.log("foi", productData, newAditionals);
+
+        firebaseUpdateProduct(productData)
+        renderProductValue();
+      })
+    });
+
+  }
+
+  
 
   const productDate = [];
   const { produto } = getQueryString();
@@ -216,8 +321,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
     console.log(user);
     if (user) {
       userGlobal = user;
-
-      console.log("produto", produto);
 
       db.collection("products")
         .doc(produto)
@@ -233,7 +336,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
           imageElement.src = productDate[0].photo || "./assets/images/user.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
         });
-      console.log("productDate1", productDate);
       
       renderProductValue();
         
@@ -262,9 +364,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
     productData.companyId = userGlobal.uid;
     productData.price = productData.price.replace(",", ".");
 
-    console.log(productData);
-    console.log(productDate[0].name);
-
     db.collection("products")
       .doc(produto)
       .update(productData)
@@ -284,7 +383,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
   });
 
   buttonElement.addEventListener("click", (e) => {
-    console.log(cropper);
     if (cropper) {
       imageElement.src = cropper.getCroppedCanvas().toDataURL("image/png");
 
@@ -300,7 +398,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
           .then((snapshot) => snapshot.ref.getDownloadURL())
           // .then((photoURL) => userGlobal.updateProfile({ photoURL }))
           .then((photo) => {
-            console.log("photo", photo);
             db.collection("products").doc(produto).update({ photo: photo });
 
             imageElement.src = photo;

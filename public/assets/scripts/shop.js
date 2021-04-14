@@ -240,30 +240,53 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
     ulProducts.querySelectorAll(".content").forEach((item) => {
       item.addEventListener("click", () => {
-        const { name, price, description, photo } = productData.find(
+        const { name, price, description, photo, aditionals } = productData.find(
           (product) => product.id === item.id
         );
         // console.log(;
+        let options = ""
+        if (aditionals) {
+          aditionals.forEach(item => {
+
+            options += `
+                      <h4>${item["option-title"]}</h4>
+                      <span>Escolha entre ${item.min} e ${item.max} opções.</span>
+                      <ul>
+                      `
+            item.options.forEach(({option, price}) => {
+              options += `
+                        <label for="${option}">${option} + "${formatCurrency(price)}"</label>
+                        <input type="checkbox" id="${option}" name="${option}" value="${price}" />
+                        `
+            });
+
+            options += `</ul>`
+            
+          });
+        }
+        
+        
+        
         showModal(`
-            <h3>${name}</h3>
-            <img class="image-prod-modal" src=${photo} alt="Imagem do Produto" />
-            <span></span>
-            <span>${description}</span>
-            <span><strong>Valor: ${formatCurrency(price)}</strong></span>
-            <div class="options-product" >
-              <button>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"/></svg>
-              </button>
-              <input type="number" name="qtd">
-              <button>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
-              </button>
-            </div>
+            <form>
+              <h3>${name}</h3>
+              <img class="image-prod-modal" src=${photo} alt="Imagem do Produto" />
+              <span></span>
+              <span>${description}</span>
+              <span><strong>Valor: ${formatCurrency(price)}</strong></span>
+              <div class="options-product" >
+              ${options}
+              </div>
+              <footer >
+                <span>Total: ${formatCurrency(price)}</span>
+                <button type="submit" >Salvar</button>
+              </footer>
+            </form>
           `);
       });
     });
 
-    addOrder(productData);
+    // addOrder(productData);
 
     if(Cookies.getJSON("order")) renderOrderList();
 
@@ -304,3 +327,36 @@ document.querySelectorAll("#shop").forEach(async (page) => {
   //   }, onSnapshotError);
   // });
 });
+
+
+
+// const addOrder = (data) => {
+//   document.querySelectorAll(".add-product").forEach((option) => {
+//     option.addEventListener("click", (e) => {
+//       // console.log(e.currentTarget);
+//       let idBtn = e.currentTarget.dataset.id;
+//       const { name, price, photo } = data.find(
+//         (product) => product.id === idBtn
+//       );
+//       const newOrder = {
+//         name,
+//         price,
+//         photo,
+//       };
+//       const oldOrder = Cookies.getJSON("order");
+//       if (oldOrder) {
+//         // data.find( product => product.id === idBtn );
+//         newOrder.id = Number(Cookies.get("nextOrderId"))
+//         oldOrder.push(newOrder);
+//         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
+//         Cookies.set("order", oldOrder, { expires: 15 });
+//       } else {
+//         newOrder.id = 0;
+//         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
+//         Cookies.set("order", [newOrder], { expires: 15 });
+//       }
+//       renderOrderList();
+//       console.log("order", Cookies.getJSON("order"));
+//     });
+//   });
+// };

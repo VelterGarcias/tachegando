@@ -133,10 +133,9 @@ export function getQueryString() {
   return queryString;
 }
 
-export function appendTemplate(element, tag, html) {
+export function appendTemplate(element, tag, html, ) {
 
   const [ tagName, ...tagAtribute ] = tag.split(' ')
-  console.log(tagName, tagAtribute);
   const wrapElement = document.createElement(tagName);
 
   wrapElement.innerHTML = html;
@@ -147,7 +146,7 @@ export function appendTemplate(element, tag, html) {
     wrapElement.setAttribute(atributeName, atributeValueFormated);
   })
 
-  element.append(wrapElement);
+  element.append(wrapElement); 
 
   return wrapElement;
 }

@@ -85,6 +85,78 @@ label {
 #modal {
   display: none;
 }
+#modal form {
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 90px;
+  overflow: auto;
+}
+#modal form::-webkit-scrollbar {
+  width: 10px;
+}
+#modal form::-webkit-scrollbar-track {
+  background: #ffffff;
+  margin: 10px 0;
+}
+#modal form::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.25);
+}
+#modal form:hover::-webkit-scrollbar-thumb {
+  background: rgba(31, 59, 229, 0.5);
+}
+#modal form:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 59, 229, 0.75);
+}
+#modal form:hover::-webkit-scrollbar-thumb:active {
+  background: #1f3be5;
+}
+#modal footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 15px 0;
+  border-top: 1px solid #00000050;
+  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: #dadada;
+}
+#modal footer button {
+  background-color: #101d1d;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--white);
+  padding: 1rem;
+  min-width: 110px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+#modal footer button:hover {
+  background-color: #142626;
+  box-shadow: 0 0 10px var(--primary);
+}
+#modal footer button:active {
+  background-color: var(--light);
+  color: var(--dark);
+  transition-duration: 0.05s;
+  box-shadow: 0 0 5px var(--primary);
+}
+#modal footer button:disabled {
+  background-color: var(--light);
+  cursor: progress;
+}
+#modal footer button.close {
+  background-color: #cccccc90;
+  color: #000;
+}
 #modal > div {
   position: fixed;
   top: 0;
@@ -528,31 +600,6 @@ label {
 .auth #options h3 {
   margin: 10px 0;
 }
-.auth #modal form {
-  width: 100%;
-  padding: 10px;
-  padding-bottom: 90px;
-  overflow: auto;
-}
-.auth #modal form::-webkit-scrollbar {
-  width: 10px;
-}
-.auth #modal form::-webkit-scrollbar-track {
-  background: #ffffff;
-  margin: 10px 0;
-}
-.auth #modal form::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.25);
-}
-.auth #modal form:hover::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.5);
-}
-.auth #modal form:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(31, 59, 229, 0.75);
-}
-.auth #modal form:hover::-webkit-scrollbar-thumb:active {
-  background: #1f3be5;
-}
 .auth .options {
   padding: 0;
 }
@@ -663,53 +710,6 @@ label {
 .auth .btn-add:disabled {
   background-color: var(--light);
   cursor: progress;
-}
-.auth #modal footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 15px 0;
-  border-top: 1px solid #00000050;
-  margin-top: 10px;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  background-color: #dadada;
-}
-.auth #modal footer button {
-  background-color: #101d1d;
-  border: none;
-  border-radius: var(--radius);
-  color: var(--white);
-  padding: 1rem;
-  min-width: 110px;
-  text-transform: uppercase;
-  outline: none;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  font-weight: bold;
-}
-.auth #modal footer button:hover {
-  background-color: #142626;
-  box-shadow: 0 0 10px var(--primary);
-}
-.auth #modal footer button:active {
-  background-color: var(--light);
-  color: var(--dark);
-  transition-duration: 0.05s;
-  box-shadow: 0 0 5px var(--primary);
-}
-.auth #modal footer button:disabled {
-  background-color: var(--light);
-  cursor: progress;
-}
-.auth #modal footer button.close {
-  background-color: #cccccc90;
-  color: #000;
 }
 
 #app #loading {
