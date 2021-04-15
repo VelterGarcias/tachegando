@@ -82,7 +82,7 @@
   @media (min-width: vars.$desktopStartWidth) {
     flex-direction: row;
     #logo-icon {
-      width: initial;
+      width: 100px;
     }
     #logo-text {
       margin-left: var(--space);

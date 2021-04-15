@@ -5,6 +5,7 @@ import {
   onSnapshotError,
   formatCurrency,
   showModal,
+  getFormValues,
 } from "./utils";
 
 const prod = false;
@@ -35,17 +36,20 @@ const renderProducts = (targetElement, productOptions) => {
 };
 
 const addOrder = (data) => {
-  document.querySelectorAll(".add-product").forEach((option) => {
-    option.addEventListener("click", (e) => {
+    
       // console.log(e.currentTarget);
-      let idBtn = e.currentTarget.dataset.id;
-      const { name, price, photo } = data.find(
-        (product) => product.id === idBtn
-      );
+      let details = []
+      if (!data.details.empty) {
+        data.details.forEach(detail => {
+          const {name, price} = detail.split('=')
+          details.push({name, price})
+        });
+      }
       const newOrder = {
-        name,
-        price,
-        photo,
+        name: data.name,
+        price: data.total,
+        photo: data.photo,
+        details
       };
       const oldOrder = Cookies.getJSON("order");
       if (oldOrder) {
@@ -61,8 +65,7 @@ const addOrder = (data) => {
       }
       renderOrderList();
       console.log("order", Cookies.getJSON("order"));
-    });
-  });
+
 };
 
 const renderOrderList = () => {
@@ -229,6 +232,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       btn.style = `background-color: ${company.second_color}`;
     });
 
+
+    // ============  click nos produtos e mostrar modal ==============
     ulProducts.querySelectorAll(".content").forEach((item) => {
       item.addEventListener("click", () => {
         const { name, price, description, photo, aditionals } = productData.find(
@@ -252,7 +257,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             add.options.forEach(({option, price}) => {
               options += `
                         <label for="${option}">${option} + "${formatCurrency(price)}"</label>
-                        <input type="checkbox" id="${option}" name="${option}" value="${price}" />
+                        <input type="checkbox" id="${option}" name="details" value="${option}=${price}" />
                         `
             });
 
@@ -264,21 +269,61 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         
         
         showModal(`
-            <form>
+            <form id="product-details">
+              <input type="hidden" name="name" value="${name}" />
+              <input type="hidden" name="photo" value="${photo}" />
+              <input type="hidden" name="price" value="${price}" />
+              <input type="hidden" name="total" value="${price}" />
               <h3>${name}</h3>
               <img class="image-prod-modal" src=${photo} alt="Imagem do Produto" />
               <span></span>
               <span>${description}</span>
               <span><strong>Valor: ${formatCurrency(price)}</strong></span>
               <div class="options-product" >
-              ${options}
+                ${options}
               </div>
               <footer >
-                <span>Total: ${formatCurrency(price)}</span>
+                <span id="subtotal" data-subtotal="${price}">Total: ${formatCurrency(price)}</span>
                 <button type="submit" >Salvar</button>
               </footer>
             </form>
-          `);
+        `);
+
+        
+
+        const formProductDetails = document.querySelector("#product-details")
+
+        formProductDetails.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const data = getFormValues(formProductDetails)
+          console.log(data);
+          addOrder(data);
+          const modal = document.querySelector("#modal");
+          modal.classList.remove("open");
+          modal.innerHTML = "";
+        })
+
+        const handleOptions = formProductDetails.querySelectorAll("input[type=checkbox]")
+
+        handleOptions.forEach(input => {
+          input.addEventListener("change", () => {
+            console.log(input.value.split("=")[1]);
+            console.log(input.checked);
+            let result = 0
+            const totalSpan = formProductDetails.querySelector('#subtotal')
+
+            if (input.checked) {
+              result = Number(totalSpan.dataset.subtotal) + Number(input.value.split("=")[1])
+            } else {
+              result = Number(totalSpan.dataset.subtotal) - Number(input.value.split("=")[1])
+            }
+
+            totalSpan.dataset.subtotal = result
+            totalSpan.innerHTML = `Total: ${formatCurrency(result)}`
+            formProductDetails.querySelector("input[name=total]").value = result
+          })
+        });
+        
       });
     });
 
