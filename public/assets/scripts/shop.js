@@ -7,28 +7,7 @@ import {
   showModal,
 } from "./utils";
 
-const prod = true;
-
-const renderBreadOptions = (context, breadOptions) => {
-  const targetElement = context.querySelector("#breads");
-
-  targetElement.innerHTML = "";
-
-  breadOptions.forEach((item) => {
-    appendTemplate(
-      targetElement,
-      "li",
-      `
-            <label>
-            <input type="radio" name="item" value="${item.id}"  />
-            <span></span>
-            <h3>${item.name}</h3>
-            <div>${formatCurrency(item.price)}</div>
-            </label>
-        `
-    );
-  });
-};
+const prod = false;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
@@ -153,6 +132,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
   const db = firebase.firestore();
 
   let hashName = window.location.hash;
+  let allAditionals = []
   console.log(hashName);
   if (hashName) {
     let timeout = 1000;
@@ -221,6 +201,17 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         console.log("product", product.is_online, productData);
       });
       Cookies.set("products", productData, { expires: 0.041 });
+
+      
+      const getAditionals = await db.collection("aditionals").where("dataAditional.companyId", "==", company.userId).get();
+      if (getAditionals.empty) return;
+      getAditionals.forEach((item) => {
+        let data = item.data();
+        data = data.dataAditional;
+        data.id = item.id;
+        allAditionals.push(data);
+      });
+      Cookies.set("allAditionals", allAditionals, { expires: 0.041 });
     }
 
     const ulProducts = page.querySelector("#products");
@@ -243,17 +234,22 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         const { name, price, description, photo, aditionals } = productData.find(
           (product) => product.id === item.id
         );
-        // console.log(;
+        console.log(aditionals);
         let options = ""
+        
         if (aditionals) {
           aditionals.forEach(item => {
+            console.log(allAditionals);
+            if (!allAditionals.find((aditional) => aditional.id === item)) return;
+            const add = allAditionals.find((aditional) => aditional.id === item)
+
 
             options += `
-                      <h4>${item["option-title"]}</h4>
-                      <span>Escolha entre ${item.min} e ${item.max} opções.</span>
+                      <h4>${add["option-title"]}</h4>
+                      <span>Escolha entre ${add.min} e ${add.max} opções.</span>
                       <ul>
                       `
-            item.options.forEach(({option, price}) => {
+            add.options.forEach(({option, price}) => {
               options += `
                         <label for="${option}">${option} + "${formatCurrency(price)}"</label>
                         <input type="checkbox" id="${option}" name="${option}" value="${price}" />

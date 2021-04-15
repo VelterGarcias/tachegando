@@ -2,7 +2,7 @@ export function getFormValues(form) {
   const values = {};
 
   form.querySelectorAll("[name]").forEach((field) => {
-    console.log(field.name, field.value, field.type);
+    // console.log(field.name, field.value, field.type);
     switch (field.type) {
       case "select":
         values[field.name] = field.querySelector("option:selected")?.value;
@@ -15,8 +15,8 @@ export function getFormValues(form) {
         break;
 
       case "checkbox":
-        if(field.name.startsWith('is')) {
-          if(form.querySelector(`[name=${field.name}]:checked`) ) {
+        if (field.name.startsWith("is")) {
+          if (form.querySelector(`[name=${field.name}]:checked`)) {
             values[field.name] = true;
           } else {
             values[field.name] = false;
@@ -41,37 +41,33 @@ export function getFormValues(form) {
 }
 
 export function setFormValues(form, values) {
+  Object.keys(values).forEach((key) => {
+    const field = form.querySelector(`[name=${key}]`);
+    if (field) {
+      switch (field.type) {
+        case "select":
+          field.querySelector(`option[value=${values[key]}]`).selected = true;
+          break;
 
-  Object.keys(values).forEach(key => {
-      const field = form.querySelector(`[name=${key}]`)
-      if (field) {
-        switch (field.type) {
-            case "select":
-                field.querySelector(`option[value=${values[key]}]`).selected = true
-                break;
+        case "radio":
+        case "checkbox":
+          if (field.name.startsWith("is")) {
+            form.querySelector(`[name=${key}]`).checked = values[key];
+          } else {
+            form.querySelector(
+              `[name=${key}][value="${values[key]}"]`
+            ).checked = true;
+          }
 
-            case "radio":
-            case "checkbox":
-                if(field.name.startsWith('is')) {
-
-                  form.querySelector(`[name=${key}]`).checked = values[key]
-
-                } else {
-                  form.querySelector(`[name=${key}][value="${values[key]}"]`).checked = true
-                }
-                
-                break;
-            case "file":
-                break;
-            default:
-                field.value = values[key]
-                break;
-        }
+          break;
+        case "file":
+          break;
+        default:
+          field.value = values[key];
+          break;
       }
-      
-  })
-
-  
+    }
+  });
 }
 
 export function showAlertError() {
@@ -133,20 +129,20 @@ export function getQueryString() {
   return queryString;
 }
 
-export function appendTemplate(element, tag, html, ) {
-
-  const [ tagName, ...tagAtribute ] = tag.split(' ')
+export function appendTemplate(element, tag, html) {
+  const [tagName, ...tagAtribute] = tag.split(" ");
   const wrapElement = document.createElement(tagName);
 
   wrapElement.innerHTML = html;
   tagAtribute.forEach((atribute) => {
-    
-    const [atributeName, atributeValue] = atribute.split('=')
-    let atributeValueFormated = atributeValue.replace(/^"|"$/g, '').replace(/^'|'$/g, '')
+    const [atributeName, atributeValue] = atribute.split("=");
+    let atributeValueFormated = atributeValue
+      .replace(/^"|"$/g, "")
+      .replace(/^'|'$/g, "");
     wrapElement.setAttribute(atributeName, atributeValueFormated);
-  })
+  });
 
-  element.append(wrapElement); 
+  element.append(wrapElement);
 
   return wrapElement;
 }
@@ -200,15 +196,19 @@ export function showModal(content) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = "";
   modal.classList.add("open");
-  appendTemplate(modal, "div", `<div id="overlay" class="close"></div><div class="modal-content"><img class="close" src="assets/images/close.svg" alt="Fechar" />${content}</div>`);
+  appendTemplate(
+    modal,
+    "div",
+    `<div id="overlay" class="close"></div><div class="modal-content"><img class="close" src="assets/images/close.svg" alt="Fechar" />${content}</div>`
+  );
 
   const closeBtn = modal.querySelectorAll(".close");
-  
-  [...closeBtn].forEach(close => {
+
+  [...closeBtn].forEach((close) => {
     close.addEventListener("click", () => {
       modal.classList.remove("open");
       modal.innerHTML = "";
-    })
+    });
   });
 }
 
@@ -229,3 +229,4 @@ export function getOrderId(btn) {
   const cardOrder = btn.closest(".actions");
   return cardOrder.id;
 }
+

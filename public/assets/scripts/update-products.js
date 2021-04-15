@@ -25,6 +25,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
+
+  const productDate = [];
+  const { produto } = getQueryString();
   
 
   // new IMask(inputPhone, {
@@ -76,9 +79,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     let product = productData
     let options = ""
-    if (!product.id) {
+    if (!product) {
       product = {
-        id: productData,
+        id: 0,
         max: '',
         min: '',
         "option-title": ''
@@ -172,152 +175,335 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     saveFormOptions.addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = getFormValues(saveFormOptions)
+      const dataAditional = getFormValues(saveFormOptions)
       const optionsLi = saveFormOptions.querySelectorAll('li')
       const options = []
       optionsLi.forEach(li => {
         options.push(getFormValues(li));
       });
 
-      data.options = options;
-      delete data.option;
-      delete data.price;
-      let oldProductData = Cookies.getJSON("product")
+      dataAditional.options = options;
+      delete dataAditional.option;
+      delete dataAditional.price;
+
+      const  oldAditionals = Cookies.getJSON("aditionals")
+      let newAditionals = oldAditionals ? oldAditionals : []
       
-      if (oldProductData.nextProductId) {
-        const idExists = oldProductData.aditionals.findIndex((product) => product.id === data.id)
-        if (idExists >= 0) {
-          oldProductData.aditionals[idExists] = data
+
+      if (dataAditional.id == 0) {
+        delete dataAditional.id;
+        dataAditional.companyId = userGlobal.uid;
+
+        if (newAditionals.length > 0) {
+          newAditionals.push(dataAditional)
         } else {
-          oldProductData.aditionals.push(data)
+          newAditionals = [dataAditional]
         }
-        oldProductData.nextProductId = ++oldProductData.nextProductId
         
+        // Cookies.set("aditionals", newAditionals, { expires: 1 });
+
+        db.collection("aditionals")
+          .add({dataAditional})
+          .then((res) => {
+            const product = Cookies.getJSON("product")
+            let aditionals = []
+            if (product.aditionals) {
+              aditionals = [...product.aditionals, res.id]
+            } else {
+              aditionals = [res.id]
+            }
+            return db.collection("products").doc(produto).update({aditionals})
+          })
+          .then(() => showAlert("Adicional salvo com sucesso"))
+          .catch((err) => {
+            console.log(err);
+            showAlert(err.message, true);
+          })
+          
       } else {
-        oldProductData.nextProductId = 2
-        oldProductData.aditionals = [data]
+
+        dataAditional.companyId = userGlobal.uid;
+
+        console.log("dataAditional", dataAditional);
+        console.log("newAditionals", newAditionals);
+
+        db.collection("aditionals")
+          .doc(dataAditional.id)
+          .set({dataAditional})
+          .then(() => showAlert("Adicional salvo com sucesso"))
+          .catch((err) => {
+            console.log(err);
+            showAlert(err.message, true);
+          })
+
+        
+
+        // let oldProductData = Cookies.getJSON("product")
+      
+        // if (oldProductData.nextProductId) {
+        //   const idExists = oldProductData.aditionals.findIndex((product) => product.id === dataAditional.id)
+        //   if (idExists >= 0) {
+        //     oldProductData.aditionals[idExists] = dataAditional
+        //   } else {
+        //     oldProductData.aditionals.push(dataAditional)
+        //   }
+        //   oldProductData.nextProductId = ++oldProductData.nextProductId
+          
+        // } else {
+        //   oldProductData.nextProductId = 2
+        //   oldProductData.aditionals = [dataAditional]
+        // }
+
+        // firebaseUpdateProduct(oldProductData);
+
       }
 
-      firebaseUpdateProduct(oldProductData);
-
       const modal = document.querySelector("#modal");
-        modal.classList.remove("open");
-        modal.innerHTML = "";
+      modal.classList.remove("open");
+      modal.innerHTML = "";
       
     })
 
     updateBtnRemove();
   };
 
+  const showAditionalsOptions = async () => {
+
+    let allAditionals = []
+    const getAditionals = await db.collection("aditionals").where("dataAditional.companyId", "==", userGlobal.uid).get();
+
+    getAditionals.forEach((item) => {
+      let data = item.data();
+      data = data.dataAditional;
+      data.id = item.id;
+      allAditionals.push(data);
+    });
+    
+
+    let aditionalsOptions = ""
+    // if (!product) {
+    //   product = {
+    //     id: 0,
+    //     max: '',
+    //     min: '',
+    //     "option-title": ''
+    //   }
+    //   options = `
+    //           <li class="row">
+    //             <input type="text" name="option" />
+    //             <button type="button" class="btn-remove">
+    //             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    //             <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+    //             </svg>
+    //             </button>
+    //             <input type="text" name="price" placeholder="R$" >
+            
+    //           </li>
+    //           `
+    // } else {
+      let aditionals = Cookies.getJSON("aditionals")
+      if (!aditionals) aditionals = []
+
+      console.log("allAditionals", allAditionals);
+      console.log("aditionals", aditionals);
+
+
+      if (allAditionals) {
+        allAditionals.forEach((aditional, i) => {
+
+          
+
+          aditionalsOptions += `
+                    <label for="${aditional.id}" >${aditional["option-title"]}</label>
+                    <input type="checkbox" name="aditionals" id="${aditional.id}" value="${aditional.id}" ${aditionals.find((item) => item.id === aditional.id) ? "checked" : ''} />
+                    `
+          
+        });
+      }
+
+    const contentModal =`
+        <form>
+            <h3>Escolha os adicionais deste produto</h3>
+            ${aditionalsOptions}
+          <button type="button" class="new-additional">Novo Adicional</button>
+          <footer >
+            <button type="button" class="close" >Cancelar</button>
+            <button type="submit" >Salvar</button>
+          </footer>
+        </form>
+      `;
+
+    showModal(contentModal);
+
+
+    document.querySelector(".new-additional").addEventListener("click", (e) => {
+      editProductOptions();
+    });
+
+
+    const saveFormOptions = document.querySelector("#modal form");
+
+    saveFormOptions.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const {aditionals} = getFormValues(saveFormOptions)
+      
+      console.log(aditionals);
+
+      db.collection("products")
+      .doc(produto)
+      .update({ aditionals: aditionals })
+      .catch((err) => {
+        console.log(err);
+        showAlert(err.message, true);
+      });
+
+      const modal = document.querySelector("#modal");
+      modal.classList.remove("open");
+      modal.innerHTML = "";
+      
+    })
+
+    updateBtnRemove();
+  };
+
+
   const renderProductOptions = (product) => {
     const divOptions = document.querySelector("#options");
     divOptions.innerHTML = ""
     
     appendTemplate(divOptions, 'h3', 'Opções')
-    product.forEach(item => {
-      let options = ""
-      item.options.forEach(({option, price}) => {
 
-        options += `
-                  <li class="row">
-                    ${option}
-                    <span>+ ${formatCurrency(price)}</span>
-                  </li>
-                  `
+    if (product) {
+      product.forEach(item => {
+        let options = ""
+        item.options.forEach(({option, price}) => {
+  
+          options += `
+                    <li class="row">
+                      ${option}
+                      <span>+ ${formatCurrency(price)}</span>
+                    </li>
+                    `
+          
+        });
+  
+        appendTemplate(
+          divOptions,
+          'ul',
+          `
+            <h4 class="option-title">${item["option-title"]}</h4>
+            <button class="btn-edit" data-id="${item.id}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path
+                  d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
+              </svg>
+              Editar
+            </button>
+            <button type="button" class="btn-remove" data-id="${item.id}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+              </svg>
+            </button>
+            <span>Minimo: ${item.min}</span>
+            <span>Máximo: ${item.max}</span>
+            ${options}  
+          `
+        )
         
       });
-
-      appendTemplate(
-        divOptions,
-        'ul',
-        `
-          <h4 class="option-title">${item["option-title"]}</h4>
-          <button class="btn-edit" data-id="${item.id}">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path
-                d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
-            </svg>
-            Editar
-          </button>
-          <button type="button" class="btn-remove" data-id="${item.id}">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
-            </svg>
-          </button>
-          <span>Minimo: ${item.min}</span>
-          <span>Máximo: ${item.max}</span>
-          ${options}  
-        `
-      )
-      
-    });
+    }
+    
 
     appendTemplate(
       divOptions,
       'div',
-      `<button type="button" id="new-additional">Novo Adicional</button>`
+      `<button type="button" id="choose-additional">Novo Adicional</button>`
     )
 
-    document.querySelector("#new-additional").addEventListener("click", (e) => {
-      const {nextProductId} = Cookies.getJSON("product")
-      editProductOptions(nextProductId);
+    document.querySelector("#choose-additional").addEventListener("click", (e) => {
+      showAditionalsOptions();
     });
       
   }
 
-  const firebaseUpdateProduct = (productData) => {
+  // const firebaseUpdateProduct = (productData) => {
 
-    Cookies.set("product", productData, { expires: 1 });
+  //   // Cookies.set("product", productData, { expires: 1 });
 
-    db.collection("products")
-      .doc(produto)
-      .update(productData)
-      .then(() => showAlert("Produto salvo com sucesso"))
-      .catch((err) => {
-        console.log(err);
-        showAlert(err.message, true);
-      })
-      .finally(() => {
+  //   db.collection("products")
+  //     .doc(produto)
+  //     .update(productData)
+  //     .then(() => showAlert("Produto salvo com sucesso"))
+  //     .catch((err) => {
+  //       console.log(err);
+  //       showAlert(err.message, true);
+  //     })
+  //     .finally(() => {
         
-      });
-      renderProductValue();
-  }
+  //     });
+  //     renderProductValue();
+  // }
 
   const renderProductValue = () => {
 
     const productData = Cookies.getJSON("product")
     setFormValues(form, productData);  
 
-    renderProductOptions(productData.aditionals);
+    const aditionals = Cookies.getJSON("aditionals")
+    if (aditionals) {
 
-    [...document.querySelectorAll(".btn-edit")].forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const id = productData.aditionals.findIndex((product) => product.id === btn.dataset.id)
-        editProductOptions(productData.aditionals[id]);
-      })
-    });
+      renderProductOptions(aditionals);
 
-    [...document.querySelectorAll(".btn-remove")].forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        
-        
-        const newAditionals = productData.aditionals.filter((product) => product.id !== btn.dataset.id);
-        productData.aditionals = newAditionals
-        console.log("foi", productData, newAditionals);
+      [...document.querySelectorAll(".btn-edit")].forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const id = aditionals.findIndex((aditional) => aditional.id === btn.dataset.id)
+          // const data = aditionals.filter(aditional => aditional.id === btn.dataset.id)
+          console.log("data-btn", aditionals[id]);
+          editProductOptions(aditionals[id]);
+        })
+      });
 
-        firebaseUpdateProduct(productData)
-        renderProductValue();
-      })
-    });
+      [...document.querySelectorAll(".btn-remove")].forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          
+          deleteAditional(btn.dataset.id, productData.aditionals)
+          // const newAditionals = productData.aditionals.filter((product) => product.id !== btn.dataset.id);
+          // productData.aditionals = newAditionals
+          // console.log("foi", productData, newAditionals);
+  
+          // firebaseUpdateProduct(productData)
+          // renderProductValue();
+        })
+      });
+
+
+    } else {
+      renderProductOptions();
+    }
+    
+
+    
+
+    
 
   }
 
+  function deleteAditional(id, allAditionals) {
+    const aditionalsFilter = allAditionals.filter(
+      (aditional) => aditional !== id
+    );
   
+    db.collection("products")
+      .doc(produto)
+      .update({ aditionals: aditionalsFilter })
+      .catch((err) => {
+        console.log(err);
+        showAlert(err.message, true);
+      });
+  }
 
-  const productDate = [];
-  const { produto } = getQueryString();
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged(async (user) => {
     console.log(user);
     if (user) {
       userGlobal = user;
@@ -335,9 +521,42 @@ document.querySelectorAll("#form-product").forEach((form) => {
           // });
           imageElement.src = productDate[0].photo || "./assets/images/user.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
+          console.log("productDate", productDate);
+          let aditionals = []
+          if (productDate[0].aditionals) {
+
+            if (!productDate[0].aditionals.length) renderProductValue();
+
+            productDate[0].aditionals.forEach((aditionalId, i) => {
+              console.log("aditionalId", aditionalId);
+              db.collection("aditionals")
+              .doc(aditionalId)
+              .onSnapshot((snapshot) => {
+                const data = snapshot.data()
+                if (data) {
+                  const {dataAditional} = data
+                  dataAditional.id = snapshot.id
+                  const indexExistis = aditionals.findIndex((product) => product.id === snapshot.id)
+                  if (indexExistis === -1) {
+                    aditionals.push(dataAditional);
+                  } else {
+                    aditionals[indexExistis] = dataAditional
+                  }
+                  Cookies.set("aditionals", aditionals, { expires: 1 });
+                } else {
+                  deleteAditional(aditionalId, productDate[0].aditionals)
+                }
+                renderProductValue();
+              });
+            });
+
+          } else {
+            Cookies.remove("aditionals");
+            renderProductValue();
+          }
+
         });
-      
-      renderProductValue();
+        
         
     } else {
       auth.signOut();
