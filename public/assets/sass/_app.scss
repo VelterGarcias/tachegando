@@ -50,7 +50,7 @@
       color: white;
       width: 100%;
       position: relative;
-      box-shadow: 1px 3px 9px -1px black;
+      box-shadow: 1px 3px 9px -1px #00000087;
       #company {
         flex: 1;
         align-items: center;
@@ -153,7 +153,7 @@
             display: flex;
             color: var(--dark);
             overflow: hidden;
-            box-shadow: 1px 1px 16px -2px black;
+            box-shadow: 1px 1px 16px -2px #00000052;
             margin: 0 auto;
             margin-bottom: 25px;
             max-width: 400px;
@@ -204,6 +204,9 @@
               > h3 {
                 margin: 0;
                 text-align: center;
+              }
+              > span {
+                font-size: 20px;
               }
             }
           }
@@ -346,6 +349,8 @@
     background-color: var(--white);
     color: var(--dark);
     height: 64px;
+    z-index: 2;
+    transition: height .3s ease-in-out;
     header {
       flex-direction: row;
       justify-content: space-between;
@@ -382,7 +387,8 @@
     }
     section {
       height: 0;
-      overflow: hidden;
+      overflow: auto;
+      transition: height .3s ease-in-out;
       ul {
         @include mixins.reset-list;
         li {
@@ -506,7 +512,7 @@
       }
     }
     &.open {
-      height: calc(100vh - 350px);
+      height: calc(100vh - 100px);
       header,
       section {
         padding: var(--space);
@@ -524,7 +530,7 @@
         }
       }
       section {
-        height: calc(100vh - 518px);
+        height: calc(100vh - 268px);
         @media (min-width: vars.$desktopStartWidth) {
           height: calc(100vh - 168px);
         }
