@@ -13,58 +13,25 @@
     />
   </head>
   <body id="app">
+    <div id="modal"></div>
     <section id="payment" class="page">
-      <header>
-        <a href="index.html">
-          <img
-            src="assets/images/logo-icon-blue.svg"
-            alt="Logo Icone"
-            id="logo-icon"
-          />
-          <img
-            src="assets/images/logo-text-blue.svg"
-            alt="Logo Texto"
-            id="logo-text"
-          />
-        </a>
-        <small id="userName"></small>
-        <div id="userMenu"></div>
-        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+      <header >
+        <div id="company">
+          <h1>Dados para entrega</h1>
+        </div>
       </header>
 
       <main>
-        <header>
-          <h1>Pagamento</h1>
-        </header>
         <section>
           <form>
-            <input type="text" name="number" placeholder="Número do Cartão" />
-
-            <div class="fields">
-              <div class="field">
-                <input type="text" name="validate" placeholder="Validade" />
-              </div>
-              <div class="field">
-                <input
-                  type="text"
-                  name="code"
-                  placeholder="Código de Segurança"
-                />
-              </div>
-            </div>
-
-            <input type="text" name="name" placeholder="Nome" />
-
-            <select name="bank">
-              <option>Nubank</option>
-              <option>C6 Bank</option>
-              <option>BS2 Bank</option>
-            </select>
-
-            <select name="installments">
-              <option value="1">1 parcela de R$ 100,00 (R$ 100,00)</option>
-              <option value="2">2 parcelas de R$ 52,26 (R$ 104,52)</option>
-            </select>
+            <input type="text" name="name" placeholder="Seu nome" required/>
+            <h3>Endereço</h3>
+            <input type="text" name="cep" placeholder="CEP (não obrigatório)" />
+            <input type="text" name="adress" placeholder="Endereço" required/>
+            <input type="number" name="number" placeholder="Nº da Casa" required/>
+            <input type="text" name="complement" placeholder="Complemento (não obrigatório)" />
+            <input type="text" name="district" placeholder="Bairro" required/>
+            <input type="text" name="city" placeholder="Cidade" required/>
 
             <button type="submit" style="display: none">Send</button>
           </form>
@@ -89,6 +56,46 @@
         </button>
       </footer>
     </section>
+
+    <aside id="menu">
+      <header id="open-menu">
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M50.6667 8H13.3067C10.3467 8 8.02667 10.3733 8.02667 13.3333L8 50.6667C8 53.6 10.3467 56 13.3067 56H50.6667C53.6 56 56 53.6 56 50.6667V13.3333C56 10.3733 53.6 8 50.6667 8ZM50.6667 40H40C40 44.4267 36.4 48 32 48C27.6 48 24 44.4267 24 40H13.3067V13.3333H50.6667V40Z"
+            fill="#070D0D"
+          />
+        </svg>
+        <strong>Bandeja<small></small></strong>
+      </header>
+      <section>
+        <ul id="orderList"></ul>
+      </section>
+      <footer>
+        <div class="close">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.59 8.59L12 13.17L7.41 8.59L6 10L12 16L18 10L16.59 8.59Z"
+              fill="black"
+            />
+          </svg>
+          <span>Esconder Bandeja</span>
+        </div>
+
+        <div class="price"><small>Subtotal</small><span>R$ 0,00</span></div>
+      </footer>
+    </aside>
 
     <div id="alert" class="hide"></div>
 

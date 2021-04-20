@@ -6,9 +6,10 @@ import {
   formatCurrency,
   showModal,
   getFormValues,
+  renderOrderList,
 } from "./utils";
 
-const prod = false;
+const prod = true;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
@@ -58,74 +59,16 @@ const addOrder = (data) => {
         oldOrder.push(newOrder);
         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
         Cookies.set("order", oldOrder, { expires: 15 });
+        console.log("aqui1");
       } else {
         newOrder.id = 0;
         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
         Cookies.set("order", [newOrder], { expires: 15 });
+        console.log("aqui2");
       }
       renderOrderList();
       console.log("order", Cookies.getJSON("order"));
 
-};
-
-const renderOrderList = () => {
-  // console.log(order);
-  const menu = document.querySelector("#menu");
-  const targetElement = menu.querySelector("#orderList");
-
-  targetElement.innerHTML = "";
-
-  let total = 0;
-
-  const currentOrder = Cookies.getJSON("order")
-
-  currentOrder.forEach((item) => {
-    total += Number(item.price);
-    appendTemplate(
-      targetElement,
-      "li",
-      `
-        <div>${item.name}</div>
-        <div>${formatCurrency(item.price)}</div>
-        <button type="button" aria-label="Remover ${
-          item.name
-        }" data-orderid="${item.id}">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
-          </svg>
-        </button>
-      `
-    );
-  });
-
-  setRemoveBuguerButtonEvent(targetElement);
-
-  menu.querySelector("footer .price span").innerHTML = formatCurrency(total);
-
-  menu.querySelector("header strong small").innerHTML =
-  currentOrder.length < 2
-      ? `${currentOrder.length} produto`
-      : `${currentOrder.length} produtos`;
-};
-
-
-const setRemoveBuguerButtonEvent = (list) => {
-  const buttons = list.querySelectorAll("button");
-  buttons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const removeBurguerId = e.currentTarget.dataset.orderid
-
-      console.log(removeBurguerId);
-      let order =  Cookies.getJSON("order")
-      order = order.filter((x) => +x.id !== +removeBurguerId);
-
-      console.log(order);
-
-      Cookies.set("order", order, { expires: 15 });
-
-      renderOrderList();
-    });
-  });
 };
 
 //============= começa os códigos das páginas =================
@@ -188,6 +131,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
     if (Cookies.get("products") && prod) {
       productData = Cookies.getJSON("products");
+      allAditionals = Cookies.getJSON("allAditionals");
     } else {
       timeout = 0;
       const products = await db

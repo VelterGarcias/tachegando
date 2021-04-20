@@ -1,7 +1,6 @@
 import firebase from "./firebase-app";
 import IMask from "imask";
-import Cookies from "js-cookie";
-import { formatCurrency, getFormValues, renderOrderList, saveOrder, showAlert } from "./utils";
+import { formatCurrency, saveOrder, showAlert } from "./utils";
 
 const setInstallmentsOptions = (input, order) => {
   let totalPrice = 0;
@@ -101,10 +100,81 @@ const validateForm = (data) => {
 }
 
 const submitForm = (form) => {
+  const databaseOrders = firebase.firestore();
+  let data = {};
 
-    const dataForm = getFormValues(form);
-    console.log(dataForm);
+  form
+    .querySelectorAll("[name]")
+    .forEach((input) => (data[input.name] = input.value));
+
+    if (!validateForm(data)) return;
   
+
+  const orderItems = JSON.parse(sessionStorage.getItem("order"));
+  data["burguers"] = orderItems;
+  let orderTotal = 0;
+  data["burguers"].forEach((burguer) => {
+    orderTotal += +burguer.total;
+  });
+
+  data.orderTotal = orderTotal;
+
+  data.user_id = firebase.auth().currentUser.uid;
+  data.user_Name = firebase.auth().currentUser.displayName;
+  data.created_at = new Date().toLocaleDateString("pt-br");
+
+  saveOrder(databaseOrders, data);
+  //console.log(data);
+};
+
+const payment = document.querySelector("#payment");
+
+if (payment) {
+  const btnPay = payment.querySelector("#btn-pay-order");
+  const form = payment.querySelector("form");
+  const inputCardNumber = form.querySelector('[name="number"]');
+  const inputValidate = form.querySelector('[name="validate"]');
+  const inputCvvCode = form.querySelector('[name="code"]');
+  const inputBanks = form.querySelector('[name="bank"]');
+  const inputInstallments = form.querySelector('[name="installments"]');
+
+  new IMask(inputCardNumber, {
+    mask: "0000 0000 0000 0000",
+  });
+
+  new IMask(inputValidate, {
+    mask: "00/00",
+  });
+
+  new IMask(inputCvvCode, {
+    mask: "000[0]",
+  });
+
+  const order = JSON.parse(sessionStorage.getItem("order")) || [];
+
+  if (order.length < 1) {
+    showAlert("Não possui nenhum pedido", true);
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 4000);
+  } else {
+    setInstallmentsOptions(inputInstallments, order);
+    getBankList(inputBanks);
+  }
+
+  btnPay.addEventListener("click", (e) => {
+    form.querySelector('button[type="submit"]').click();
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submitForm(form);
+  });
+}
+
+
+btnGoToPayment.addEventListener("click", (e) => {
+  if (Cookies.getJSON("order").length > 0) {
     const { phone, name } = Cookies.getJSON("company")
 
     let whats = phone.replace('(', '')
@@ -115,9 +185,9 @@ const submitForm = (form) => {
     const order = Cookies.getJSON("order")
 
     const msgHeader = `
-      *${name}*%0A
+      Recebemos seu pedido!%0A
       ===============%0A
-      *${dataForm.name}*%0A
+      *${name}*%0A
       ===============%0A
 
     `
@@ -135,73 +205,14 @@ const submitForm = (form) => {
       ===============%0A
       *Total do Pedido: ${formatCurrency(total)}*%0A
       ===============%0A
-      ${dataForm.adress}, ${dataForm.number}*%0A
-      ${dataForm.complement ? dataForm.complement + '*%0A': ''}
-      ${dataForm.district} - ${dataForm.city}*%0A
-      ${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} *%0A
-    `
-
-    const msgAdress = `
-      ===============%0A
-      *Endereço de Entrega:*%0A
-      ===============%0A
 
     `
 
-    const msg = msgHeader + messageBody + msgFooter + msgAdress
-
-    console.log(msg);
+    const msg = msgHeader + messageBody + msgFooter
 
     window.location.href = `https://api.whatsapp.com/send/?phone=55${whats}&text=${msg}`;
-
     
-};
-
-const payment = document.querySelector("#payment");
-
-if (payment) {
-  const btnPay = payment.querySelector("#btn-pay-order");
-  const form = payment.querySelector("form");
-  // const inputCardNumber = form.querySelector('[name="number"]');
-  // const inputValidate = form.querySelector('[name="validate"]');
-  // const inputCvvCode = form.querySelector('[name="code"]');
-  // const inputBanks = form.querySelector('[name="bank"]');
-  // const inputInstallments = form.querySelector('[name="installments"]');
-
-  // new IMask(inputCardNumber, {
-  //   mask: "0000 0000 0000 0000",
-  // });
-
-  // new IMask(inputValidate, {
-  //   mask: "00/00",
-  // });
-
-  // new IMask(inputCvvCode, {
-  //   mask: "000[0]",
-  // });
-
-  // const order = JSON.parse(sessionStorage.getItem("order")) || [];
-
-  // if (order.length < 1) {
-  //   showAlert("Não possui nenhum pedido", true);
-  //   setTimeout(() => {
-  //     window.location.href = "/";
-  //   }, 4000);
-  // } else {
-  //   setInstallmentsOptions(inputInstallments, order);
-  //   getBankList(inputBanks);
-  // }
-
-  renderOrderList()
-
-  btnPay.addEventListener("click", (e) => {
-    form.querySelector('button[type="submit"]').click();
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    submitForm(form);
-  });
-
-
-}
+  } else {
+    showAlert("Adicione ao menos um hamburguer para prosseguir!", true);
+  }
+});

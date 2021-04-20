@@ -24,7 +24,7 @@ document.querySelectorAll(".auth").forEach((page) => {
         .then((response) => {
           showAlert("Logado com Sucesso!");
           setTimeout(() => {
-            window.location.href = "/orders.html";
+            window.location.href = "/products.html";
           }, 3000);
         })
         .catch((err) => {
@@ -64,7 +64,7 @@ document.querySelectorAll(".auth").forEach((page) => {
               );
             });
           setTimeout(() => {
-            window.location.href = "/orders.html";
+            window.location.href = "/products.html";
           }, 2000);
         })
         .catch((error) => {

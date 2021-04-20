@@ -44,7 +44,7 @@ $secondary: rgba(#A1EB73, .7); */
 
 body {
   margin: 0;
-  background-color: var(--dark);
+  background-color: var(--white);
   color: black;
 }
 
@@ -750,6 +750,12 @@ label {
 }
 #app > section {
   flex: 1;
+}
+#app > section#payment header #company {
+  padding: 1em;
+}
+#app > section#payment main > section {
+  padding-bottom: 40px;
 }
 #app > section > header {
   display: flex;
@@ -1486,6 +1492,7 @@ label {
   flex-direction: row;
   display: flex;
   color: var(--dark);
+  box-shadow: 1px 1px 16px -2px #00000052;
 }
 #list-products > li > div {
   padding: 10px;
@@ -1523,6 +1530,13 @@ label {
   justify-content: center;
   border-left: var(--dark) 1px dashed;
   margin-left: 10px;
+}
+#list-products > li .actions a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #list-products > li .actions button {
   width: 40px;

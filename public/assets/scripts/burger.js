@@ -8,50 +8,18 @@ const btnGoToPayment = document.querySelector("#btn-pay");
 let order = [];
 
 if (btnGoToPayment) {
+
   btnGoToPayment.addEventListener("click", (e) => {
+
     if (Cookies.getJSON("order").length > 0) {
-      const { phone, name } = Cookies.getJSON("company")
-
-      let whats = phone.replace('(', '')
-      whats = phone.replace(')', '')
-      whats = phone.replace(' ', '')
-      whats = phone.replace('-', '')
-
-      const order = Cookies.getJSON("order")
-
-      const msgHeader = `
-        Recebemos seu pedido!%0A
-        ===============%0A
-        *${name}*%0A
-        ===============%0A
-
-      `
-      let messageBody = '%0A'
-
-      
-      let total = 0;
-      order.forEach((item,i) => {
-        const msgItem = `(${++i}) ${item.name}: ${formatCurrency(item.price)}%0A`
-        messageBody = messageBody + msgItem
-        total += Number(item.price)
-      });
-
-      const msgFooter = `
-        ===============%0A
-        *Total do Pedido: ${formatCurrency(total)}*%0A
-        ===============%0A
-
-      `
-
-      const msg = msgHeader + messageBody + msgFooter
-
-      window.location.href = `https://api.whatsapp.com/send/?phone=55${whats}&text=${msg}`;
-      
+      window.location.href = '/pay.html'
     } else {
-      showAlert("Adicione ao menos um hamburguer para prosseguir!", true);
+      showAlert("Adicione ao menos um produto para prosseguir!", true);
     }
+    
   });
 
+  
 }
 
 //   btnSaveBurguer.addEventListener("click", (e) => {

@@ -5,6 +5,8 @@
 @use "form";
 @use "sass:color";
 
+
+
 #app {
   #loading {
     height: 0;
@@ -44,6 +46,18 @@
   }
   > section {
     flex: 1;
+    &#payment {
+      header {
+        #company {
+          padding: 1em;
+        }
+      }
+      main {
+        > section {
+          padding-bottom: 40px;
+        }
+      }
+    }
     > header {
       @include components.logo;
       background-color: #1f2525;
