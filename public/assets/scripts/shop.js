@@ -42,7 +42,7 @@ const addOrder = (data) => {
       let details = []
       if (!data.details.empty) {
         data.details.forEach(detail => {
-          const {name, price} = detail.split('=')
+          const [name, price] = detail.split('=')
           details.push({name, price})
         });
       }
@@ -52,6 +52,8 @@ const addOrder = (data) => {
         photo: data.photo,
         details
       };
+
+      console.log(details);
       const oldOrder = Cookies.getJSON("order");
       if (oldOrder) {
         // data.find( product => product.id === idBtn );
@@ -194,18 +196,21 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
 
             options += `
+                      <div>
                       <h4>${add["option-title"]}</h4>
                       <span>Escolha entre ${add.min} e ${add.max} opções.</span>
                       <ul>
                       `
             add.options.forEach(({option, price}) => {
               options += `
-                        <label for="${option}">${option} + "${formatCurrency(price)}"</label>
-                        <input type="checkbox" id="${option}" name="details" value="${option}=${price}" />
+                        <li>
+                          <input type="checkbox" id="${option}" name="details" value="${option}=${price}" />
+                          <label for="${option}">${option} <span>+ ${formatCurrency(price)}</span></label>
+                        </li>
                         `
             });
 
-            options += `</ul>`
+            options += `</ul></div>`
             
           });
         }
@@ -221,14 +226,14 @@ document.querySelectorAll("#shop").forEach(async (page) => {
               <h3>${name}</h3>
               <img class="image-prod-modal" src=${photo} alt="Imagem do Produto" />
               <span></span>
-              <span>${description}</span>
-              <span><strong>Valor: ${formatCurrency(price)}</strong></span>
+              <span class="description-prod" >${description}</span>
+              <span class="price-prod" ><strong>Valor: ${formatCurrency(price)}</strong></span>
               <div class="options-product" >
                 ${options}
               </div>
-              <footer >
+              <footer style="background-color: ${company.main_color}" >
                 <span id="subtotal" data-subtotal="${price}">Total: ${formatCurrency(price)}</span>
-                <button type="submit" >Salvar</button>
+                <button type="submit" style="background-color: ${company.second_color}" >Salvar</button>
               </footer>
             </form>
         `);

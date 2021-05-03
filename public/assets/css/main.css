@@ -197,7 +197,45 @@ label {
   cursor: pointer;
 }
 #modal > div > .modal-content .image-prod-modal {
-  width: 250px;
+  width: 100%;
+}
+#modal > div > .modal-content .description-prod {
+  margin: 10px 0;
+  padding: 10px;
+}
+#modal > div > .modal-content .price-prod {
+  text-align-last: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+#modal > div > .modal-content .options-product > div {
+  background: #eaeaea;
+  padding: 10px;
+  margin: 5px 0 0;
+}
+#modal > div > .modal-content .options-product > div ul {
+  margin: 10px 0;
+  padding: 5px;
+}
+#modal > div > .modal-content .options-product > div ul li {
+  list-style: none;
+  display: flex;
+  margin-bottom: 5px;
+}
+#modal > div > .modal-content .options-product > div ul li label {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 5px;
+}
+#modal > div > .modal-content .options-product > div h4 {
+  margin: 0;
+  font-size: 18px;
+}
+#modal > div > .modal-content .options-product > div > span {
+  font-size: 12px;
+  padding-left: 5px;
 }
 #modal > div > .modal-content h3 {
   margin: 0;

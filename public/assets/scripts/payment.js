@@ -126,7 +126,13 @@ const submitForm = (form) => {
     
     let total = 0;
     order.forEach((item,i) => {
-      const msgItem = `(${++i}) ${item.name}: ${formatCurrency(item.price)}%0A`
+      let msgItem = `✔ *${item.name}*: ${formatCurrency(item.price)}%0A`
+
+      if(!item.details.empty) {
+        item.details.forEach((detail) => {
+          msgItem = msgItem + `${detail.name} - ${detail.price}%0A`
+        })
+      }
       messageBody = messageBody + msgItem
       total += Number(item.price)
     });
