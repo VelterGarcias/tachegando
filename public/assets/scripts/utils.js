@@ -244,20 +244,42 @@ export function  renderOrderList() {
   const currentOrder = Cookies.getJSON("order")
 
   currentOrder.forEach((item) => {
-    total += Number(item.price);
+    console.log("orderList", item);
+    total += Number(item.total);
+    let details = ''
+
+    if(!item.details.empty) {
+      console.log(item.details);
+      item.details.forEach(detail => {
+        let items = ''
+        console.log(detail);
+        detail.items.forEach(detailItem => {
+          console.log(detailItem);
+          const [name, price] = detailItem.split('=')
+          items = items + `<span>&emsp;${name} ${price ? `<small> (+ ${formatCurrency(price)})</small>` : ''}</span>`
+        })
+        console.log(details);
+        details = details + `<span><strong>${detail.title}</strong></span>${items}`
+      });
+    }
+    
+
     appendTemplate(
       targetElement,
-      "li",
+      "details",
       `
-        <div>${item.name}</div>
-        <div>${formatCurrency(item.price)}</div>
-        <button type="button" aria-label="Remover ${
-          item.name
-        }" data-orderid="${item.id}">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
-          </svg>
-        </button>
+        <summary>
+          <div>${item.name}</div>
+          <div>${formatCurrency(item.total)}</div>
+          <button type="button" aria-label="Remover ${
+            item.name
+          }" data-orderid="${item.id}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
+            </svg>
+          </button>
+        </summary>
+        <div>${details}</div>
       `
     );
   });

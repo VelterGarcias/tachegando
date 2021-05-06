@@ -1,7 +1,7 @@
 import firebase from "./firebase-app";
 import IMask from "imask";
 import Cookies from "js-cookie";
-import { formatCurrency, getFormValues, renderOrderList, saveOrder, showAlert } from "./utils";
+import { formatCurrency, getFormValues, renderOrderList, saveOrder, setFormValues, showAlert } from "./utils";
 
 const setInstallmentsOptions = (input, order) => {
   let totalPrice = 0;
@@ -104,7 +104,7 @@ const submitForm = (form) => {
 
     const dataForm = getFormValues(form);
     console.log(dataForm);
-  
+    Cookies.set('user', dataForm)
     const { phone, name } = Cookies.getJSON("company")
 
     let whats = phone.replace('(', '')
@@ -114,45 +114,61 @@ const submitForm = (form) => {
 
     const order = Cookies.getJSON("order")
 
-    const msgHeader = `
-      *${name}*%0A
-      ===============%0A
-      *${dataForm.name}*%0A
-      ===============%0A
-
-    `
-    let messageBody = '%0A'
+    const msgHeader = 
+`
+🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾%0A %0A
+*${name}*%0A
+............................................................%0A
+𝓟𝓮𝓭𝓲𝓭𝓸 𝓯𝓮𝓲𝓽𝓸 𝓹𝓸𝓻:%0A
+*${dataForm.name}*%0A
+............................................................%0A
+`
+    let messageBody = ''
 
     
     let total = 0;
     order.forEach((item,i) => {
-      let msgItem = `✔ *${item.name}*: ${formatCurrency(item.price)}%0A`
+      let msgItem = 
+`
+%0A
+❍ *${item.name}*: ${formatCurrency(item.price)} %0A
+`
 
       if(!item.details.empty) {
-        item.details.forEach((detail) => {
-          msgItem = msgItem + `${detail.name} - ${detail.price}%0A`
-        })
+        item.details.forEach(detail => {
+          let items = ''
+          detail.items.forEach(detailItem => {
+            const [name] = detailItem.split('=')
+            items = items + `      - ${name}%0A`
+          })
+          msgItem = msgItem + `    ${detail.title}:%0A${items}`
+        });
       }
+
+      // if(!item.details.empty) {
+      //   item.details.forEach((detail) => {
+      //     msgItem = msgItem + `${detail.name} - ${detail.price} %0A`
+      //   })
+      // }
       messageBody = messageBody + msgItem
       total += Number(item.price)
     });
 
-    const msgFooter = `
-      ===============%0A
-      *Total do Pedido: ${formatCurrency(total)}*%0A
-      ===============%0A
-      ${dataForm.adress}, ${dataForm.number}*%0A
-      ${dataForm.complement ? dataForm.complement + '*%0A': ''}
-      ${dataForm.district} - ${dataForm.city}*%0A
-      ${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} *%0A
-    `
+    const msgFooter = 
+`%0A
+............................................................%0A
+𝙏𝙤𝙩𝙖𝙡 𝙙𝙤 𝙥𝙚𝙙𝙞𝙙𝙤: *${formatCurrency(total)}*%0A
+`
 
-    const msgAdress = `
-      ===============%0A
-      *Endereço de Entrega:*%0A
-      ===============%0A
-
-    `
+    const msgAdress = 
+`
+............................................................%0A %0A %0A
+*Endereço de Entrega:*%0A
+${dataForm.adress}, ${dataForm.number}%0A
+${dataForm.complement ? dataForm.complement + '%0A': ''}
+${dataForm.district} - ${dataForm.city}%0A
+${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} %0A
+`
 
     const msg = msgHeader + messageBody + msgFooter + msgAdress
 
@@ -166,8 +182,13 @@ const submitForm = (form) => {
 const payment = document.querySelector("#payment");
 
 if (payment) {
-  const btnPay = payment.querySelector("#btn-pay-order");
+  const btnPay = document.querySelector("#btn-pay-order");
   const form = payment.querySelector("form");
+
+  const user = Cookies.getJSON("user");
+  console.log(user);
+  if (user) setFormValues(form, user)
+
   // const inputCardNumber = form.querySelector('[name="number"]');
   // const inputValidate = form.querySelector('[name="validate"]');
   // const inputCvvCode = form.querySelector('[name="code"]');

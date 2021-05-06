@@ -786,6 +786,9 @@ label {
 #app #privacity {
   padding: 20px;
 }
+#app #payment {
+  padding-bottom: 40px;
+}
 #app > section {
   flex: 1;
 }
@@ -1235,7 +1238,7 @@ label {
   overflow: hidden;
   position: absolute;
   padding: 16px;
-  width: calc(100% - 204px);
+  width: calc(100% - 190px);
   cursor: pointer;
 }
 #app aside header svg {
@@ -1272,7 +1275,12 @@ label {
   padding: 0;
   list-style: none;
 }
-#app aside section ul li {
+#app aside section ul details > div {
+  background-color: #e3e3e342;
+  padding: 5px 15px;
+  color: #a1a1a1;
+}
+#app aside section ul summary {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1284,25 +1292,25 @@ label {
   height: 48px;
   border-bottom: var(--dark) 1px dotted;
 }
-#app aside section ul li:hover div {
+#app aside section ul summary:hover div {
   opacity: 0.7;
 }
-#app aside section ul li button {
+#app aside section ul summary button {
   background: none;
   outline: none;
   border: none;
   padding: 10px;
   cursor: pointer;
 }
-#app aside section ul li button:hover {
+#app aside section ul summary button:hover {
   opacity: 0.75;
   background-color: var(--gray);
 }
-#app aside section ul li button:active {
+#app aside section ul summary button:active {
   opacity: 1;
   background-color: var(--primary);
 }
-#app aside section ul li button:active path {
+#app aside section ul summary button:active path {
   fill: var(--primaryText);
 }
 #app aside footer {
@@ -1397,6 +1405,19 @@ label {
   #app aside footer button svg {
     margin-right: 10px;
   }
+}
+#app aside footer.payment .price {
+  width: 90px;
+  font-size: 18px;
+  padding: 0 10px;
+}
+#app aside footer.payment button {
+  width: 120px;
+  background-color: #49c958;
+}
+#app aside footer.payment button img {
+  width: 20px;
+  margin: 5px;
 }
 #app aside.open {
   height: calc(100vh - 100px);

@@ -39,33 +39,34 @@ const renderProducts = (targetElement, productOptions) => {
 const addOrder = (data) => {
     
       // console.log(e.currentTarget);
-      let details = []
-      if (!data.details.empty) {
-        data.details.forEach(detail => {
-          const [name, price] = detail.split('=')
-          details.push({name, price})
-        });
-      }
-      const newOrder = {
-        name: data.name,
-        price: data.total,
-        photo: data.photo,
-        details
-      };
+      // console.log("data", data);
+      // let details = []
+      // if (!data.details.empty) {
+      //   data.details.forEach(detail => {
+      //     const [name, price] = detail.split('=')
+      //     details.push({name, price})
+      //   });
+      // }
+      // const newOrder = {
+      //   name: data.name,
+      //   price: data.total,
+      //   photo: data.photo,
+      //   details
+      // };
 
-      console.log(details);
+      // console.log(details);
       const oldOrder = Cookies.getJSON("order");
       if (oldOrder) {
         // data.find( product => product.id === idBtn );
-        newOrder.id = Number(Cookies.get("nextOrderId"))
-        oldOrder.push(newOrder);
-        Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
+        data.id = Number(Cookies.get("nextOrderId"))
+        oldOrder.push(data);
+        Cookies.set("nextOrderId", ++data.id, { expires: 15 });
         Cookies.set("order", oldOrder, { expires: 15 });
         console.log("aqui1");
       } else {
-        newOrder.id = 0;
-        Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
-        Cookies.set("order", [newOrder], { expires: 15 });
+        data.id = 0;
+        Cookies.set("nextOrderId", ++data.id, { expires: 15 });
+        Cookies.set("order", [data], { expires: 15 });
         console.log("aqui2");
       }
       renderOrderList();
@@ -204,7 +205,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             add.options.forEach(({option, price}) => {
               options += `
                         <li>
-                          <input type="checkbox" id="${option}" name="details" value="${option}=${price}" />
+                          <input type="checkbox" id="${option}" name='details' value="${option}=${price}" />
                           <label for="${option}">${option} <span>+ ${formatCurrency(price)}</span></label>
                         </li>
                         `
@@ -245,7 +246,28 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         formProductDetails.addEventListener("submit", (e) => {
           e.preventDefault();
           const data = getFormValues(formProductDetails)
-          console.log(data);
+          console.log("dataForm", data);
+
+          const productOptions = formProductDetails.querySelectorAll('.options-product > div')
+          let details = []
+          productOptions.forEach(form => {
+            const title = form.querySelector('h4').innerHTML
+            const items = getFormValues(form)
+              const detailsFormated = {
+                title,
+                items: [...items.details]
+              }
+              console.log(items);
+
+              if (detailsFormated.items.length) {
+                details.push(detailsFormated)
+              }
+              
+            
+            
+          });
+          console.log("details", details);
+          data.details = details;
           addOrder(data);
           const modal = document.querySelector("#modal");
           modal.classList.remove("open");
