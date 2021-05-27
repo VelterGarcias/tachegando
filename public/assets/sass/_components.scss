@@ -133,7 +133,7 @@
 @mixin input {
   height: 50px;
   border-radius: var(--radius);
-  border: none;
+  border: 1px solid #cccc;
   font-size: 16px;
   padding: var(--space);
   outline: none;

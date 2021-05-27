@@ -208,6 +208,20 @@ label {
   font-size: 20px;
   margin-bottom: 15px;
 }
+#modal > div > .modal-content .comments-wrapper {
+  padding: 10px;
+  margin: 5px 0 0;
+}
+#modal > div > .modal-content .comments-wrapper label {
+  font-weight: bold;
+}
+#modal > div > .modal-content .comments-wrapper > textarea {
+  border-radius: var(--radius);
+  border: 1px solid #cccc;
+  font-size: 14px;
+  padding: 5px;
+  outline: none;
+}
 #modal > div > .modal-content .options-product > div {
   background: #eaeaea;
   padding: 10px;
@@ -495,7 +509,7 @@ label {
 .auth main form input {
   height: 50px;
   border-radius: var(--radius);
-  border: none;
+  border: 1px solid #cccc;
   font-size: 16px;
   padding: var(--space);
   outline: none;
@@ -522,7 +536,7 @@ label {
 .auth main form form input {
   height: 50px;
   border-radius: var(--radius);
-  border: none;
+  border: 1px solid #cccc;
   font-size: 16px;
   padding: var(--space);
   outline: none;
@@ -666,7 +680,7 @@ label {
 .auth .options input {
   height: 50px;
   border-radius: var(--radius);
-  border: none;
+  border: 1px solid #cccc;
   font-size: 16px;
   padding: var(--space);
   outline: none;

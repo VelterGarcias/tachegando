@@ -262,6 +262,9 @@ export function  renderOrderList() {
         details = details + `<span><strong>${detail.title}</strong></span>${items}`
       });
     }
+    if(item.comments) {
+      details = details + `<small><strong>Observações: </strong>${item.comments}</small>`
+    }
     
 
     appendTemplate(

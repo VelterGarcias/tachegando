@@ -125,13 +125,14 @@ const submitForm = (form) => {
 `
     let messageBody = ''
 
+    console.log("order", order)
     
     let total = 0;
     order.forEach((item,i) => {
       let msgItem = 
 `
 %0A
-❍ *${item.name}*: ${formatCurrency(item.price)} %0A
+❍ *${item.name}*: ${formatCurrency(item.total)} %0A
 `
 
       if(!item.details.empty) {
@@ -150,8 +151,15 @@ const submitForm = (form) => {
       //     msgItem = msgItem + `${detail.name} - ${detail.price} %0A`
       //   })
       // }
-      messageBody = messageBody + msgItem
-      total += Number(item.price)
+      console.log('item', item.comments)
+      let comments = '';
+      if (item.comments) {
+        comments = `    _Observações: ${item.comments}_%0A`
+      } 
+
+
+      messageBody = messageBody + msgItem + comments
+      total += Number(item.total)
     });
 
     const msgFooter = 

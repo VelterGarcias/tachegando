@@ -9,31 +9,81 @@ import {
   renderOrderList,
 } from "./utils";
 
-const prod = true;
+const prod = false;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
+  const categoryWrapper = document.querySelector('div.category')
+  categoryWrapper.innerHTML = "";
+  console.log("productOptions", productOptions);
 
-  productOptions.forEach((item) => {
+  let categories = [...new Set(productOptions.map(item => item.category))];
+  console.log("categories", categories);
+
+  categories.forEach(category => {
+    const productsInCategory = productOptions.filter((product) => product.category === category)
+    console.log("productsInCategory", productsInCategory);
+
+    
+
+    let listProducts = ''
+
+    productsInCategory.forEach((item) => {
+  
+      listProducts = listProducts + `
+        <li id="category">
+          <div id=${item.id} class="content">
+            <img class="image-product" src=${item.photo} alt="Foto do ${item.name}">
+            <div class="data-product" >
+              <h3>${item.name}</h3>
+              <span>${formatCurrency(item.price)}</span>
+            </div>
+          </div>
+          <div class="options-product" >
+            <button class="add-product" data-id="${item.id}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </button>
+          </div>
+        </li>
+        `
+    });
+
     appendTemplate(
-      targetElement,
-      "li",
+      categoryWrapper,
+      "div",
       `
-      <div id=${item.id} class="content">
-        <img class="image-product" src=${item.photo} alt="Foto do ${item.name}">
-        <div class="data-product" >
-          <h3>${item.name}</h3>
-          <span>${formatCurrency(item.price)}</span>
-        </div>
-      </div>
-      <div class="options-product" >
-        <button class="add-product" data-id="${item.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        </button>
-      </div>
+      <h2>${category}</h2>
+      <ul>
+      ${listProducts}
+      </ul>
       `
     );
-  });
+
+    // productsInCategory.forEach((item) => {
+    //   appendTemplate(
+    //     targetElement,
+    //     "li",
+    //     `
+    //     <div id=${item.id} class="content">
+    //       <img class="image-product" src=${item.photo} alt="Foto do ${item.name}">
+    //       <div class="data-product" >
+    //         <h3>${item.name}</h3>
+    //         <span>${formatCurrency(item.price)}</span>
+    //       </div>
+    //     </div>
+    //     <div class="options-product" >
+    //       <button class="add-product" data-id="${item.id}">
+    //         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+    //       </button>
+    //     </div>
+    //     `
+    //   );
+    // });
+
+
+  })
+
+  
 };
 
 const addOrder = (data) => {
@@ -164,7 +214,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       Cookies.set("allAditionals", allAditionals, { expires: 0.041 });
     }
 
-    const ulProducts = page.querySelector("#products");
+    const ulProducts = page.querySelector(".category");
     console.log("product", productData);
     renderProducts(ulProducts, productData);
 
@@ -190,7 +240,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         let options = ""
         
         if (aditionals) {
-          aditionals.forEach(item => {
+          aditionals.forEach((item, i )=> {
             console.log(allAditionals);
             if (!allAditionals.find((aditional) => aditional.id === item)) return;
             const add = allAditionals.find((aditional) => aditional.id === item)
@@ -205,8 +255,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             add.options.forEach(({option, price}) => {
               options += `
                         <li>
-                          <input type="checkbox" id="${option}" name='details' value="${option}=${price}" />
-                          <label for="${option}">${option} <span>+ ${formatCurrency(price)}</span></label>
+                          <input type="checkbox" id="${option + i}" name='details' value="${option}=${price}" />
+                          <label for="${option + i}">${option} <span>+ ${formatCurrency(price)}</span></label>
                         </li>
                         `
             });
@@ -231,6 +281,10 @@ document.querySelectorAll("#shop").forEach(async (page) => {
               <span class="price-prod" ><strong>Valor: ${formatCurrency(price)}</strong></span>
               <div class="options-product" >
                 ${options}
+              </div>
+              <div class="comments-wrapper">
+                <label for="comments">Observações:</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
               </div>
               <footer style="background-color: ${company.main_color}" >
                 <span id="subtotal" data-subtotal="${price}">Total: ${formatCurrency(price)}</span>
