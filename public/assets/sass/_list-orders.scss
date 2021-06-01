@@ -6,6 +6,8 @@
   @include mixins.reset-list;
   @include components.scrollbar;
   padding: var(--space);
+  max-width: 500px;
+  margin: 0 auto;
   > li {
     background-color: var(--white);
     border-radius: var(--radius);
@@ -33,11 +35,16 @@
       }
       ul {
         @include mixins.reset-list;
+        height: 100%;
+        display: flex;
+        flex-direction: column;        
+        justify-content: space-around;
         li {
+          b {
+            font-size: 16px;
+          }
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
-          height: 32px;
           align-items: center;
         }
       }
@@ -78,22 +85,22 @@
       margin-top: var(--space);
     }
   }
-  @media (min-width: vars.$desktopStartWidth) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: var(--space);
-    > li {
-      & + li {
-        margin-top: 0;
-      }
-    }
-  }
-  @media (min-width: vars.$desktopStartWidth * 1.5) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: vars.$desktopStartWidth * 2) {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  // @media (min-width: vars.$desktopStartWidth) {
+  //   display: grid;
+  //   grid-template-columns: repeat(2, 1fr);
+  //   grid-gap: var(--space);
+  //   > li {
+  //     & + li {
+  //       margin-top: 0;
+  //     }
+  //   }
+  // }
+  // @media (min-width: vars.$desktopStartWidth * 1.5) {
+  //   grid-template-columns: repeat(3, 1fr);
+  // }
+  // @media (min-width: vars.$desktopStartWidth * 2) {
+  //   grid-template-columns: repeat(4, 1fr);
+  // }
 }
 
 #list-orders {

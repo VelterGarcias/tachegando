@@ -13,12 +13,8 @@
 
 <body id="admin" class="auth">
   <header>
-    <a href="index.html">
-      <img src="assets/images/logo-icon-blue.svg" alt="Logo Icone" id="logo-icon" />
-      <img src="assets/images/logo-text-blue.svg" alt="Logo Texto" id="logo-text" />
-    </a>
+    <span>🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾</span>
     <div id="menu-admin">
-      <small id="userName"></small>
       <div id="userMenu"></div>
       <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
       <nav></nav>
@@ -27,17 +23,18 @@
 
   <main>
     <ul id="form-tabs">
-      <li class="active"><a href="updateBusiness.html">Empresa</a></li>
-      <li></li>
+      <li class="active main-color"><a href="updateBusiness.html">Empresa</a></li>
+      <li><a href="products.html">Voltar</a></li>
     </ul>
-    <form id="form-update">
+    <form id="form-update" class="main-color">
       <a id="link-shop"></a>
       <h3>Logotipo da Empresa</h3>
       <div>
         <img src="assets/images/user.svg" alt="photo" id="photo-preview" style="max-width: 300px; max-height: 300px" />
         <input type="file" name="photo" id="file" />
 
-        <button type="button" class="choose-photo">Alterar Logotipo</button>
+        <button type="button" class="choose-photo second">Alterar Logotipo</button>
+        <br/>
       </div>
 
       <div>
@@ -77,7 +74,7 @@
       <input type="text" name="cep" placeholder="CEP" />
 
       <footer>
-        <button type="submit">Atualizar</button>
+        <button class="second"type="submit">Atualizar</button>
       </footer>
 
     </form>

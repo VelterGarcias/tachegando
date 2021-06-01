@@ -78,10 +78,12 @@ document.querySelectorAll("#form-update").forEach((form) => {
           const hash = `${window.location.origin}#${userDate[0].hash}`
           linkShop.innerHTML = hash
           linkShop.href = hash
-          form.style = `background-color: ${userDate[0].main_color}`
-          form.querySelectorAll('button').forEach((btn)=>{
-            btn.style = `background-color: ${userDate[0].second_color}`
-          })
+          document.querySelectorAll(".main-color").forEach((btn) => {
+            btn.style = `background-color: ${userDate[0].main_color}`;
+          });
+          document.querySelectorAll(".second").forEach((btn) => {
+            btn.style = `background-color: ${userDate[0].second_color}`;
+          });
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {

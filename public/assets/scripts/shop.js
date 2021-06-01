@@ -9,7 +9,7 @@ import {
   renderOrderList,
 } from "./utils";
 
-const prod = false;
+const prod = true;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
@@ -40,7 +40,7 @@ const renderProducts = (targetElement, productOptions) => {
             </div>
           </div>
           <div class="options-product" >
-            <button class="add-product" data-id="${item.id}">
+            <button class="add-product second" data-id="${item.id}">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
             </button>
           </div>
@@ -225,7 +225,10 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       body.classList.remove("loading");
     }, timeout);
     body.style = `background-color: ${company.main_color}`;
-    document.querySelectorAll("button").forEach((btn) => {
+    document.querySelectorAll(".main-color").forEach((btn) => {
+      btn.style = `background-color: ${company.main_color}`;
+    });
+    document.querySelectorAll(".second").forEach((btn) => {
       btn.style = `background-color: ${company.second_color}`;
     });
 

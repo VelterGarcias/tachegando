@@ -2,16 +2,20 @@
 @use "colors";
 
 .auth {
-  background-color: colors.$bgLogin;
-  background-image: url("../images/bg.svg");
+  
   header {
     @include components.header;
+    background: black;
+    color: white;
   }
   main {
     align-items: center;
+    background: #2d2d2d;
+    padding-bottom: 40px;
   }
   #form-tabs {
     @include components.tabs;
+    background-color: #000000;
     width: 100%;
     li {
       width: 175px;
@@ -42,12 +46,12 @@
     }
   }
   main form {
-    background-color: var(--primary);
     padding: var(--space);
     border-bottom-left-radius: var(--radius);
     border-bottom-right-radius: var(--radius);
     width: 350px;
     z-index: 1;
+    background-color: rgb(219, 219, 219);
     label {
       margin-top: 12px;
       margin-bottom: 5px;

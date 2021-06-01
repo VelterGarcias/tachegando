@@ -316,3 +316,12 @@ export function setRemoveBuguerButtonEvent(list) {
   });
 };
 
+export function changeColors(main, second) {
+  document.querySelectorAll(".main-color").forEach((btn) => {
+    btn.style = `background-color: ${main}`;
+  });
+  document.querySelectorAll(".second").forEach((btn) => {
+    btn.style = `background-color: ${second}`;
+  });
+}
+

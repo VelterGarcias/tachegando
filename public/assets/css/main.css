@@ -298,23 +298,23 @@ label {
   width: 100vw;
   height: 100vh;
   top: 0;
-  right: 0;
+  right: -1000vw;
   background-color: #000000bd;
   z-index: 999;
   display: flex;
-  transition: none;
-  display: none;
+  transition: right 0.3s ease-in-out;
+  display: flex;
   align-items: flex-end;
 }
 #userMenu > div {
-  width: 50%;
+  width: 90%;
+  max-width: 450px;
+  height: 100vh;
   background-color: #fff;
-  border-radius: 10px;
   padding: 1rem;
+  padding-top: 40px;
   color: #000;
   min-height: 12rem;
-  max-height: 90vh;
-  max-width: 25rem;
   position: relative;
   overflow: auto;
   z-index: 6;
@@ -334,7 +334,7 @@ label {
   text-align: center;
 }
 #userMenu > div button {
-  background-color: var(--primary);
+  background: #2d2d2d;
   text-align: center;
   color: #ffffff;
   padding: 0.7rem 0;
@@ -343,6 +343,8 @@ label {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.9rem;
+  border-radius: var(--radius);
+  cursor: pointer;
 }
 #userMenu > div ul {
   padding: 0;
@@ -352,7 +354,7 @@ label {
 }
 #userMenu > div ul li {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 5px;
 }
 #userMenu > div ul li a {
@@ -363,22 +365,21 @@ label {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.9rem;
+  color: #000;
 }
 #userMenu > div ul li a:first-child {
   margin-top: 0.5rem;
 }
 #userMenu.open {
-  display: flex;
+  right: 0px;
 }
 
-.auth {
-  background-color: #08182b;
-  background-image: url("../images/bg.svg");
-}
 .auth header {
   justify-content: center;
   align-items: center;
-  height: 180px;
+  height: 48px;
+  background: black;
+  color: white;
 }
 .auth header a {
   display: flex;
@@ -408,16 +409,19 @@ label {
 }
 .auth main {
   align-items: center;
+  background: #2d2d2d;
+  padding-bottom: 40px;
 }
 .auth #form-tabs {
   margin: 0;
   padding: 0;
-  background-color: #202f3f;
+  background-color: #9c9c9c5b;
   height: 80px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   list-style: none;
+  background-color: #000000;
   width: 100%;
 }
 .auth #form-tabs li {
@@ -425,7 +429,7 @@ label {
   justify-content: center;
   align-items: center;
   height: 64px;
-  background-color: rgba(31, 59, 229, 0.25);
+  background-color: rgba(156, 156, 156, 0.75);
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
   color: var(--dark);
@@ -435,11 +439,11 @@ label {
   cursor: pointer;
 }
 .auth #form-tabs li:hover {
-  background-color: rgba(31, 59, 229, 0.5);
+  background-color: rgba(156, 156, 156, 0.5);
 }
 .auth #form-tabs li.active {
-  background-color: var(--primary);
   cursor: default;
+  background-color: #dbdbdb;
 }
 .auth #form-tabs li {
   width: 175px;
@@ -494,12 +498,12 @@ label {
   margin-right: 10px;
 }
 .auth main form {
-  background-color: var(--primary);
   padding: var(--space);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
   width: 350px;
   z-index: 1;
+  background-color: #dbdbdb;
 }
 .auth main form label {
   margin-top: 12px;
@@ -822,6 +826,8 @@ label {
   width: 100%;
   position: relative;
   box-shadow: 1px 3px 9px -1px #00000087;
+  min-height: 46px;
+  align-items: center;
 }
 #app > section > header #logo-icon {
   width: 100px;
@@ -865,21 +871,6 @@ label {
   position: relative;
   display: flex;
 }
-#app > section > header #userName {
-  color: var(--white);
-  font-size: 20px;
-  z-index: 3;
-  position: absolute;
-  top: 30px;
-  right: 45px;
-  text-align: right;
-  text-transform: uppercase;
-  background-color: var(--primary);
-  padding: 5px 10px;
-  padding-right: 40px;
-  border-radius: 5px;
-  min-height: 34px;
-}
 #app > section > header #avatar {
   position: absolute;
   top: var(--space);
@@ -903,6 +894,7 @@ label {
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 15px 0;
 }
 #app > section main > header h1 {
   font-weight: 500;
@@ -929,8 +921,7 @@ label {
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
-  position: absolute;
-  right: 10px;
+  margin-top: 20px;
 }
 #app > section main > header #new-product:hover {
   background-color: #142626;
@@ -1539,6 +1530,8 @@ label {
   padding: 0;
   list-style: none;
   padding: var(--space);
+  max-width: 500px;
+  margin: 0 auto;
 }
 #list-products::-webkit-scrollbar {
   width: 10px;
@@ -1591,13 +1584,18 @@ label {
   margin: 0;
   padding: 0;
   list-style: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 #list-products > li .content ul li {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  height: 32px;
   align-items: center;
+}
+#list-products > li .content ul li b {
+  font-size: 16px;
 }
 #list-products > li .actions {
   justify-content: center;
@@ -1632,26 +1630,6 @@ label {
 }
 #list-products > li + li {
   margin-top: var(--space);
-}
-@media (min-width: 768px) {
-  #list-products {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: var(--space);
-  }
-  #list-products > li + li {
-    margin-top: 0;
-  }
-}
-@media (min-width: 1152px) {
-  #list-products {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (min-width: 1536px) {
-  #list-products {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 #list-orders {

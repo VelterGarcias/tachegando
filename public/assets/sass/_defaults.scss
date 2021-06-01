@@ -228,22 +228,22 @@ label {
   width: 100vw;
   height: 100vh;
   top: 0;
-  right: 0;
+  right: -1000vw;
   background-color: #000000bd;
   z-index: 999;
   display: flex;
-  transition: none;
-  display: none;
+  transition: right 0.3s ease-in-out;
+  display: flex;
   align-items: flex-end;
   > div {
-    width: 50%;
+    width: 90%;
+    max-width: 450px;
+    height: 100vh;
     background-color: #fff;
-    border-radius: 10px;
     padding: 1rem;
+    padding-top: 40px;
     color: #000;
     min-height: 12rem;
-    max-height: 90vh;
-    max-width: 25rem;
     position: relative;
     overflow: auto;
     z-index: 6;
@@ -262,7 +262,7 @@ label {
       text-align: center;
     }
     button {
-      background-color: var(--primary);
+      background: #2d2d2d;
       text-align: center;
       color: #ffffff;
       padding: 0.7rem 0;
@@ -271,6 +271,8 @@ label {
       font-weight: bold;
       text-transform: uppercase;
       font-size: 0.9rem;
+      border-radius: var(--radius);
+      cursor: pointer;
     }
     ul {
       padding: 0;
@@ -279,7 +281,7 @@ label {
       margin: 10px 0;
       li {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         margin-bottom: 5px;
         a {
           text-align: center;
@@ -289,6 +291,7 @@ label {
           font-weight: bold;
           text-transform: uppercase;
           font-size: 0.9rem;
+          color: #000;
         }
         a:first-child {
           margin-top: 0.5rem;
@@ -297,6 +300,6 @@ label {
     }
   }
   &.open {
-    display: flex;
+    right: 0px;
   }
 }

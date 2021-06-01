@@ -175,11 +175,15 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     saveFormOptions.addEventListener('submit', (e) => {
       e.preventDefault();
-      const dataAditional = getFormValues(saveFormOptions)
+      const dataAditional = getFormValues(saveFormOptions);
+      console.log("dataAditional", dataAditional);
       const optionsLi = saveFormOptions.querySelectorAll('li')
       const options = []
       optionsLi.forEach(li => {
-        options.push(getFormValues(li));
+        let dataOpt = getFormValues(li);
+        console.log(dataOpt.price.replace(",", "."))
+        dataOpt.price = dataOpt.price.replace(",", ".");
+        options.push(dataOpt);
       });
 
       dataAditional.options = options;
@@ -578,7 +582,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     btnSubmit.innerHTML = "Salvando...";
 
     const productData = getFormValues(form);
-
+    console.log("productData", productData)
     productData.photo = imageElement.src;
     productData.companyId = userGlobal.uid;
     productData.price = productData.price.replace(",", ".");
