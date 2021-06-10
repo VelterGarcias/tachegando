@@ -32,7 +32,7 @@ label {
 }
 
 #alert {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   z-index: 99;
@@ -49,6 +49,7 @@ label {
   }
   &.danger {
     background-color: var(--danger);
+    color: white;
   }
 }
 
@@ -113,6 +114,9 @@ label {
       max-width: 350px;
       position: relative;
       overflow: hidden;
+      .modal-alert {
+        padding: 10px;
+      }
       img.close {
         position: absolute;
         top: 5px;
@@ -200,6 +204,9 @@ label {
           text-transform: uppercase;
           font-size: 0.9rem;
           cursor : pointer;
+          &.danger {
+            background-color: var(--danger);
+          }
         }
         a:first-child {
           margin-top: 0.5rem;

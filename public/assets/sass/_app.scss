@@ -27,7 +27,7 @@
       overflow: hidden;
       transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
       span {
-        font-size: 40px;
+        font-size: 30px;
         font-weight: bold;
       }
     }
@@ -114,6 +114,9 @@
       a {
         position: relative;
         display: flex;
+        > .undo {
+          padding-left: 25px;
+        }
       }
       // #userName {
       //   color: var(--white);

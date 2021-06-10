@@ -10,10 +10,16 @@ let order = [];
 if (btnGoToPayment) {
 
   btnGoToPayment.addEventListener("click", (e) => {
-
-    if (Cookies.getJSON("order").length > 0) {
-      window.location.href = '/pay.html'
-    } else {
+    
+    if (Cookies.getJSON("order")) {
+      if (Cookies.getJSON("order").length > 0) {
+        window.location.href = '/pay.html'
+      }
+      else {
+        showAlert("Adicione ao menos um produto para prosseguir!", true);
+      }
+    }
+     else {
       showAlert("Adicione ao menos um produto para prosseguir!", true);
     }
     

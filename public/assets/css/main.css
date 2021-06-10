@@ -18,15 +18,15 @@ $secondary: rgba(#A1EB73, .7); */
   --space: 20px;
   --bar-height: 64px;
   --field-height: 48px;
-  --primary: #1f3be5;
+  --primary: #101d1d;
   --primaryText: #ffffff;
   --secondary: rgba(27, 154, 246, 0.7);
   --dark: #070d0d;
   --light: #d7d7d7;
   --white: #ffffff;
   --gray: #e3e3e3;
-  --danger: rgba(255, 82, 82, 0.7);
-  --success: rgba(161, 235, 115, 0.7);
+  --danger: #ff5252;
+  --success: #a1eb73;
   --white10: rgba(255, 255, 255, 0.1);
   --white25: rgba(255, 255, 255, 0.25);
   --white90: rgba(255, 255, 255, 0.9);
@@ -62,7 +62,7 @@ label {
 }
 
 #alert {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   z-index: 99;
@@ -80,6 +80,7 @@ label {
 }
 #alert.danger {
   background-color: var(--danger);
+  color: white;
 }
 
 #modal {
@@ -99,16 +100,16 @@ label {
   margin: 10px 0;
 }
 #modal form::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.25);
+  background: rgba(16, 29, 29, 0.25);
 }
 #modal form:hover::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.5);
+  background: rgba(16, 29, 29, 0.5);
 }
 #modal form:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(31, 59, 229, 0.75);
+  background: rgba(16, 29, 29, 0.75);
 }
 #modal form:hover::-webkit-scrollbar-thumb:active {
-  background: #1f3be5;
+  background: #101d1d;
 }
 #modal footer {
   display: flex;
@@ -134,7 +135,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -188,6 +189,9 @@ label {
   max-width: 350px;
   position: relative;
   overflow: hidden;
+}
+#modal > div > .modal-content .modal-alert {
+  padding: 10px;
 }
 #modal > div > .modal-content img.close {
   position: absolute;
@@ -275,6 +279,10 @@ label {
   text-transform: uppercase;
   font-size: 0.9rem;
   cursor: pointer;
+}
+#modal > div > .modal-content p a.danger,
+#modal > div > .modal-content p button.danger {
+  background-color: var(--danger);
 }
 #modal > div > .modal-content p a:first-child {
   margin-top: 0.5rem;
@@ -466,7 +474,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -583,7 +591,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -625,7 +633,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -746,7 +754,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -789,7 +797,7 @@ label {
   transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 #app.loading #loading span {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 }
 #app.loading > section,
@@ -871,6 +879,9 @@ label {
   position: relative;
   display: flex;
 }
+#app > section > header a > .undo {
+  padding-left: 25px;
+}
 #app > section > header #avatar {
   position: absolute;
   top: var(--space);
@@ -917,7 +928,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
@@ -948,16 +959,16 @@ label {
   margin: 10px 0;
 }
 #app > section main > section::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.25);
+  background: rgba(16, 29, 29, 0.25);
 }
 #app > section main > section:hover::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.5);
+  background: rgba(16, 29, 29, 0.5);
 }
 #app > section main > section:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(31, 59, 229, 0.75);
+  background: rgba(16, 29, 29, 0.75);
 }
 #app > section main > section:hover::-webkit-scrollbar-thumb:active {
-  background: #1f3be5;
+  background: #101d1d;
 }
 #app > section main .category {
   margin: var(--space);
@@ -1105,7 +1116,7 @@ label {
   align-items: center;
 }
 #app > section > footer button {
-  background-color: #2a45e6;
+  background-color: #182c2c;
   border: none;
   border-radius: var(--radius);
   color: var(--white);
@@ -1114,13 +1125,13 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;
 }
 #app > section > footer button:hover {
-  background-color: #4159e9;
+  background-color: #1e3636;
   box-shadow: 0 0 10px var(--primary);
 }
 #app > section > footer button:active {
@@ -1396,7 +1407,7 @@ label {
   transition-duration: 0.05s;
 }
 #app aside footer button:hover {
-  background-color: #4159e9;
+  background-color: #1e3636;
 }
 #app aside footer button:active {
   background-color: var(--dark);
@@ -1531,6 +1542,7 @@ label {
   list-style: none;
   padding: var(--space);
   max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
 }
 #list-products::-webkit-scrollbar {
@@ -1541,16 +1553,16 @@ label {
   margin: 10px 0;
 }
 #list-products::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.25);
+  background: rgba(16, 29, 29, 0.25);
 }
 #list-products:hover::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.5);
+  background: rgba(16, 29, 29, 0.5);
 }
 #list-products:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(31, 59, 229, 0.75);
+  background: rgba(16, 29, 29, 0.75);
 }
 #list-products:hover::-webkit-scrollbar-thumb:active {
-  background: #1f3be5;
+  background: #101d1d;
 }
 #list-products > li {
   background-color: var(--white);
@@ -1561,12 +1573,17 @@ label {
   box-shadow: 1px 1px 16px -2px #00000052;
 }
 #list-products > li > div {
-  padding: 10px;
+  padding: 5px;
 }
 #list-products > li .id {
-  width: 25%;
+  width: 30%;
   max-width: 200px;
-  min-width: 150px;
+  min-width: 90px;
+}
+#list-products > li .id > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 #list-products > li .content {
   flex: 1;
@@ -1593,6 +1610,7 @@ label {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 }
 #list-products > li .content ul li b {
   font-size: 16px;
@@ -1601,6 +1619,10 @@ label {
   justify-content: center;
   border-left: var(--dark) 1px dashed;
   margin-left: 10px;
+}
+#list-products > li .actions.offline {
+  background-color: #929292;
+  border-radius: 0 10px 10px 0;
 }
 #list-products > li .actions a {
   width: 40px;
@@ -1647,16 +1669,16 @@ label {
   margin: 10px 0;
 }
 #list-orders::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.25);
+  background: rgba(16, 29, 29, 0.25);
 }
 #list-orders:hover::-webkit-scrollbar-thumb {
-  background: rgba(31, 59, 229, 0.5);
+  background: rgba(16, 29, 29, 0.5);
 }
 #list-orders:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(31, 59, 229, 0.75);
+  background: rgba(16, 29, 29, 0.75);
 }
 #list-orders:hover::-webkit-scrollbar-thumb:active {
-  background: #1f3be5;
+  background: #101d1d;
 }
 #list-orders > li {
   background-color: var(--white);
@@ -1769,7 +1791,7 @@ label {
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(31, 59, 229, 0.25);
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   font-weight: bold;

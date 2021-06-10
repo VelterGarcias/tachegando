@@ -7,6 +7,7 @@
   @include components.scrollbar;
   padding: var(--space);
   max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
   > li {
     background-color: var(--white);
@@ -16,12 +17,17 @@
     color: var(--dark);
     box-shadow: 1px 1px 16px -2px #00000052;
     > div {
-      padding: 10px;
+      padding: 5px;
     }
     .id {
-      width: 25%;
+      width: 30%;
       max-width: 200px;
-      min-width: 150px;
+      min-width: 90px;
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
     .content {
       flex: 1;
@@ -40,12 +46,13 @@
         flex-direction: column;        
         justify-content: space-around;
         li {
-          b {
-            font-size: 16px;
-          }
           display: flex;
           flex-direction: row;
           align-items: center;
+          flex-wrap: wrap;
+          b {
+            font-size: 16px;
+          }
         }
       }
       font-size: 14px;
@@ -54,6 +61,10 @@
       justify-content: center;
       border-left: var(--dark) 1px dashed;
       margin-left: 10px;
+      &.offline {
+        background-color: #929292;
+        border-radius: 0 10px 10px 0;
+      }
       a {
         width: 40px;
         height: 40px;

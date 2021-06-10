@@ -9,7 +9,7 @@ import {
   renderOrderList,
 } from "./utils";
 
-const prod = true;
+const prod = false;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
@@ -141,7 +141,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     let download = true;
 
     if(company) {
-      if (company.hash === hashName && prod) {
+      if (company.hash === hashName) {
         console.log("tem", company.name, company);
         download = false;
       } else {
