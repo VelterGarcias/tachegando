@@ -35,8 +35,12 @@
 
         <button type="button" class="choose-photo">Alterar Logotipo</button>
       </div>
-      <label for="is_online">Produto Online?</label>
-      <input type="checkbox" name="is_online" value="1" />
+      <h4 for="is_online">Produto Online?</h4>
+      <!-- <input type="checkbox" name="is_online" value="1" /> -->
+      <label class="switch">
+        <input type="checkbox" name="is_online" value="1" >
+        <span class="slider round"></span>
+      </label>
       <label for="name">Nome do Produto</label>
       <input type="text" name="name" placeholder="Nome do Produto" required />
       <label for="category">Categoria da Produto</label>

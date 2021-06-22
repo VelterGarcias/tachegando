@@ -144,6 +144,19 @@
     main {
       flex: 1;
       width: 100%;
+      @media (min-width: vars.$desktopStartWidth) {
+        max-height: calc(100vh - 100px);
+        overflow-y: scroll;
+        @include components.scrollbar;
+        &::-webkit-scrollbar-track {
+          background: transparent;
+          margin: 10px 0;
+        }
+        &::-webkit-scrollbar-track:hover {
+          background: colors.$white;
+        }
+      }
+      
       > header {
         @include components.horizontalTitle;
         width: 100%;

@@ -88,7 +88,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
       }
       options = `
               <li class="row">
-                <input type="text" name="option" />
+                <input type="text" name="option" placeholder="Nome da Opção" />
                 <button type="button" class="btn-remove">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
@@ -122,7 +122,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         <form>
           <ul class="options">
             <input type="hidden"  name="id" value="${product.id}" />
-            <label for="option-title">Título do Adicional</label>
+            <label class="title" for="option-title">Título do Adicional</label>
             <div class="row">  
               <input type="text"  name="option-title" placeholder="Nome do Adicional" value="${product["option-title"]}" />
             </div>
@@ -158,7 +158,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         document.querySelector("#modal .options"),
         `li class="row"`,
         `
-        <input type="text" name="option" />
+        <input type="text" name="option" placeholder="Nome da Opção" />
         <button type="button"class="btn-remove">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
@@ -181,8 +181,12 @@ document.querySelectorAll("#form-product").forEach((form) => {
       const options = []
       optionsLi.forEach(li => {
         let dataOpt = getFormValues(li);
-        console.log(dataOpt.price.replace(",", "."))
-        dataOpt.price = dataOpt.price.replace(",", ".");
+        if(dataOpt.price == '') {
+          dataOpt.price = 0;
+        } else {
+          console.log(dataOpt.price.replace(",", "."))
+          dataOpt.price = dataOpt.price.replace(",", ".");
+        }
         options.push(dataOpt);
       });
 
@@ -318,15 +322,18 @@ document.querySelectorAll("#form-product").forEach((form) => {
           
 
           aditionalsOptions += `
-                    <label for="${aditional.id}" >${aditional["option-title"]}</label>
-                    <input type="checkbox" name="aditionals" id="${aditional.id}" value="${aditional.id}" ${aditionals.find((item) => item.id === aditional.id) ? "checked" : ''} />
+          <div class="row" >
+            <input type="checkbox" name="aditionals" id="${aditional.id}" value="${aditional.id}" ${aditionals.find((item) => item.id === aditional.id) ? "checked" : ''} />
+            <label for="${aditional.id}" >${aditional["option-title"]}</label>
+          </div>
+          
                     `
           
         });
       }
 
     const contentModal =`
-        <form>
+        <form class="form-new-aditional">
             <h3>Escolha os adicionais deste produto</h3>
             ${aditionalsOptions}
           <button type="button" class="new-additional">Novo Adicional</button>
@@ -375,7 +382,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     const divOptions = document.querySelector("#options");
     divOptions.innerHTML = ""
     
-    appendTemplate(divOptions, 'h3', 'Opções')
+    appendTemplate(divOptions, 'h3', 'Opções Adicionais')
 
     if (product) {
       product.forEach(item => {
@@ -395,22 +402,26 @@ document.querySelectorAll("#form-product").forEach((form) => {
           divOptions,
           'ul',
           `
-            <h4 class="option-title">${item["option-title"]}</h4>
-            <button class="btn-edit" data-id="${item.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path
-                  d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
-              </svg>
-              Editar
-            </button>
-            <button type="button" class="btn-remove" data-id="${item.id}">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
-              </svg>
-            </button>
-            <span>Minimo: ${item.min}</span>
-            <span>Máximo: ${item.max}</span>
+            <div>
+              <h4 class="option-title">${item["option-title"]}</h4>
+              <button class="btn-edit" data-id="${item.id}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                  <path d="M0 0h24v24H0V0z" fill="none" />
+                  <path
+                    d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
+                </svg>
+              </button>
+              <button type="button" class="btn-remove" data-id="${item.id}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black"></path>
+                </svg>
+              </button>
+              <div class="min-max row" >
+                <span>Minimo: ${item.min}</span>
+                <span>Máximo: ${item.max}</span>
+              </div>
+              
+            </div>
             ${options}  
           `
         )
