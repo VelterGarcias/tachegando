@@ -235,6 +235,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
     // ============  click nos produtos e mostrar modal ==============
     ulProducts.querySelectorAll(".content").forEach((item) => {
+
       item.addEventListener("click", () => {
         const { name, price, description, photo, aditionals } = productData.find(
           (product) => product.id === item.id
@@ -257,7 +258,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             // Escolha quantas opções desejar. ok
             // Escolha 6 opções. ok
 
-            if (add.min == "" && add.max == "") {
+            if (add.min == "" && add.max == "" || add.min > add.max) {
               min_Max = `<span>Escolha quantas opções desejar.</span>`
             } else if (add.min == 1 && add.max == 1) {
               min_Max = `<span>Escolha apenas 1 opção.</span>`
@@ -271,9 +272,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
               if (add.max == "" || add.max == 0) {
                 min_Max = `<span>Escolha no mínimo ${add.min} ${add.min > 1 ? 'opções' : 'opção'}.</span>`
               } else if (add.max > 0) {
-                min_Max = `<span>Escolha no mínimo ${add.min} ${add.min > 1 ? 'opções' : 'opção'} e no máximo ${add.max} ${add.max > 1 ? 'opções' : 'opção'}.</span>`
+                min_Max = `<span>Escolha entre ${add.min} e ${add.max} ${add.min > 1 ? 'opções' : 'opção'}.</span>`
               }
-
             }
             options += ` 
                       <div>
@@ -334,7 +334,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
           const productOptions = formProductDetails.querySelectorAll('.options-product > div')
           let details = []
           productOptions.forEach(form => {
-            const title = form.querySelector('h4').innerHTML
+            const title = form.querySelector('h4')
             const items = getFormValues(form)
               const detailsFormated = {
                 title,
