@@ -247,12 +247,38 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             console.log(allAditionals);
             if (!allAditionals.find((aditional) => aditional.id === item)) return;
             const add = allAditionals.find((aditional) => aditional.id === item)
+            console.log(add)
+            let min_Max = `<span>Escolha entre ${add.min} e ${add.max} opções.</span>`
+            // Escolha entre 1 e 6 opções. 
+            // Escolha no máximo 6 opções. ok
+            // Escolha apenas uma opção. ok
+            // Escolha no mínimo 4 opções.
+            // Escolha no mínimo 1 opção e no máximo 4 opções.
+            // Escolha quantas opções desejar. ok
+            // Escolha 6 opções. ok
 
+            if (add.min == "" && add.max == "") {
+              min_Max = `<span>Escolha quantas opções desejar.</span>`
+            } else if (add.min == 1 && add.max == 1) {
+              min_Max = `<span>Escolha apenas 1 opção.</span>`
+            } else if (add.min == add.max) {
+              min_Max = `<span>Escolha ${add.max} ${add.max > 1 ? 'opções' : 'opção'}.</span>`
+            } else if (add.min == "" || add.min == 0) {
+              // if (add.max > 0) {
+                min_Max = `<span>Escolha no máximo ${add.max} ${add.max > 1 ? 'opções' : 'opção'}.</span>`
+              // } 
+            } else if (add.min > 0) {
+              if (add.max == "" || add.max == 0) {
+                min_Max = `<span>Escolha no mínimo ${add.min} ${add.min > 1 ? 'opções' : 'opção'}.</span>`
+              } else if (add.max > 0) {
+                min_Max = `<span>Escolha no mínimo ${add.min} ${add.min > 1 ? 'opções' : 'opção'} e no máximo ${add.max} ${add.max > 1 ? 'opções' : 'opção'}.</span>`
+              }
 
-            options += `
+            }
+            options += ` 
                       <div>
                       <h4>${add["option-title"]}</h4>
-                      <span>Escolha entre ${add.min} e ${add.max} opções.</span>
+                      ${min_Max}
                       <ul>
                       `
             add.options.forEach(({option, price}) => {

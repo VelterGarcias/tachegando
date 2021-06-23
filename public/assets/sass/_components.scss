@@ -60,6 +60,10 @@
     margin: 0;
     font-size: 22px;
     font-weight: bold;
+    border-bottom: 1px dotted;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
   }
   ul {
     @include mixins.reset-list;
