@@ -504,18 +504,67 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
   }
 
-  function deleteAditional(id, allAditionals) {
+  function deleteAditional(id, allAditionals, withoutModal) {
     const aditionalsFilter = allAditionals.filter(
       (aditional) => aditional !== id
     );
-  
-    db.collection("products")
-      .doc(produto)
-      .update({ aditionals: aditionalsFilter })
-      .catch((err) => {
-        console.log(err);
-        showAlert(err.message, true);
-      });
+    
+    if (withoutModal) {
+      
+        db.collection("products")
+        .doc(produto)
+        .update({ aditionals: aditionalsFilter })
+        .catch((err) => {
+          console.log(err);
+          showAlert(err.message, true);
+        });
+
+    } else {
+        showModal(`
+          <div class="modal-alert">
+            <h3>De onde deseja EXCLUIR essa opção?</h3>
+            <p>
+              <button id="btn-delete-only">Apenas neste produto</button>
+              <button id="btn-delete" class="danger" >Excluir Totalmente</button>
+              <button id="btn-cancel" class="cancel" >Cancelar</button>
+            </p>
+          </div>
+          
+        `);
+
+          const btnCancel = document.querySelector("#btn-cancel");
+          const btnDelete = document.querySelector("#btn-delete-only");
+          const btnDeleteTotal = document.querySelector("#btn-delete");
+    
+          btnCancel.addEventListener("click", () => {
+            modal.classList.remove("open");
+          });
+    
+          btnDelete.addEventListener("click", () => {
+            db.collection("products")
+            .doc(produto)
+            .update({ aditionals: aditionalsFilter })
+            .catch((err) => {
+              console.log(err);
+              showAlert(err.message, true);
+            });
+            modal.classList.remove("open");
+          });
+
+          btnDeleteTotal.addEventListener("click", () => {
+            db.collection("aditionals")
+            .doc(id)
+            .delete()
+            .then(() => showAlert("Opção EXCLUIDA com sucesso"))
+            .catch((err) => {
+              console.log(err);
+              showAlert(err.message, true);
+            });
+            modal.classList.remove("open");
+            modal.innerHTML = "";
+          });
+    }
+    
   }
 
   auth.onAuthStateChanged(async (user) => {
@@ -559,7 +608,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
                   }
                   Cookies.set("aditionals", aditionals, { expires: 1 });
                 } else {
-                  deleteAditional(aditionalId, productDate[0].aditionals)
+                  deleteAditional(aditionalId, productDate[0].aditionals, true)
                 }
                 renderProductValue();
               });

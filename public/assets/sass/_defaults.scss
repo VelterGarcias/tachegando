@@ -209,9 +209,15 @@ label {
           font-weight: bold;
           text-transform: uppercase;
           font-size: 0.9rem;
+          border: none;
+          border-radius: 9px;
           cursor : pointer;
           &.danger {
             background-color: var(--danger);
+          }
+          &.cancel {
+            background-color: var(--gray);
+            color: black;
           }
         }
         a:first-child {
