@@ -424,6 +424,7 @@ label {
   align-items: center;
   background: #2d2d2d;
   padding-bottom: 40px;
+  min-height: calc(100vh - 48px);
 }
 .auth #form-tabs {
   margin: 0;
@@ -641,7 +642,7 @@ label {
   min-height: var(--space);
 }
 .auth main form footer a {
-  color: var(--white);
+  color: var(--black);
   font-size: 14px;
 }
 .auth main form footer button {
@@ -1409,7 +1410,7 @@ label {
   width: 100%;
   border: #b5b5b5 1px solid;
   border-radius: var(--radius);
-  color: #b5b5b5;
+  color: #1b1b1b;
   font-size: 16px;
   padding: 0 var(--space);
   outline: none;

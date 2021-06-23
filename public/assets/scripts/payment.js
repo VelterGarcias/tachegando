@@ -2,103 +2,104 @@ import firebase from "./firebase-app";
 import IMask from "imask";
 import Cookies from "js-cookie";
 import { formatCurrency, getFormValues, renderOrderList, saveOrder, setFormValues, showAlert } from "./utils";
+import axios from "axios";
 
-const setInstallmentsOptions = (input, order) => {
-  let totalPrice = 0;
+// const setInstallmentsOptions = (input, order) => {
+//   let totalPrice = 0;
 
-  order.forEach((burger) => {
-    totalPrice += burger.total;
-  });
+//   order.forEach((burger) => {
+//     totalPrice += burger.total;
+//   });
 
-  let numberOfInstallments = 6;
+//   let numberOfInstallments = 6;
 
-  const price = totalPrice;
+//   const price = totalPrice;
 
-  for (let i = numberOfInstallments; i >= 1; i--) {
-    if (price / i < 10) {
-      continue;
-    } else {
-      numberOfInstallments = i;
-      break;
-    }
-  }
+//   for (let i = numberOfInstallments; i >= 1; i--) {
+//     if (price / i < 10) {
+//       continue;
+//     } else {
+//       numberOfInstallments = i;
+//       break;
+//     }
+//   }
 
-  input.innerHTML = "";
+//   input.innerHTML = "";
 
-  for (let i = 1; i <= numberOfInstallments; i++) {
-    const option = document.createElement("option");
-    option.innerHTML = `${i}x de ${formatCurrency(
-      totalPrice / i
-    )} (${formatCurrency(totalPrice)})`;
-    option.value = i;
-    input.appendChild(option);
-  }
-};
+//   for (let i = 1; i <= numberOfInstallments; i++) {
+//     const option = document.createElement("option");
+//     option.innerHTML = `${i}x de ${formatCurrency(
+//       totalPrice / i
+//     )} (${formatCurrency(totalPrice)})`;
+//     option.value = i;
+//     input.appendChild(option);
+//   }
+// };
 
-const getBankList = (input) => {
-  const database = firebase.firestore();
+// const getBankList = (input) => {
+//   const database = firebase.firestore();
 
-  database
-    .collection("banks")
-    .orderBy("bankName", "asc")
-    .onSnapshot((snapshot) => {
-      input.innerHTML = "";
+//   database
+//     .collection("banks")
+//     .orderBy("bankName", "asc")
+//     .onSnapshot((snapshot) => {
+//       input.innerHTML = "";
 
-      const bankList = [];
+//       const bankList = [];
 
-      snapshot.forEach((bank) => {
-        bankList.push(bank.data());
-      });
+//       snapshot.forEach((bank) => {
+//         bankList.push(bank.data());
+//       });
 
-      bankList.forEach((bank) => {
-        const option = document.createElement("option");
-        option.innerHTML = bank.bankName;
-        option.value = bank.bankCod;
-        input.appendChild(option);
-      });
-    });
-};
+//       bankList.forEach((bank) => {
+//         const option = document.createElement("option");
+//         option.innerHTML = bank.bankName;
+//         option.value = bank.bankCod;
+//         input.appendChild(option);
+//       });
+//     });
+// };
 
-const validateForm = (data) => {
-  for (let key in data) {
-    if (data[key].trim() === "") {
-      showAlert("Preencha todos os campos para prosseguir", true);
-      return false;
-    }
-  }
+// const validateForm = (data) => {
+//   for (let key in data) {
+//     if (data[key].trim() === "") {
+//       showAlert("Preencha todos os campos para prosseguir", true);
+//       return false;
+//     }
+//   }
 
-  if (data.number.length < 16) {
-    showAlert("O número do cartão de crédito deve conter 16 dígitos", true);
-    return false;
-  }
-  else if (data.code < 3) {
-    showAlert("O código de segurança deve conter ao menos 3 dígitos", true);
-    return false;
-  }
-  else if (data.validate.length < 5) {
-    showAlert("A data de validade do cartão deve conter 4 dígitos", true);
-    return false;
-  }
-  else {
-    const month = data.validate.split('/')[0];
-    const year = data.validate.split('/')[1];
-    const currentYear = new Date().getFullYear().toString().substr(-2);
-    const currentMonth = new Date().getMonth() + 1;
+//   if (data.number.length < 16) {
+//     showAlert("O número do cartão de crédito deve conter 16 dígitos", true);
+//     return false;
+//   }
+//   else if (data.code < 3) {
+//     showAlert("O código de segurança deve conter ao menos 3 dígitos", true);
+//     return false;
+//   }
+//   else if (data.validate.length < 5) {
+//     showAlert("A data de validade do cartão deve conter 4 dígitos", true);
+//     return false;
+//   }
+//   else {
+//     const month = data.validate.split('/')[0];
+//     const year = data.validate.split('/')[1];
+//     const currentYear = new Date().getFullYear().toString().substr(-2);
+//     const currentMonth = new Date().getMonth() + 1;
 
-    if (year < currentYear) {
-      showAlert("A data de validade do cartão é inválida", true);
-      return false;
-    }
-    else if (year == currentYear) {
-      if (month < currentMonth || month > 12) {
-        showAlert("A data de validade do cartão é inválida", true);
-        return false;
-      }
-    }
+//     if (year < currentYear) {
+//       showAlert("A data de validade do cartão é inválida", true);
+//       return false;
+//     }
+//     else if (year == currentYear) {
+//       if (month < currentMonth || month > 12) {
+//         showAlert("A data de validade do cartão é inválida", true);
+//         return false;
+//       }
+//     }
     
-    return true;
-  }
-}
+//     return true;
+//   }
+// }
 
 const submitForm = (form) => {
 
@@ -197,35 +198,40 @@ if (payment) {
   console.log(user);
   if (user) setFormValues(form, user)
 
-  // const inputCardNumber = form.querySelector('[name="number"]');
-  // const inputValidate = form.querySelector('[name="validate"]');
-  // const inputCvvCode = form.querySelector('[name="code"]');
-  // const inputBanks = form.querySelector('[name="bank"]');
-  // const inputInstallments = form.querySelector('[name="installments"]');
+  const inputCep = form.querySelector('[name="cep"]');
 
-  // new IMask(inputCardNumber, {
-  //   mask: "0000 0000 0000 0000",
-  // });
+  new IMask(inputCep, {
+    mask: "00000-000",
+  });
 
-  // new IMask(inputValidate, {
-  //   mask: "00/00",
-  // });
+  inputCep.addEventListener('change', (e) => {
+    const cep = inputCep.value.replace('-','');
+    console.log(cep,cep.length);
+    if (cep.length == 8) {
+      axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(function (response) {
+        // handle success
+        const {bairro, localidade, logradouro, uf} = response.data;
 
-  // new IMask(inputCvvCode, {
-  //   mask: "000[0]",
-  // });
+        const cepData = {
+          adress: logradouro,
+          city: localidade,
+          district: bairro,
+          UF: uf
+        }
 
-  // const order = JSON.parse(sessionStorage.getItem("order")) || [];
-
-  // if (order.length < 1) {
-  //   showAlert("Não possui nenhum pedido", true);
-  //   setTimeout(() => {
-  //     window.location.href = "/";
-  //   }, 4000);
-  // } else {
-  //   setInstallmentsOptions(inputInstallments, order);
-  //   getBankList(inputBanks);
-  // }
+        setFormValues(form, cepData);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+        console.log("finiu");
+      });
+    }
+  })
 
   renderOrderList()
 

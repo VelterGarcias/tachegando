@@ -128,7 +128,7 @@ const addOrder = (data) => {
 //============= começa os códigos das páginas =================
 
 document.querySelectorAll("#shop").forEach(async (page) => {
-  const auth = firebase.auth();
+  // const auth = firebase.auth();
   const db = firebase.firestore();
 
   let hashName = window.location.hash;

@@ -12,6 +12,7 @@
     align-items: center;
     background: #2d2d2d;
     padding-bottom: 40px;
+    min-height: calc(100vh - 48px);
   }
   #form-tabs {
     @include components.tabs;
@@ -112,7 +113,7 @@
       position: relative;
       min-height: var(--space);
       a {
-        color: var(--white);
+        color: var(--black);
         font-size: 14px;
       }
       button {
