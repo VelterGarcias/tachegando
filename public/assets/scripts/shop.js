@@ -7,6 +7,7 @@ import {
   showModal,
   getFormValues,
   renderOrderList,
+  showAlert,
 } from "./utils";
 
 const prod = false;
@@ -279,7 +280,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
                       <div>
                       <h4>${add["option-title"]}</h4>
                       ${min_Max}
-                      <ul>
+                      <ul data-min="${add.min}" data-max="${add.max}">
                       `
             add.options.forEach(({option, price}) => {
               options += `
@@ -322,39 +323,63 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             </form>
         `);
 
-        
 
         const formProductDetails = document.querySelector("#product-details")
+        // const allCheckboxes = formProductDetails.querySelectorAll('input[type="checkbox"]')
+        
+        // allCheckboxes.forEach(input => {
+        //   input.addEventListener("change", (e) => {
+        //     console.log(e.target)
+        //   })
+        // });
 
         formProductDetails.addEventListener("submit", (e) => {
           e.preventDefault();
           const data = getFormValues(formProductDetails)
           console.log("dataForm", data);
 
-          const productOptions = formProductDetails.querySelectorAll('.options-product > div')
-          let details = []
-          productOptions.forEach(form => {
-            const title = form.querySelector('h4')
-            const items = getFormValues(form)
-              const detailsFormated = {
-                title,
-                items: [...items.details]
-              }
-              console.log(items);
+          const ulOptions = formProductDetails.querySelectorAll('.options-product > div > ul');
+          let minOptions = true;
+          ulOptions.forEach(ul => {
+            const countAllCheckeds = ul.querySelectorAll("input[type=checkbox]:checked").length;
+            if (countAllCheckeds < ul.dataset.min) {
+            ul.closest('div').classList.add('error')
+            showAlert(`Aqui você deve escolher pelo menos ${ul.dataset.min} ${ul.dataset.min > 1 ? 'opções' : 'opção'} `, true)
+            minOptions = false;
+            }
+          })
 
-              if (detailsFormated.items.length) {
-                details.push(detailsFormated)
-              }
+          if (minOptions) {
+
+            const productOptions = formProductDetails.querySelectorAll('.options-product > div')
+            let details = []
+            productOptions.forEach(form => {
+              const title = form.querySelector('h4').innerHTML
+              const items = getFormValues(form)
+                const detailsFormated = {
+                  title,
+                  items: [...items.details]
+                }
+                console.log(items);
+
+                if (detailsFormated.items.length) {
+                  details.push(detailsFormated)
+                }
+                
               
-            
-            
-          });
-          console.log("details", details);
-          data.details = details;
-          addOrder(data);
-          const modal = document.querySelector("#modal");
-          modal.classList.remove("open");
-          modal.innerHTML = "";
+              
+            });
+            console.log("details", details);
+            data.details = details;
+            addOrder(data);
+            const modal = document.querySelector("#modal");
+            modal.classList.remove("open");
+            modal.innerHTML = "";
+
+          } else {
+            console.log("Não deu");
+          }
+          
         })
 
         const handleOptions = formProductDetails.querySelectorAll("input[type=checkbox]")
@@ -363,18 +388,38 @@ document.querySelectorAll("#shop").forEach(async (page) => {
           input.addEventListener("change", () => {
             console.log(input.value.split("=")[1]);
             console.log(input.checked);
-            let result = 0
-            const totalSpan = formProductDetails.querySelector('#subtotal')
+            
+            const ulParent = input.closest('ul')
+            ulParent.closest('div').classList.remove('error')
+            const countCheckboxesChecked = ulParent.querySelectorAll("input[type=checkbox]:checked").length;
 
-            if (input.checked) {
-              result = Number(totalSpan.dataset.subtotal) + Number(input.value.split("=")[1])
+            if (countCheckboxesChecked > ulParent.dataset.max && ulParent.dataset.max > 0) {
+              input.checked = false;
+              showAlert(`Neste opicional você pode escolher apenas ${ulParent.dataset.max} ${ulParent.dataset.max > 1 ? 'opções' : 'opção'} `, true)
+
             } else {
-              result = Number(totalSpan.dataset.subtotal) - Number(input.value.split("=")[1])
+
+              // Códigos para calcular e colocar o valor no TOTAL do Modal
+              let result = 0
+              const totalSpan = formProductDetails.querySelector('#subtotal')
+
+              if (input.checked) {
+                result = Number(totalSpan.dataset.subtotal) + Number(input.value.split("=")[1])
+              } else {
+                result = Number(totalSpan.dataset.subtotal) - Number(input.value.split("=")[1])
+              }
+
+              totalSpan.dataset.subtotal = result
+              totalSpan.innerHTML = `Total: ${formatCurrency(result)}`
+              formProductDetails.querySelector("input[name=total]").value = result
+
             }
 
-            totalSpan.dataset.subtotal = result
-            totalSpan.innerHTML = `Total: ${formatCurrency(result)}`
-            formProductDetails.querySelector("input[name=total]").value = result
+            console.log(countCheckboxesChecked, ulParent.dataset.min, ulParent.dataset.max)
+
+            
+
+
           })
         });
         
