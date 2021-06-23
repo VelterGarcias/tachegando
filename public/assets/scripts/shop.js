@@ -112,12 +112,12 @@ const addOrder = (data) => {
         data.id = Number(Cookies.get("nextOrderId"))
         oldOrder.push(data);
         Cookies.set("nextOrderId", ++data.id, { expires: 15 });
-        Cookies.set("order", oldOrder, { expires: 15 });
+        Cookies.set("order", oldOrder, { expires: 1 });
         console.log("aqui1");
       } else {
         data.id = 0;
         Cookies.set("nextOrderId", ++data.id, { expires: 15 });
-        Cookies.set("order", [data], { expires: 15 });
+        Cookies.set("order", [data], { expires: 1 });
         console.log("aqui2");
       }
       renderOrderList();
@@ -179,6 +179,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
     logo.src = company.photo;
     companyName.innerHTML = company.name;
+    document.title = company.name;
     companySlogam.innerHTML = company.message;
 
     let productData = [];

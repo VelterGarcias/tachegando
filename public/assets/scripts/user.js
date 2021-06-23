@@ -24,7 +24,7 @@ document.querySelectorAll("#menu-admin").forEach((page) => {
         <img src="assets/images/close.svg" alt="" />
         <ul>
         <li><a href="./products.html">Produtos</a></li>
-        <li><a href="./updateBusiness.html">Editar Empresa</a></li>
+        <li><a href="./updateBusiness.html">Dados da Empresa</a></li>
         </ul>
         <button type="button" id="logout">Deslogar</button>
     `);
