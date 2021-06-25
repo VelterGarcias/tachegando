@@ -48,6 +48,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   const bodyElement = document.body;
 
   const hidePixOptions = () => {
+    console.log("exec")
     if(inputPix.checked) {
       document.querySelector('.wrap-pix').style.display = 'block';
     } else {
@@ -58,7 +59,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   inputPix.addEventListener('change', (e) => {
     hidePixOptions();
   })
-  hidePixOptions();
+
 
   const uploadFile = (files) => {
     if (files) {
@@ -145,6 +146,8 @@ document.querySelectorAll("#form-update").forEach((form) => {
           document.querySelectorAll(".second").forEach((btn) => {
             btn.style = `background-color: ${userDate[0].second_color}`;
           });
+          
+          hidePixOptions();
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {
@@ -241,4 +244,5 @@ document.querySelectorAll("#form-update").forEach((form) => {
   inputHash.addEventListener('change', (e)=>{
     verifyUniqueHash(db, inputHash);
   })
+
 });
