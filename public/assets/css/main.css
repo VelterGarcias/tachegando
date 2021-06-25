@@ -394,6 +394,86 @@ label {
   right: 0px;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.ali-center {
+  align-items: center;
+}
+
+.j-center {
+  justify-content: center;
+}
+
+.hide {
+  display: none;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 .auth header {
   justify-content: center;
   align-items: center;
@@ -442,6 +522,7 @@ label {
   align-items: flex-end;
   justify-content: center;
   list-style: none;
+  height: 110px;
   background-color: #000000;
   width: 100%;
 }
@@ -467,7 +548,8 @@ label {
   background-color: #dbdbdb;
 }
 .auth #form-tabs li {
-  width: 175px;
+  width: 45%;
+  max-width: 175px;
 }
 .auth #form-tabs a {
   display: flex;
@@ -522,13 +604,10 @@ label {
   padding: var(--space);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
-  width: 350px;
+  max-width: 350px;
+  width: 90%;
   z-index: 1;
   background-color: #dbdbdb;
-  /* The switch - the box around the slider */
-  /* Hide default HTML checkbox */
-  /* The slider */
-  /* Rounded sliders */
 }
 .auth main form .wrap-photo {
   width: 250px;
@@ -543,6 +622,7 @@ label {
   font-weight: bold;
   width: max-content;
   max-width: 300px;
+  max-width: 100%;
   overflow-wrap: break-word;
 }
 .auth main form .row {
@@ -727,67 +807,15 @@ label {
   background-color: var(--light);
   cursor: progress;
 }
-.auth main form .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-.auth main form .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.auth main form .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-.auth main form .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-.auth main form input:checked + .slider {
-  background-color: #2196F3;
-}
-.auth main form input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-.auth main form input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-.auth main form .slider.round {
-  border-radius: 34px;
-}
-.auth main form .slider.round:before {
-  border-radius: 50%;
-}
 .auth #options {
   background-color: #ffffff;
   padding: var(--space);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
-  width: 350px;
+  max-width: 350px;
+  width: 90%;
   z-index: 0;
   margin-top: -20px;
-}
-.auth #options .row {
-  flex-direction: row;
 }
 .auth #options h3 {
   margin: 10px 0;
@@ -1458,6 +1486,29 @@ label {
   width: 100%;
   max-width: 768px;
 }
+#app > section.page form .label-delivery {
+  margin-left: 7px;
+  font-size: 19px;
+  font-weight: bold;
+}
+#app > section.page form .msg-delivery {
+  max-width: 70%;
+  padding-left: 5px;
+}
+#app > section.page form #tax-delivery, #app > section.page form #msg-money, #app > section.page form #msg-pix, #app > section.page form #msg-card {
+  background: whitesmoke;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 8px -4px black;
+  margin: 10px 0;
+}
+#app > section.page form #tax-delivery input, #app > section.page form #msg-money input, #app > section.page form #msg-pix input, #app > section.page form #msg-card input {
+  margin-top: 10px;
+  background-color: white;
+}
+#app > section.page form #tax-delivery span, #app > section.page form #msg-money span, #app > section.page form #msg-pix span, #app > section.page form #msg-card span {
+  font-weight: bold;
+}
 #app > section.page form input,
 #app > section.page form select {
   height: 50px;
@@ -1485,6 +1536,13 @@ label {
 #app > section.page form select + select,
 #app > section.page form select + .fields {
   margin-top: var(--space);
+}
+#app > section.page form input[type=radio],
+#app > section.page form select[type=radio] {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 7px;
 }
 #app > section.page form .fields {
   flex-direction: row;
@@ -1541,6 +1599,7 @@ label {
   color: var(--dark);
   height: 64px;
   z-index: 2;
+  box-shadow: 0 0 9px #0000005e;
   transition: height 0.3s ease-in-out;
 }
 #app aside header {
@@ -1722,6 +1781,7 @@ label {
   width: 90px;
   font-size: 18px;
   padding: 0 10px;
+  z-index: 2;
 }
 #app aside footer.payment button {
   width: 120px;

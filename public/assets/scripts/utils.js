@@ -52,20 +52,21 @@ export function setFormValues(form, values) {
           break;
 
         case "radio":
+          form.querySelector(
+                `[name="${key}"][value="${values[key]}"]`
+              ).checked = true;
+          break;
         case "checkbox":
-          console.log(field.name)
-          console.log(values[key])
+          // console.log(field.name)
+          // console.log(values[key])
           
           if (field.name.startsWith("is")) {
             form.querySelector(`[name=${key}]`).checked = values[key];
           } else {
             if (values[key] != '') {
-              console.log(`form.querySelector(
-                [name=${key}][value="${values[key]}"]
-              ).checked = true;`)
               values[key].forEach(check => {
                 form.querySelector(
-                  `[name=${key}][value="${check}"]`
+                  `[name="${key}"][value="${check}"]`
                 ).checked = true;
               });
             }
@@ -162,7 +163,7 @@ export function appendTemplate(element, tag, html) {
 
 export function onSnapshotError(err) {
   showAlertError()(err);
-  console.error(err);
+  // console.error(err);
   setTimeout(() => {
     // window.location.href = "/login.html";
   }, 2000);
@@ -253,25 +254,28 @@ export function  renderOrderList() {
   let total = 0;
 
   const currentOrder = Cookies.getJSON("order")
+  // console.log("currentOrder", currentOrder)
 
   currentOrder.forEach((item) => {
-    console.log("orderList", item);
+    // console.log("orderList", item);
     total += Number(item.total);
     let details = ''
 
-    if(!item.details.empty) {
-      console.log(item.details);
-      item.details.forEach(detail => {
-        let items = ''
-        console.log(detail);
-        detail.items.forEach(detailItem => {
-          console.log(detailItem);
-          const [name, price] = detailItem.split('=')
-          items = items + `<span>&emsp;${name} ${price ? `<small> (+ ${formatCurrency(price)})</small>` : ''}</span>`
-        })
-        console.log(details);
-        details = details + `<span><strong>${detail.title}</strong></span>${items}`
-      });
+    if(item.details) {
+      if(!item.details.empty) {
+        // console.log(item.details);
+        item.details.forEach(detail => {
+          let items = ''
+          // console.log(detail);
+          detail.items.forEach(detailItem => {
+            // console.log(detailItem);
+            const [name, price] = detailItem.split('=')
+            items = items + `<span>&emsp;${name} ${price ? `<small> (+ ${formatCurrency(price)})</small>` : ''}</span>`
+          })
+          // console.log(details);
+          details = details + `<span><strong>${detail.title}</strong></span>${items}`
+        });
+      }
     }
     if(item.comments) {
       details = details + `<small><strong>Observações: </strong>${item.comments}</small>`
@@ -314,11 +318,18 @@ export function setRemoveBuguerButtonEvent(list) {
     button.addEventListener("click", (e) => {
       const removeBurguerId = e.currentTarget.dataset.orderid
 
-      console.log(removeBurguerId);
+      // console.log(removeBurguerId);
       let order =  Cookies.getJSON("order")
-      order = order.filter((x) => +x.id !== +removeBurguerId);
+      order = order.filter((x) => {
+        if (x.name != 'Taxa de Entrega') {
+          if (+x.id !== +removeBurguerId) return true;
+        } else {
+          showAlert('Para remover a taxa de entrega DESATIVE a opção entrega na sua casa.', true)
+          return true;
+        }
+      });
 
-      console.log(order);
+      // console.log(order);
 
       Cookies.set("order", order, { expires: 15 });
 

@@ -40,38 +40,50 @@
       <main>
         <section>
           <form>
+            <h3>Seu nome</h3>
             <input type="text" name="name" placeholder="Seu nome" required/>
-            <h3>Endereço</h3>
-            <input type="text" name="cep" placeholder="CEP (não obrigatório)" />
-            <input type="text" name="adress" placeholder="Endereço" required/>
-            <input type="number" name="number" placeholder="Nº da Casa" required/>
-            <input type="text" name="complement" placeholder="Complemento (não obrigatório)" />
-            <input type="text" name="district" placeholder="Bairro" required/>
-            <input type="text" name="city" placeholder="Cidade" required/>
-            <input type="text" name="UF" placeholder="Estado" required/>
-
-            <h3>Tipo de Entrega</h3>
-            <div class="row">
-              <input type="radio" id="money" name="delivery" value="dinheiro">
-              <label for="money">Entrega na sua casa</label>
+            <br />
+            <br />
+            <div class="row ali-center">
+              <label class="switch">
+                <input type="checkbox" id="delivery" name="delivery" value="1" autocomplete="off">
+                <span class="slider round"></span>
+              </label>
+              <label class="label-delivery" for="delivery" >Entregar na sua casa</label>
             </div>
-            <div class="row">
-              <input type="radio" id="card" name="delivery" value="cartao">
-              <label for="card">Buscar no balcão</label>
-            </div>
-
+            <small class="msg-delivery">Ative essa opção se desejar receber o seu pedido em casa.</small>
+            
+            <p id="tax-delivery" class="hide">Para entregar o seu pedido na sua casa cobramos uma taxa de entrega de <strong>R$0,00</strong>.</p>
+            <div id="adress"></div>
+            
+            <br />
             <h3>Método de Pagamento</h3>
-            <div class="row">
-              <input type="radio" id="money" name="payments" value="dinheiro">
-              <label for="money">Com Dinheiro</label>
-            </div>
-            <div class="row">
+            <div class="row ali-center hide">
               <input type="radio" id="card" name="payments" value="cartao">
               <label for="card">No Cartão</label>
             </div>
-            <div class="row">
+            <p id="msg-card" class="hide">Ok! O motoboy vai levar a máquininha.</p>
+
+            <div class="row ali-center hide">
               <input type="radio" id="pix" name="payments" value="pix">
               <label for="pix">Por Pix</label>
+            </div>
+            <p id="msg-pix" class="hide">
+              <small>Nossa chave pix:</small><br/>
+              <strong id="pix-company"></strong>
+              <br/>
+              <br/>
+              <small>Após realizar o pagamento com o PIX nos envie o <strong>comprovante</strong> para ficar mais fácil identificar o seu pagamento.</small>
+            </p>
+
+            <div class="row ali-center hide">
+              <input type="radio" id="money" name="payments" value="dinheiro">
+              <label for="money">Com Dinheiro</label>
+            </div>
+            <div id="msg-money" class="hide">
+              <span>Precisa de Troco para quanto?</span>
+              <small>Informe abaixo caso necessário.</small>
+              <input type="text" id="money-change" name="money-change" placeholder="R$"/>
             </div>
 
             <button type="submit" style="display: none">Send</button>

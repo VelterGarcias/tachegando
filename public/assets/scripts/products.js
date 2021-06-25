@@ -98,7 +98,7 @@ document.querySelectorAll("#list-products").forEach((page) => {
   
         btnDelete.addEventListener("click", () => {
           const id = getOrderId(btn);
-          console.log(id);
+          // console.log(id);
           // const order_id = btn.closest(".actions").dataset.order;
           db.collection("products")
             .doc(id)
@@ -142,7 +142,7 @@ document.querySelectorAll("#list-products").forEach((page) => {
         });
         
         // page.querySelector('p').innerHTML = products[0].name
-        console.log(products);
+        // console.log(products);
 
         renderProductsAdmin(page, products);
 
@@ -151,16 +151,16 @@ document.querySelectorAll("#list-products").forEach((page) => {
       
 
       btnNewProduct.addEventListener("click", (e) => {
-        console.log("novo");
+        // console.log("novo");
 
         db.collection("products")
         .add({name: "Novo Produto"})
         .then((res) => {
-          console.log(res.id)
+          // console.log(res.id)
           window.location.href = `/product.html?produto=${res.id}`
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           showAlert(err.message, true)
         })
 

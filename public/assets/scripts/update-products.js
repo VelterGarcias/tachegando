@@ -176,7 +176,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     saveFormOptions.addEventListener('submit', (e) => {
       e.preventDefault();
       const dataAditional = getFormValues(saveFormOptions);
-      console.log("dataAditional", dataAditional);
+      // console.log("dataAditional", dataAditional);
       const optionsLi = saveFormOptions.querySelectorAll('li')
       const options = []
       optionsLi.forEach(li => {
@@ -184,7 +184,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         if(dataOpt.price == '') {
           dataOpt.price = 0;
         } else {
-          console.log(dataOpt.price.replace(",", "."))
+          // console.log(dataOpt.price.replace(",", "."))
           dataOpt.price = dataOpt.price.replace(",", ".");
         }
         options.push(dataOpt);
@@ -224,7 +224,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
           })
           .then(() => showAlert("Adicional salvo com sucesso"))
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             showAlert(err.message, true);
           })
           
@@ -232,15 +232,15 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
         dataAditional.companyId = userGlobal.uid;
 
-        console.log("dataAditional", dataAditional);
-        console.log("newAditionals", newAditionals);
+        // console.log("dataAditional", dataAditional);
+        // console.log("newAditionals", newAditionals);
 
         db.collection("aditionals")
           .doc(dataAditional.id)
           .set({dataAditional})
           .then(() => showAlert("Adicional salvo com sucesso"))
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             showAlert(err.message, true);
           })
 
@@ -312,8 +312,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
       let aditionals = Cookies.getJSON("aditionals")
       if (!aditionals) aditionals = []
 
-      console.log("allAditionals", allAditionals);
-      console.log("aditionals", aditionals);
+      // console.log("allAditionals", allAditionals);
+      // console.log("aditionals", aditionals);
 
 
       if (allAditionals) {
@@ -358,13 +358,13 @@ document.querySelectorAll("#form-product").forEach((form) => {
       e.preventDefault();
       const {aditionals} = getFormValues(saveFormOptions)
       
-      console.log(aditionals);
+      // console.log(aditionals);
 
       db.collection("products")
       .doc(produto)
       .update({ aditionals: aditionals })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         showAlert(err.message, true);
       });
 
@@ -442,24 +442,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
       
   }
 
-  // const firebaseUpdateProduct = (productData) => {
-
-  //   // Cookies.set("product", productData, { expires: 1 });
-
-  //   db.collection("products")
-  //     .doc(produto)
-  //     .update(productData)
-  //     .then(() => showAlert("Produto salvo com sucesso"))
-  //     .catch((err) => {
-  //       console.log(err);
-  //       showAlert(err.message, true);
-  //     })
-  //     .finally(() => {
-        
-  //     });
-  //     renderProductValue();
-  // }
-
   const renderProductValue = () => {
 
     const productData = Cookies.getJSON("product")
@@ -474,7 +456,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         btn.addEventListener("click", (e) => {
           const id = aditionals.findIndex((aditional) => aditional.id === btn.dataset.id)
           // const data = aditionals.filter(aditional => aditional.id === btn.dataset.id)
-          console.log("data-btn", aditionals[id]);
+          // console.log("data-btn", aditionals[id]);
           editProductOptions(aditionals[id]);
         })
       });
@@ -483,12 +465,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         btn.addEventListener("click", (e) => {
           
           deleteAditional(btn.dataset.id, productData.aditionals)
-          // const newAditionals = productData.aditionals.filter((product) => product.id !== btn.dataset.id);
-          // productData.aditionals = newAditionals
-          // console.log("foi", productData, newAditionals);
-  
-          // firebaseUpdateProduct(productData)
-          // renderProductValue();
+          
         })
       });
 
@@ -515,7 +492,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
         .doc(produto)
         .update({ aditionals: aditionalsFilter })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           showAlert(err.message, true);
         });
 
@@ -545,7 +522,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
             .doc(produto)
             .update({ aditionals: aditionalsFilter })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
               showAlert(err.message, true);
             });
             modal.classList.remove("open");
@@ -557,7 +534,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
             .delete()
             .then(() => showAlert("Opção EXCLUIDA com sucesso"))
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
               showAlert(err.message, true);
             });
             modal.classList.remove("open");
@@ -568,7 +545,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
   }
 
   auth.onAuthStateChanged(async (user) => {
-    console.log(user);
+    // console.log(user);
     if (user) {
       userGlobal = user;
 
@@ -579,20 +556,16 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
           productDate.push(snapshot.data());
 
-          // snapshot.forEach((item) => {
-          //   console.log(item.id);
-          //   productDate.push(item.data()); 
-          // });
           imageElement.src = productDate[0].photo || "./assets/images/user.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
-          console.log("productDate", productDate);
+          // console.log("productDate", productDate);
           let aditionals = []
           if (productDate[0].aditionals) {
 
             if (!productDate[0].aditionals.length) renderProductValue();
 
             productDate[0].aditionals.forEach((aditionalId, i) => {
-              console.log("aditionalId", aditionalId);
+              // console.log("aditionalId", aditionalId);
               db.collection("aditionals")
               .doc(aditionalId)
               .onSnapshot((snapshot) => {
@@ -642,7 +615,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     btnSubmit.innerHTML = "Salvando...";
 
     const productData = getFormValues(form);
-    console.log("productData", productData)
+    // console.log("productData", productData)
     productData.photo = imageElement.src;
     productData.companyId = userGlobal.uid;
     productData.price = productData.price.replace(",", ".");
@@ -652,7 +625,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
       .update(productData)
       .then(() => showAlert("Produto salvo com sucesso"))
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         showAlert(err.message, true);
       })
       .finally(() => {

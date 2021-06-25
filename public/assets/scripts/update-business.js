@@ -48,7 +48,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   const bodyElement = document.body;
 
   const hidePixOptions = () => {
-    console.log("exec")
+    // console.log("exec")
     if(inputPix.checked) {
       document.querySelector('.wrap-pix').style.display = 'block';
     } else {
@@ -98,10 +98,10 @@ document.querySelectorAll("#form-update").forEach((form) => {
     });
     if(!hashExist || atualCompanyHash == search) {
       // console.log("hashExist", hashExist);
-      console.log("Novo");
+      // console.log("Novo");
       input.classList.add('success')
     } else {
-      console.log("Novo");
+      // console.log("Novo");
       input.classList.add('danger')
     }
   }
@@ -110,7 +110,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
 
   const userDate = [];
   auth.onAuthStateChanged((user) => {
-    console.log(user);
+    // console.log(user);
     
     if (user) {
       userGlobal = user;
@@ -122,7 +122,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
           snapshot.forEach((item) => {
             userDate.push(item.data());
           });
-          console.log("userDate", userDate);
+          // console.log("userDate", userDate);
           if (userDate.length == 0 ) {
             userDate.push({
               name: user.displayName,
@@ -176,8 +176,8 @@ document.querySelectorAll("#form-update").forEach((form) => {
     companyData.photo = userGlobal.photoURL
     companyData.userId = userGlobal.uid
 
-    console.log(companyData);
-    console.log(userDate[0].name)
+    // console.log(companyData);
+    // console.log(userDate[0].name)
 
     db.collection("companies")
       .doc(userGlobal.uid)
@@ -186,7 +186,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
       .then(() => userGlobal.updateEmail(userDate[0].email))
       .then(() => showAlert("Usuário atualizado com sucesso"))
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         showAlert(err.message, true)
       })
       .finally(() => {
@@ -201,7 +201,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   });
 
   buttonElement.addEventListener("click", (e) => {
-    console.log(cropper);
+    // console.log(cropper);
     if (cropper) {
       imageElement.src = cropper.getCroppedCanvas().toDataURL("image/png");
 

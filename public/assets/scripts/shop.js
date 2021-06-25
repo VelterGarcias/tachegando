@@ -16,14 +16,14 @@ const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
   const categoryWrapper = document.querySelector('div.category')
   categoryWrapper.innerHTML = "";
-  console.log("productOptions", productOptions);
+  // console.log("productOptions", productOptions);
 
   let categories = [...new Set(productOptions.map(item => item.category))];
-  console.log("categories", categories);
+  // console.log("categories", categories);
 
   categories.forEach(category => {
     const productsInCategory = productOptions.filter((product) => product.category === category)
-    console.log("productsInCategory", productsInCategory);
+    // console.log("productsInCategory", productsInCategory);
 
     
 
@@ -60,26 +60,6 @@ const renderProducts = (targetElement, productOptions) => {
       `
     );
 
-    // productsInCategory.forEach((item) => {
-    //   appendTemplate(
-    //     targetElement,
-    //     "li",
-    //     `
-    //     <div id=${item.id} class="content">
-    //       <img class="image-product" src=${item.photo} alt="Foto do ${item.name}">
-    //       <div class="data-product" >
-    //         <h3>${item.name}</h3>
-    //         <span>${formatCurrency(item.price)}</span>
-    //       </div>
-    //     </div>
-    //     <div class="options-product" >
-    //       <button class="add-product" data-id="${item.id}">
-    //         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-    //       </button>
-    //     </div>
-    //     `
-    //   );
-    // });
 
 
   })
@@ -89,23 +69,7 @@ const renderProducts = (targetElement, productOptions) => {
 
 const addOrder = (data) => {
     
-      // console.log(e.currentTarget);
-      // console.log("data", data);
-      // let details = []
-      // if (!data.details.empty) {
-      //   data.details.forEach(detail => {
-      //     const [name, price] = detail.split('=')
-      //     details.push({name, price})
-      //   });
-      // }
-      // const newOrder = {
-      //   name: data.name,
-      //   price: data.total,
-      //   photo: data.photo,
-      //   details
-      // };
 
-      // console.log(details);
       const oldOrder = Cookies.getJSON("order");
       if (oldOrder) {
         // data.find( product => product.id === idBtn );
@@ -113,15 +77,15 @@ const addOrder = (data) => {
         oldOrder.push(data);
         Cookies.set("nextOrderId", ++data.id, { expires: 15 });
         Cookies.set("order", oldOrder, { expires: 1 });
-        console.log("aqui1");
+        // console.log("aqui1");
       } else {
         data.id = 0;
         Cookies.set("nextOrderId", ++data.id, { expires: 15 });
         Cookies.set("order", [data], { expires: 1 });
-        console.log("aqui2");
+        // console.log("aqui2");
       }
       renderOrderList();
-      console.log("order", Cookies.getJSON("order"));
+      // console.log("order", Cookies.getJSON("order"));
 
 };
 
@@ -133,7 +97,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
   let hashName = window.location.hash;
   let allAditionals = []
-  console.log(hashName);
+  // console.log(hashName);
   if (hashName) {
     let timeout = 1000;
     hashName = hashName.substring(1);
@@ -143,7 +107,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
     if(company) {
       if (company.hash === hashName) {
-        console.log("tem", company.name, company);
+        // console.log("tem", company.name, company);
         download = false;
       } else {
         Object.keys(Cookies.get()).forEach(function(cookie) {
@@ -154,7 +118,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     
     if (download) {
       company = null;
-      console.log("Não tem");
+      // console.log("Não tem");
 
       const snapshot = await db
         .collection("companies")
@@ -163,11 +127,11 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
       if (snapshot.empty) return;
 
-      console.log(snapshot);
+      // console.log(snapshot);
       snapshot.forEach((item) => {
         company = item.data();
       });
-      console.log(company);
+      // console.log(company);
 
       Cookies.set("company", company, { expires: 0.5 });
     }
@@ -205,14 +169,14 @@ document.querySelectorAll("#shop").forEach(async (page) => {
           product.id = item.id;
           productData.push(product);
         }
-        console.log("product", product.is_online, productData);
+        // console.log("product", product.is_online, productData);
       });
       Cookies.set("products", productData, { expires: 0.041 });
 
       
       const getAditionals = await db.collection("aditionals").where("dataAditional.companyId", "==", company.userId).get();
       if (getAditionals.empty) {
-        console.log("Sem adicionais")
+        // console.log("Sem adicionais")
       } else {
         getAditionals.forEach((item) => {
           let data = item.data();
@@ -226,10 +190,10 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     }
 
     const ulProducts = page.querySelector(".category");
-    console.log("product", productData);
+    // console.log("product", productData);
     renderProducts(ulProducts, productData);
 
-    console.log(Cookies.getJSON("products"));
+    // console.log(Cookies.getJSON("products"));
 
     const body = document.querySelector("body");
     setTimeout(() => {
@@ -251,25 +215,18 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         const { name, price, description, photo, aditionals } = productData.find(
           (product) => product.id === item.id
         );
-        console.log(aditionals);
+        // console.log(aditionals);
         let options = ""
         
         if (aditionals) {
           aditionals.forEach((item, i )=> {
-            console.log(allAditionals);
+            // console.log(allAditionals);
             if (!allAditionals.find((aditional) => aditional.id === item)) return;
             const add = allAditionals.find((aditional) => aditional.id === item)
-            console.log(add)
+            // console.log(add)
             let min_Max = `<span>Escolha entre ${add.min} e ${add.max} opções.</span>`
-            // Escolha entre 1 e 6 opções. 
-            // Escolha no máximo 6 opções. ok
-            // Escolha apenas uma opção. ok
-            // Escolha no mínimo 4 opções.
-            // Escolha no mínimo 1 opção e no máximo 4 opções.
-            // Escolha quantas opções desejar. ok
-            // Escolha 6 opções. ok
-
-            if (add.min == "" && add.max == "" || add.min > add.max) {
+            
+            if (add.min == "" && add.max == "" || add.min > add.max || add.max == 0 && add.min == 0) {
               min_Max = `<span>Escolha quantas opções desejar.</span>`
             } else if (add.min == 1 && add.max == 1) {
               min_Max = `<span>Escolha apenas 1 opção.</span>`
@@ -283,7 +240,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
               if (add.max == "" || add.max == 0) {
                 min_Max = `<span>Escolha no mínimo ${add.min} ${add.min > 1 ? 'opções' : 'opção'}.</span>`
               } else if (add.max > 0) {
-                min_Max = `<span>Escolha entre ${add.min} e ${add.max} ${add.min > 1 ? 'opções' : 'opção'}.</span>`
+                min_Max = `<span>Escolha entre ${add.min} e ${add.max} ${add.max > 1 ? 'opções' : 'opção'}.</span>`
               }
             }
             options += ` 
@@ -346,7 +303,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         formProductDetails.addEventListener("submit", (e) => {
           e.preventDefault();
           const data = getFormValues(formProductDetails)
-          console.log("dataForm", data);
+          // console.log("dataForm", data);
 
           const ulOptions = formProductDetails.querySelectorAll('.options-product > div > ul');
           let minOptions = true;
@@ -370,7 +327,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
                   title,
                   items: [...items.details]
                 }
-                console.log(items);
+                // console.log(items);
 
                 if (detailsFormated.items.length) {
                   details.push(detailsFormated)
@@ -379,7 +336,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
               
               
             });
-            console.log("details", details);
+            // console.log("details", details);
             data.details = details;
             addOrder(data);
             const modal = document.querySelector("#modal");
@@ -387,7 +344,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
             modal.innerHTML = "";
 
           } else {
-            console.log("Não deu");
+            // console.log("Não deu");
           }
           
         })
@@ -396,8 +353,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
         handleOptions.forEach(input => {
           input.addEventListener("change", () => {
-            console.log(input.value.split("=")[1]);
-            console.log(input.checked);
+            // console.log(input.value.split("=")[1]);
+            // console.log(input.checked);
             
             const ulParent = input.closest('ul')
             ulParent.closest('div').classList.remove('error')
@@ -425,7 +382,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
             }
 
-            console.log(countCheckboxesChecked, ulParent.dataset.min, ulParent.dataset.max)
+            // console.log(countCheckboxesChecked, ulParent.dataset.min, ulParent.dataset.max)
 
             
 
@@ -441,72 +398,12 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     if(Cookies.getJSON("order")) renderOrderList();
 
   } else {
-    console.log("sem hash");
+    // console.log("sem hash");
     setTimeout(() => {
       window.location.href = "/products.html";
     }, 2000);
   }
 
-  // auth.onAuthStateChanged((user) => {
-  //   // console.log(user);
-  //   db.collection("bread").onSnapshot((snapshot) => {
-  //     const breadOptions = [];
-
-  //     snapshot.forEach((item) => {
-  //       breadOptions.push(item.data());
-  //     });
-
-  //     sessionStorage.setItem("breadOptions", JSON.stringify(breadOptions));
-
-  //     renderBreadOptions(page, breadOptions);
-  //   }, onSnapshotError);
-
-  //   db.collection("ingredients").onSnapshot((snapshot) => {
-  //     const ingredientsOptions = [];
-
-  //     snapshot.forEach((item) => {
-  //       ingredientsOptions.push(item.data());
-  //     });
-
-  //     sessionStorage.setItem(
-  //       "ingredientsOptions",
-  //       JSON.stringify(ingredientsOptions)
-  //     );
-
-  //     renderIngredientsOptions(page, ingredientsOptions);
-  //   }, onSnapshotError);
-  // });
+ 
 });
 
-
-
-// const addOrder = (data) => {
-//   document.querySelectorAll(".add-product").forEach((option) => {
-//     option.addEventListener("click", (e) => {
-//       // console.log(e.currentTarget);
-//       let idBtn = e.currentTarget.dataset.id;
-//       const { name, price, photo } = data.find(
-//         (product) => product.id === idBtn
-//       );
-//       const newOrder = {
-//         name,
-//         price,
-//         photo,
-//       };
-//       const oldOrder = Cookies.getJSON("order");
-//       if (oldOrder) {
-//         // data.find( product => product.id === idBtn );
-//         newOrder.id = Number(Cookies.get("nextOrderId"))
-//         oldOrder.push(newOrder);
-//         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
-//         Cookies.set("order", oldOrder, { expires: 15 });
-//       } else {
-//         newOrder.id = 0;
-//         Cookies.set("nextOrderId", ++newOrder.id, { expires: 15 });
-//         Cookies.set("order", [newOrder], { expires: 15 });
-//       }
-//       renderOrderList();
-//       console.log("order", Cookies.getJSON("order"));
-//     });
-//   });
-// };

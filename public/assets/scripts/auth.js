@@ -53,7 +53,7 @@ document.querySelectorAll(".auth").forEach((page) => {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((response) => {
           const { user } = response;
-          console.log(values);
+          // console.log(values);
           user
             .updateProfile({
               displayName: values.name,
