@@ -227,10 +227,14 @@ if (payment) {
     if (isDelivery.checked) {
         wrapAdress.innerHTML = ""
         msgDelivery.innerHTML = "Desative essa opção se desejar buscar o seu pedido na loja."
-        taxDelivery.querySelector('strong').innerHTML = `${formatCurrency(company.delivery)}`
-        taxDelivery.classList.remove('hide');
+        if (!isNaN(company.delivery)) {
+          taxDelivery.querySelector('strong').innerHTML = `${formatCurrency(company.delivery)}`
+          taxDelivery.classList.remove('hide');
+          refreshTaxToOrder(company.delivery);
+        }
+        
 
-        refreshTaxToOrder(company.delivery);
+        
 
         appendTemplate(wrapAdress, 'div', `
         <h3>Endereço</h3>
@@ -302,6 +306,8 @@ if (payment) {
         wrap.classList.remove('hide')
       }
     })
+  } else {
+    document.getElementById('payment-title').style.display = 'none'
   }
   
   
