@@ -47,7 +47,7 @@
       <h3>Link do App da Empresa</h3>
       <a id="link-shop"></a>
       <h3>Logotipo da Empresa</h3>
-      <div>
+      <div class="wrap-photo">
         <img src="assets/images/user.svg" alt="photo" id="photo-preview" style="max-width: 300px; max-height: 300px" />
         <input type="file" name="photo" id="file" />
 
@@ -55,29 +55,52 @@
         <br/>
       </div>
       <h3>Escolha as cores do App</h3>
-      <div>
-        <label for="main-color">Fundo da página</label>
-        <input type="color" id="main-color" name="main_color" value="#e66465">
+      <div class="colors row">
+        <input type="color" id="main-color" name="main_color" value="#dbdbdb">
+        <label for="main-color">Cor do Fundo da Página</label>
       </div>
 
-      <div>
+      <div class="colors row">
+        <input type="color" id="second-color" name="second_color" value="#101d1d">
         <label for="second-color">Cor dos Botões</label>
-        <input type="color" id="second-color" name="second_color" value="#f6b73c">
       </div>
 
       <h3>Edite os dados da Empresa</h3>
       <label for="name">Nome da Empresa</label>
-      <input type="text" name="name" placeholder="Nome da Empresa" required />
+      <input type="text" id="name" name="name" placeholder="Nome da Empresa" required />
       <label for="category">Categoria da Empresa</label>
-      <input type="text" name="category" placeholder="Categoria da Empresa" />
+      <input type="text" id="category" name="category" placeholder="Categoria da Empresa" />
       <label for="email">E-mail</label>
-      <input type="email" name="email" placeholder="E-mail" required />
+      <input type="email" id="email" name="email" placeholder="E-mail" required />
       <label for="phone">WhatsApp Comercial</label>
-      <input type="tel" name="phone" placeholder="WhatsApp Comercial" required />
+      <input type="tel" id="phone" name="phone" placeholder="WhatsApp Comercial" required />
       <label for="message">Slogam</label>
-      <input type="text" name="message" placeholder="Slogam" />
+      <input type="text" id="message" name="message" placeholder="Slogam" />
       <label for="hash">Link único da empresa</label>
-      <input type="text" name="hash" placeholder="Link único da empresa" />
+      <input type="text" id="hash" name="hash" placeholder="Link único da empresa" />
+      <label for="delivery">Taxa de Entrega Padrão</label>
+      <input type="text" id="delivery"name="delivery" placeholder="R$ taxa padrão" />
+
+      <h3>Informações para pagamento</h3>
+      <small>Escolha as opções que a sua empresa aceita:</small>
+      <div class="row">
+        <input type="checkbox" id="money" name="payments" value="dinheiro">
+        <label for="money">Dinheiro</label>
+      </div>
+      <div class="row">
+        <input type="checkbox" id="card" name="payments" value="cartao">
+        <label for="card">Cartões</label>
+      </div>
+      <div class="row">
+        <input type="checkbox" id="pix" name="payments" value="pix">
+        <label for="pix">Pix</label>
+      </div>
+
+      <div class="wrap-pix">
+        <label for="pix-code">Chave Pix da Empresa</label>
+        <input type="text" id="pix-code"name="pix" placeholder="Chave Pix da Empresa" />
+      </div>
+      
 
       <h3>Endereço da Empresa</h3>
       <label for="adress">Rua</label>

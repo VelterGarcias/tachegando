@@ -53,12 +53,23 @@ export function setFormValues(form, values) {
 
         case "radio":
         case "checkbox":
+          console.log(field.name)
+          console.log(values[key])
+          
           if (field.name.startsWith("is")) {
             form.querySelector(`[name=${key}]`).checked = values[key];
           } else {
-            form.querySelector(
-              `[name=${key}][value="${values[key]}"]`
-            ).checked = true;
+            if (values[key] != '') {
+              console.log(`form.querySelector(
+                [name=${key}][value="${values[key]}"]
+              ).checked = true;`)
+              values[key].forEach(check => {
+                form.querySelector(
+                  `[name=${key}][value="${check}"]`
+                ).checked = true;
+              });
+            }
+            
           }
 
           break;

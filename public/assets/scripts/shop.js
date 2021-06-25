@@ -177,7 +177,12 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     const companySlogam = document.querySelector("#company > span");
     const logo = document.querySelector("#logo-icon");
 
-    logo.src = company.photo;
+    if (company.photo) {
+      logo.src = company.photo;
+    } else {
+      logo.style.display="none"
+    }
+    
     companyName.innerHTML = company.name;
     document.title = company.name;
     companySlogam.innerHTML = company.message;
@@ -206,14 +211,18 @@ document.querySelectorAll("#shop").forEach(async (page) => {
 
       
       const getAditionals = await db.collection("aditionals").where("dataAditional.companyId", "==", company.userId).get();
-      if (getAditionals.empty) return;
-      getAditionals.forEach((item) => {
-        let data = item.data();
-        data = data.dataAditional;
-        data.id = item.id;
-        allAditionals.push(data);
-      });
-      Cookies.set("allAditionals", allAditionals, { expires: 0.041 });
+      if (getAditionals.empty) {
+        console.log("Sem adicionais")
+      } else {
+        getAditionals.forEach((item) => {
+          let data = item.data();
+          data = data.dataAditional;
+          data.id = item.id;
+          allAditionals.push(data);
+        });
+        Cookies.set("allAditionals", allAditionals, { expires: 0.041 });
+      }
+      
     }
 
     const ulProducts = page.querySelector(".category");

@@ -530,13 +530,34 @@ label {
   /* The slider */
   /* Rounded sliders */
 }
+.auth main form .wrap-photo {
+  width: 250px;
+  margin: 15px auto;
+}
 .auth main form #link-shop {
+  margin-top: 10px;
   padding: 5px;
   background: white;
   color: #008cff;
   border-radius: 5px;
   font-weight: bold;
   width: max-content;
+  max-width: 300px;
+  overflow-wrap: break-word;
+}
+.auth main form .row {
+  display: flex;
+  flex-direction: row;
+}
+.auth main form .colors {
+  margin: 10px;
+}
+.auth main form .colors label {
+  padding-left: 10px;
+}
+.auth main form h3 {
+  margin-bottom: 0px;
+  margin-top: 30px;
 }
 .auth main form h4 {
   margin: 0;
@@ -554,6 +575,7 @@ label {
   font-size: 16px;
   padding: var(--space);
   outline: none;
+  transition: border 0.3s ease-in-out;
 }
 .auth main form input:focus {
   background-color: rgba(255, 255, 255, 0.9);
@@ -562,9 +584,32 @@ label {
   margin-top: var(--space);
 }
 .auth main form input[type=color] {
-  padding: 0;
-  height: revert;
-  border-radius: initial;
+  padding: 3px;
+  height: 35px;
+  width: 35px;
+  border-radius: 5px;
+}
+.auth main form input[type=checkbox] {
+  height: 35px;
+  margin-right: 10px;
+}
+.auth main form input.success {
+  border: 2px solid #00ff01;
+}
+.auth main form input.danger {
+  border: 2px solid red;
+}
+.auth main form .wrap-pix input {
+  width: 100%;
+}
+.auth main form textarea {
+  border-radius: var(--radius);
+  border: 1px solid rgba(204, 204, 204, 0.8);
+  font-size: 16px;
+  padding: 10px 7px;
+  outline: none;
+  margin: 0px;
+  resize: vertical;
 }
 .auth main form form {
   background-color: var(--primary);
@@ -590,9 +635,10 @@ label {
   margin-top: var(--space);
 }
 .auth main form form input[type=color] {
-  padding: 0;
-  height: revert;
-  border-radius: initial;
+  padding: 3px;
+  height: 35px;
+  width: 35px;
+  border-radius: 5px;
 }
 .auth main form form label + label {
   margin-top: var(--space);
@@ -882,9 +928,10 @@ label {
   margin-top: var(--space);
 }
 .auth .options input[type=color] {
-  padding: 0;
-  height: revert;
-  border-radius: initial;
+  padding: 3px;
+  height: 35px;
+  width: 35px;
+  border-radius: 5px;
 }
 .auth .options input:read-only {
   box-shadow: none;

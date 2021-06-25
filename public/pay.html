@@ -50,6 +50,30 @@
             <input type="text" name="city" placeholder="Cidade" required/>
             <input type="text" name="UF" placeholder="Estado" required/>
 
+            <h3>Tipo de Entrega</h3>
+            <div class="row">
+              <input type="radio" id="money" name="delivery" value="dinheiro">
+              <label for="money">Entrega na sua casa</label>
+            </div>
+            <div class="row">
+              <input type="radio" id="card" name="delivery" value="cartao">
+              <label for="card">Buscar no balcão</label>
+            </div>
+
+            <h3>Método de Pagamento</h3>
+            <div class="row">
+              <input type="radio" id="money" name="payments" value="dinheiro">
+              <label for="money">Com Dinheiro</label>
+            </div>
+            <div class="row">
+              <input type="radio" id="card" name="payments" value="cartao">
+              <label for="card">No Cartão</label>
+            </div>
+            <div class="row">
+              <input type="radio" id="pix" name="payments" value="pix">
+              <label for="pix">Por Pix</label>
+            </div>
+
             <button type="submit" style="display: none">Send</button>
           </form>
         </section>

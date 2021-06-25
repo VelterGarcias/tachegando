@@ -53,13 +53,34 @@
     width: 350px;
     z-index: 1;
     background-color: rgb(219, 219, 219);
+    .wrap-photo {
+      width: 250px;
+      margin: 15px auto;
+    }
     #link-shop {
+      margin-top: 10px;
       padding: 5px;
       background: white;
       color: #008cff;
       border-radius: 5px;
       font-weight: bold;
       width: max-content;
+      max-width: 300px;
+      overflow-wrap: break-word;
+    }
+    .row {
+      display: flex;
+      flex-direction: row;
+    }
+    .colors {
+      margin: 10px;
+      label {
+        padding-left: 10px;
+      }
+    }
+    h3 {
+      margin-bottom: 0px;
+      margin-top: 30px;
     }
     h4 {
       margin: 0;
@@ -72,6 +93,31 @@
     }
     input {
       @include components.input;
+      transition: border .3s ease-in-out;
+      &[type=checkbox] {
+        height: 35px;
+        margin-right: 10px;
+      }
+      &.success {
+        border: 2px solid #00ff01;
+      }
+      &.danger {
+        border: 2px solid red;
+      }
+    }
+    .wrap-pix {
+      input {
+        width: 100%;
+      }
+    }
+    textarea {
+      border-radius: var(--radius);
+      border: 1px solid rgba(204, 204, 204, 0.8);
+      font-size: 16px;
+      padding: 10px 7px;
+      outline: none;
+      margin: 0px;
+      resize: vertical;
     }
     form {
       background-color: var(--primary);

@@ -11,14 +11,18 @@ document.querySelectorAll("#form-update").forEach((form) => {
 
   let cropper = null;
   let userGlobal = null;
+  let atualCompanyHash = null;
   const imageElement = document.querySelector("#photo-preview");
   const buttonElement = document.querySelector(".choose-photo");
   const linkShop = document.querySelector("#link-shop");
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
+  const inputPix = form.querySelector("#pix");
 
   const inputPhone = form.querySelector('[name="phone"]');
   const inputCep = form.querySelector('[name="cep"]');
+  const inputDelivery = form.querySelector('#delivery');
+  const inputHash = form.querySelector('#hash');
 
   new IMask(inputPhone, {
     mask: "(00) [0]0000-0000)",
@@ -28,7 +32,33 @@ document.querySelectorAll("#form-update").forEach((form) => {
     mask: "00000-000",
   });
 
+  new IMask(inputDelivery, {
+    mask: Number,  // enable number mask
+
+    // other options are optional with defaults below
+    scale: 2,  // digits after point, 0 for integers
+    signed: false,  // disallow negative
+    thousandsSeparator: '',  // any single char
+    padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
+    normalizeZeros: false,  // appends or removes zeros at ends
+    radix: '.',  // fractional delimiter
+    mapToRadix: [',']  // symbols to process as radix
+  });
+
   const bodyElement = document.body;
+
+  const hidePixOptions = () => {
+    if(inputPix.checked) {
+      document.querySelector('.wrap-pix').style.display = 'block';
+    } else {
+      document.querySelector('.wrap-pix').style.display = 'none';
+    }
+  }
+
+  inputPix.addEventListener('change', (e) => {
+    hidePixOptions();
+  })
+  hidePixOptions();
 
   const uploadFile = (files) => {
     if (files) {
@@ -54,9 +84,33 @@ document.querySelectorAll("#form-update").forEach((form) => {
     }
   };
 
+  const verifyUniqueHash = async (db, input) => {
+    const search = input.value
+    const res = await db
+        .collection("companies")
+        .where("hash", "==", search)
+        .get();
+    
+    let hashExist = null
+    res.forEach((item) => {
+      hashExist = item.data();
+    });
+    if(!hashExist || atualCompanyHash == search) {
+      // console.log("hashExist", hashExist);
+      console.log("Novo");
+      input.classList.add('success')
+    } else {
+      console.log("Novo");
+      input.classList.add('danger')
+    }
+  }
+
+  
+
   const userDate = [];
   auth.onAuthStateChanged((user) => {
     console.log(user);
+    
     if (user) {
       userGlobal = user;
       db.collection("companies")
@@ -75,9 +129,16 @@ document.querySelectorAll("#form-update").forEach((form) => {
             });
           }
           setFormValues(form, ...userDate);
-          const hash = `${window.location.origin}#${userDate[0].hash}`
-          linkShop.innerHTML = hash
-          linkShop.href = hash
+          if (userDate[0].hash) {
+            const hash = `${window.location.origin}#${userDate[0].hash}`
+            atualCompanyHash = userDate[0].hash;
+            linkShop.innerHTML = hash
+            linkShop.href = hash
+          } else {
+            linkShop.innerHTML = "Você ainda não escolheu um Link Único para sua empresa."
+            // linkShop.href = '#hash'
+          }
+          
           document.querySelectorAll(".main-color").forEach((btn) => {
             btn.style = `background-color: ${userDate[0].main_color}`;
           });
@@ -176,4 +237,8 @@ document.querySelectorAll("#form-update").forEach((form) => {
     uploadFile(e.target.files);
     e.target.value = "";
   });
+
+  inputHash.addEventListener('change', (e)=>{
+    verifyUniqueHash(db, inputHash);
+  })
 });
