@@ -12,6 +12,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   let cropper = null;
   let userGlobal = null;
   let atualCompanyHash = null;
+  let isUniqueHash = true;
   const imageElement = document.querySelector("#photo-preview");
   const buttonElement = document.querySelector(".choose-photo");
   const linkShop = document.querySelector("#link-shop");
@@ -23,6 +24,8 @@ document.querySelectorAll("#form-update").forEach((form) => {
   const inputCep = form.querySelector('[name="cep"]');
   const inputDelivery = form.querySelector('#delivery');
   const inputHash = form.querySelector('#hash');
+  const hashSuccess = form.querySelector('#hash-success');
+  const hashError = form.querySelector('#hash-error');
 
   new IMask(inputPhone, {
     mask: "(00) [0]0000-0000)",
@@ -85,8 +88,12 @@ document.querySelectorAll("#form-update").forEach((form) => {
     }
   };
 
-  const verifyUniqueHash = async (db, input) => {
-    const search = input.value
+  const verifyUniqueHash = async (db, onMessage = true) => {
+    inputHash.classList.remove('danger')
+    inputHash.classList.remove('success')
+    hashSuccess.classList.add('hide')
+    hashError.classList.add('hide')
+    const search = inputHash.value
     const res = await db
         .collection("companies")
         .where("hash", "==", search)
@@ -99,10 +106,18 @@ document.querySelectorAll("#form-update").forEach((form) => {
     if(!hashExist || atualCompanyHash == search) {
       // console.log("hashExist", hashExist);
       // console.log("Novo");
-      input.classList.add('success')
+      isUniqueHash = true;
+      inputHash.classList.add('success')
+      hashSuccess.classList.remove('hide')
+      onMessage && showAlert('OK! O Link que você escolheu está disponível')
+      return true;
     } else {
       // console.log("Novo");
-      input.classList.add('danger')
+      isUniqueHash = false;
+      inputHash.classList.add('danger')
+      hashError.classList.remove('hide')
+      showAlert('ERRO: O Link que você escolheu não está disponível', true)
+      return false;
     }
   }
 
@@ -165,35 +180,39 @@ document.querySelectorAll("#form-update").forEach((form) => {
   //================== Salvando os dados =================
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
+    if(!isUniqueHash) {
+      console.log("ruim");
+      inputHash.focus();
+      showAlert('ERRO: Escolha um link válido antes de salvar!', true)
+    } else {
+        console.log("bom");
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = "Salvando...";
 
-    btnSubmit.disabled = true;
-    btnSubmit.innerHTML = "Salvando...";
+        const companyData = getFormValues(form)
 
-    if (cropper) {
-    } 
-    const companyData = getFormValues(form)
+        companyData.photo = userGlobal.photoURL
+        companyData.userId = userGlobal.uid
 
-    companyData.photo = userGlobal.photoURL
-    companyData.userId = userGlobal.uid
+        // console.log(companyData);
+        // console.log(userDate[0].name)
 
-    // console.log(companyData);
-    // console.log(userDate[0].name)
-
-    db.collection("companies")
-      .doc(userGlobal.uid)
-      .set(companyData)
-      .then(() => userGlobal.updateProfile({ displayName: userDate[0].name}))
-      .then(() => userGlobal.updateEmail(userDate[0].email))
-      .then(() => showAlert("Usuário atualizado com sucesso"))
-      .catch((err) => {
-        // console.log(err);
-        showAlert(err.message, true)
-      })
-      .finally(() => {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = "Salvar";
-      })
-
+        db.collection("companies")
+          .doc(userGlobal.uid)
+          .set(companyData)
+          .then(() => userGlobal.updateProfile({ displayName: userDate[0].name}))
+          .then(() => userGlobal.updateEmail(userDate[0].email))
+          .then(() => showAlert("Usuário atualizado com sucesso"))
+          .catch((err) => {
+            // console.log(err);
+            showAlert(err.message, true)
+          })
+          .finally(() => {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = "Salvar";
+          })
+    }
   });
 
   imageElement.addEventListener("click", (e) => {
@@ -241,8 +260,11 @@ document.querySelectorAll("#form-update").forEach((form) => {
     e.target.value = "";
   });
 
+  inputHash.addEventListener('input', (e)=>{
+    verifyUniqueHash(db, false);
+  })
   inputHash.addEventListener('change', (e)=>{
-    verifyUniqueHash(db, inputHash);
+    verifyUniqueHash(db);
   })
 
 });

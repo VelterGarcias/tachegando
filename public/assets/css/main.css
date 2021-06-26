@@ -252,6 +252,9 @@ label {
   justify-content: space-between;
   padding-left: 5px;
 }
+#modal > div > .modal-content .options-product > div ul li label span {
+  min-width: 75px;
+}
 #modal > div > .modal-content .options-product > div h4 {
   margin: 0;
   font-size: 18px;
@@ -647,6 +650,15 @@ input:checked + .slider:before {
   margin-top: 12px;
   margin-bottom: 5px;
   font-size: 14px;
+}
+.auth main form label.big {
+  padding-left: 10px;
+  font-size: 16px;
+}
+.auth main form #hash-success, .auth main form #hash-error {
+  position: absolute;
+  top: 47px;
+  right: 5px;
 }
 .auth main form input {
   height: 50px;
@@ -1494,6 +1506,16 @@ input:checked + .slider:before {
 #app > section.page form .msg-delivery {
   max-width: 70%;
   padding-left: 5px;
+}
+#app > section.page form #pay-method {
+  border: 3px solid transparent;
+  border-radius: 9px;
+  transition: border 0.3s ease-in-out;
+}
+#app > section.page form #pay-method.danger {
+  border: 3px solid red;
+  padding: 0 5px;
+  padding-bottom: 13px;
 }
 #app > section.page form #tax-delivery, #app > section.page form #msg-money, #app > section.page form #msg-pix, #app > section.page form #msg-card {
   background: whitesmoke;

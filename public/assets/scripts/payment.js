@@ -15,6 +15,8 @@ const payment = document.querySelector("#payment");
 
 if (payment) {
 
+  const wrapPayMethod = document.querySelector('#pay-method')
+
   const refreshTaxToOrder = (tax) => {
     let oldOrder = Cookies.getJSON("order");
     if(tax) {
@@ -51,6 +53,10 @@ if (payment) {
   };
   
   const submitForm = (form) => {
+
+    wrapPayMethod.classList.remove('danger');
+
+    if (minRadioButtonChecked) {
   
       const dataForm = getFormValues(form);
       // console.log(dataForm);
@@ -170,11 +176,15 @@ if (payment) {
   
       window.location.href = `https://api.whatsapp.com/send/?phone=55${whats}&text=${msg}`;
   
-      
+    } else {
+      wrapPayMethod.classList.add('danger')
+      showAlert('ERRO: Antes de enviar seu pedido escolha um método de pagamento!', true)
+    }
   };
 
 
   const cepIsReady = false;
+  let minRadioButtonChecked = true;
   const btnPay = document.querySelector("#btn-pay-order");
   const form = payment.querySelector("form");
   const isDelivery = form.querySelector('#delivery')
@@ -216,6 +226,8 @@ if (payment) {
 
   [...document.querySelectorAll('[name="payments"]')].forEach(radio => {
     radio.addEventListener('change', (e) => {
+      minRadioButtonChecked = true;
+      wrapPayMethod.classList.remove('danger')
       renderRadioButtons();
     })
   })
@@ -300,10 +312,13 @@ if (payment) {
   })
   
   if (company.payments) {
+    minRadioButtonChecked = false;
     company.payments.forEach((payment) => {
       const wrap = document.querySelector(`[name="payments"][value="${payment}"`).closest('.row')
       if(wrap) {
         wrap.classList.remove('hide')
+        // if (!firtsValidRadioButtonChecked) document.querySelector(`[name="payments"][value="${payment}"`).checked = true;
+        // firtsValidRadioButtonChecked = true;
       }
     })
   } else {

@@ -76,24 +76,39 @@
       <input type="tel" id="phone" name="phone" placeholder="WhatsApp Comercial" required />
       <label for="message">Slogam</label>
       <input type="text" id="message" name="message" placeholder="Slogam" />
-      <label for="hash">Link único da empresa</label>
-      <input type="text" id="hash" name="hash" placeholder="Link único da empresa" />
+
+      <div style="position: relative;">
+        <span id="hash-success" class="hide">✅</span>
+        <span id="hash-error" class="hide">🚫</span>
+        <label for="hash">Link único da empresa</label>
+        <input type="text" id="hash" name="hash" placeholder="Link único da empresa" />
+      </div>
+      
       <label for="delivery">Taxa de Entrega Padrão</label>
       <input type="text" id="delivery"name="delivery" placeholder="R$ taxa padrão" />
 
       <h3>Informações para pagamento</h3>
       <small>Escolha as opções que a sua empresa aceita:</small>
-      <div class="row">
-        <input type="checkbox" id="money" name="payments" value="dinheiro">
-        <label for="money">Dinheiro</label>
+      <div class="row ali-center">
+        <label class="switch">
+          <input type="checkbox" id="money" name="payments" value="dinheiro" >
+          <span class="slider round"></span>
+        </label>
+        <label for="money" class="big">Dinheiro</label>
       </div>
       <div class="row">
-        <input type="checkbox" id="card" name="payments" value="cartao">
-        <label for="card">Cartões</label>
+        <label class="switch">
+          <input type="checkbox" id="card" name="payments" value="cartao" >
+          <span class="slider round"></span>
+        </label>
+        <label for="card" class="big">Cartões</label>
       </div>
       <div class="row">
-        <input type="checkbox" id="pix" name="payments" value="pix">
-        <label for="pix">Pix</label>
+        <label class="switch">
+          <input type="checkbox" id="pix" name="payments" value="pix" >
+          <span class="slider round"></span>
+        </label>
+        <label for="pix" class="big">Pix</label>
       </div>
 
       <div class="wrap-pix">

@@ -106,7 +106,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     let download = true;
 
     if(company) {
-      if (company.hash === hashName) {
+      if (company.hash === hashName && prod) {
         // console.log("tem", company.name, company);
         download = false;
       } else {

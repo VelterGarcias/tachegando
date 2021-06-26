@@ -339,6 +339,16 @@
           max-width: 70%;
           padding-left: 5px;
         }
+        #pay-method {
+          border: 3px solid transparent;
+          border-radius: 9px;
+          transition: border 0.3s ease-in-out;
+          &.danger {
+            border: 3px solid red;
+            padding: 0 5px;
+            padding-bottom: 13px;
+          }
+        }
         #tax-delivery, #msg-money, #msg-pix, #msg-card {
           background: whitesmoke;
           padding: 15px;

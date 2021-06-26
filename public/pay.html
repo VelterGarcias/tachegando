@@ -57,34 +57,39 @@
             <div id="adress"></div>
             
             <br />
-            <h3 id="payment-title">Método de Pagamento</h3>
-            <div class="row ali-center hide">
-              <input type="radio" id="card" name="payments" value="cartao">
-              <label for="card">No Cartão</label>
-            </div>
-            <p id="msg-card" class="hide">Ok! O motoboy vai levar a máquininha.</p>
+            <div id="pay-method">
 
-            <div class="row ali-center hide">
-              <input type="radio" id="pix" name="payments" value="pix">
-              <label for="pix">Por Pix</label>
+              <h3 id="payment-title">Método de Pagamento</h3>
+              <div class="row ali-center hide">
+                <input type="radio" id="card" name="payments" value="cartao">
+                <label for="card">No Cartão</label>
+              </div>
+              <p id="msg-card" class="hide">Ok! O motoboy vai levar a máquininha.</p>
+  
+              <div class="row ali-center hide">
+                <input type="radio" id="pix" name="payments" value="pix">
+                <label for="pix">Por Pix</label>
+              </div>
+              <p id="msg-pix" class="hide">
+                <small>Nossa chave pix:</small><br/>
+                <strong id="pix-company"></strong>
+                <br/>
+                <br/>
+                <small>Após realizar o pagamento com o PIX nos envie o <strong>comprovante</strong> para ficar mais fácil identificar o seu pagamento.</small>
+              </p>
+  
+              <div class="row ali-center hide">
+                <input type="radio" id="money" name="payments" value="dinheiro">
+                <label for="money">Com Dinheiro</label>
+              </div>
+              <div id="msg-money" class="hide">
+                <span>Precisa de Troco para quanto?</span>
+                <small>Informe abaixo caso necessário.</small>
+                <input type="text" id="money-change" name="money-change" placeholder="R$"/>
+              </div>
+            
             </div>
-            <p id="msg-pix" class="hide">
-              <small>Nossa chave pix:</small><br/>
-              <strong id="pix-company"></strong>
-              <br/>
-              <br/>
-              <small>Após realizar o pagamento com o PIX nos envie o <strong>comprovante</strong> para ficar mais fácil identificar o seu pagamento.</small>
-            </p>
-
-            <div class="row ali-center hide">
-              <input type="radio" id="money" name="payments" value="dinheiro">
-              <label for="money">Com Dinheiro</label>
-            </div>
-            <div id="msg-money" class="hide">
-              <span>Precisa de Troco para quanto?</span>
-              <small>Informe abaixo caso necessário.</small>
-              <input type="text" id="money-change" name="money-change" placeholder="R$"/>
-            </div>
+            
 
             <button type="submit" style="display: none">Send</button>
           </form>
