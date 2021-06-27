@@ -10,7 +10,7 @@ import {
   showAlert,
 } from "./utils";
 
-const prod = false;
+const prod = true;
 
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";

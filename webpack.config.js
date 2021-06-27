@@ -1,13 +1,13 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
-    // mode: 'production',
+    // mode: 'development',
+    mode: 'production',
     entry: './public/assets/scripts/index.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
-    devtool: 'eval-source-map',
-    // devtool: false
+    // devtool: 'eval-source-map',
+    devtool: false
 }
