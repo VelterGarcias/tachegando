@@ -12,6 +12,10 @@ import {
 
 const prod = true;
 
+const scrollToCategory = (id) => {
+  window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 20), behavior: 'smooth'})
+}
+
 const renderProducts = (targetElement, productOptions) => {
   targetElement.innerHTML = "";
   const categoryWrapper = document.querySelector('div.category')
@@ -19,13 +23,16 @@ const renderProducts = (targetElement, productOptions) => {
   // console.log("productOptions", productOptions);
 
   let categories = [...new Set(productOptions.map(item => item.category))];
-  // console.log("categories", categories);
+  console.log("categories", categories);
 
-  categories.forEach(category => {
+  const wrapMenuCategories = document.querySelector('#menu-categories')
+  
+  let listMenucategories = ''
+  categories.forEach((category, indexCategory, array) => {
     const productsInCategory = productOptions.filter((product) => product.category === category)
     // console.log("productsInCategory", productsInCategory);
 
-    
+    listMenucategories = listMenucategories + `<button id="menu-${indexCategory}" class="menu-cat" >${category}</button>`
 
     let listProducts = ''
 
@@ -51,7 +58,7 @@ const renderProducts = (targetElement, productOptions) => {
 
     appendTemplate(
       categoryWrapper,
-      "div",
+      `div id="cat-${indexCategory}"`,
       `
       <h2>${category}</h2>
       <ul>
@@ -60,9 +67,21 @@ const renderProducts = (targetElement, productOptions) => {
       `
     );
 
+    if(++indexCategory === array.length) {
+      appendTemplate(wrapMenuCategories, 'div class=row', listMenucategories);
 
+      [...document.querySelectorAll('.menu-cat')].forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.id.split('-')[1]
+          scrollToCategory(id);
+        })
+      })
+
+    }
 
   })
+
+  
 
   
 };
@@ -200,6 +219,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       body.classList.remove("loading");
     }, timeout);
     body.style = `background-color: ${company.main_color}`;
+    document.querySelector('meta[name="theme-color"]').setAttribute('content',  `${company.main_color}`);
+    document.querySelector('meta[name="msapplication-TileColor"]').setAttribute('content',  `${company.main_color}`);
     document.querySelectorAll(".main-color").forEach((btn) => {
       btn.style = `background-color: ${company.main_color}`;
     });
