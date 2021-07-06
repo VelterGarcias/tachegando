@@ -1,5 +1,6 @@
 @use "components";
 @use "colors";
+@use "vars";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 * {
@@ -50,6 +51,55 @@ label {
   &.danger {
     background-color: var(--danger);
     color: white;
+  }
+}
+
+#menu-categories {
+  width: 100%;
+  background: #ffffff9e;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  > div {
+    overflow-x: scroll;
+    max-width: 100%;
+    // box-shadow: 1px 1px 4px #00000038;
+    // &::-webkit-scrollbar {
+    //   width: 0px;
+    //   height: 0px;
+    // }
+    .menu-cat {
+      background-color: white;
+      border: 1px solid black;
+      border-radius: var(--radius);
+      color: var(--black);
+      padding: 5px 10px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgb(16 29 29 / 25%);
+      letter-spacing: 0.5px;
+      font-weight: bold;
+      margin: 5px;
+      &.active {
+        background-color: #101d1d;
+        color: var(--white);
+      }
+      &:hover {
+        background-color: #232525;
+        color: var(--white);
+      }
+    }
+  }
+  @media (min-width: vars.$desktopStartWidth) {
+    position: relative;
+    > div {
+      max-width: calc(100vw - 350px);
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 2px;
+      }
+    }
   }
 }
 

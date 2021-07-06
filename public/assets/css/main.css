@@ -83,6 +83,52 @@ label {
   color: white;
 }
 
+#menu-categories {
+  width: 100%;
+  background: #ffffff9e;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+#menu-categories > div {
+  overflow-x: scroll;
+  max-width: 100%;
+}
+#menu-categories > div .menu-cat {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: var(--radius);
+  color: var(--black);
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(16, 29, 29, 0.25);
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  margin: 5px;
+}
+#menu-categories > div .menu-cat.active {
+  background-color: #101d1d;
+  color: var(--white);
+}
+#menu-categories > div .menu-cat:hover {
+  background-color: #232525;
+  color: var(--white);
+}
+@media (min-width: 768px) {
+  #menu-categories {
+    position: relative;
+  }
+  #menu-categories > div {
+    max-width: calc(100vw - 350px);
+  }
+  #menu-categories > div::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;
+  }
+}
+
 #modal {
   display: none;
 }
