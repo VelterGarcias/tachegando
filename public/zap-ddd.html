@@ -5401,7 +5401,7 @@
     });
 
     // Event Listeners
-    inputNumber.addEventListener('change', () => {
+    inputNumber.addEventListener('input', () => {
         const quantidade = parseInt(inputNumber.value);
         const firstPhone = inputPhone.value
         createCard(quantidade, firstPhone)
