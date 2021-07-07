@@ -5428,7 +5428,11 @@
             const test = JSON.parse(localStorage.getItem(maskNumber(inputPhone.value)))
             console.log(maskNumber(inputPhone.value));
             if(test) {
-                console.log('Já existe');
+                if(inputLang.value == 'pt') {
+                    showAlert('Continue de onde parou!')
+                } else {
+                    showAlert('Ou ka kontinye nan lis sa a!')
+                }
                 renderPhones(maskNumber(inputPhone.value))
             }
         }
