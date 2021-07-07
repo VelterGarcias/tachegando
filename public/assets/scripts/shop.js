@@ -30,11 +30,17 @@ const renderProducts = (targetElement, productOptions) => {
   let listMenucategories = ''
   categories.forEach((category, indexCategory, array) => {
     const productsInCategory = productOptions.filter((product) => product.category === category)
-    // console.log("productsInCategory", productsInCategory);
+    console.log("productsInCategory", productsInCategory);
 
     listMenucategories = listMenucategories + `<button id="menu-${indexCategory}" class="menu-cat" >${category}</button>`
 
     let listProducts = ''
+
+    productsInCategory.sort(function(a, b){
+        if(a.name < b.name) { return -1; }
+        if(a.name > b.name) { return 1; }
+        return 0;
+    })
 
     productsInCategory.forEach((item) => {
   
@@ -68,14 +74,14 @@ const renderProducts = (targetElement, productOptions) => {
     );
 
     if(++indexCategory === array.length) {
-      appendTemplate(wrapMenuCategories, 'div class=row', listMenucategories);
+      // appendTemplate(wrapMenuCategories, 'div class=row', listMenucategories);
 
-      [...document.querySelectorAll('.menu-cat')].forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.id.split('-')[1]
-          scrollToCategory(id);
-        })
-      })
+      // [...document.querySelectorAll('.menu-cat')].forEach(btn => {
+      //   btn.addEventListener('click', () => {
+      //     const id = btn.id.split('-')[1]
+      //     scrollToCategory(id);
+      //   })
+      // })
 
     }
 
