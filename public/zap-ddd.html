@@ -173,8 +173,8 @@
                     <input id="phone" placeholder="(11) 9 xxxx-xxxx">
                 </div>
                 <div>
-                    <p class="pt hide">Insira <strong>quantos números</strong> deseja mostrar na lista abaixo.</p>
-                    <p class="ht">Mete anba <strong>konbyen nimewo</strong> ou vle travay.</p>
+                    <p class="pt hide">Insira abaixo o <strong>total de números</strong> que a sua lista tem.</p>
+                    <p class="ht">Mete anba <strong>konbyen nimewo</strong> nan lis ou genyen.</p>
                     <input type="number" id="number" placeholder="0">
                 </div>
             </header>
@@ -5292,10 +5292,13 @@
     function updateInputs(phoneValue, numberValue) {
         if (!inputPhone.value) {
             console.log("auto complete");
+            console.log(Number(numberValue));
             inputPhone.value = maskPhone(Number(phoneValue));
             inputNumber.value = Number(numberValue);
             inputPhone.focus();
             inputPhone.blur();
+        } else {
+            inputNumber.value = Number(numberValue);
         }
         
     }
@@ -5433,6 +5436,8 @@
                 } else {
                     showAlert('Ou ka kontinye nan lis sa a!')
                 }
+                let cards = [maskNumber(inputPhone.value)];
+                localStorage.setItem('cards',  JSON.stringify(cards));
                 renderPhones(maskNumber(inputPhone.value))
             }
         }
@@ -5476,8 +5481,8 @@
         // console.log(oldCard)
         if(action == 'status') {
             index = oldCard.findIndex((item) => item.phone == e.target.dataset.phone);
-            oldCard[index].status = !oldCard[index].status;
-            // oldCard[index].status = true;
+            // oldCard[index].status = !oldCard[index].status;
+            oldCard[index].status = true;
         } else {
             index = oldCard.findIndex((item) => item.phone == e.target.name);
             if(e.target.checked) {
