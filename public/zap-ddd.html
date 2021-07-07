@@ -159,7 +159,7 @@
 
 <body>
     <div id="root">
-        <input type="hidden" id="lang" value="pt">
+        <input type="hidden" id="lang" value="ht">
         <div>
             <div id="language">
                 <button type="button" id="btn-ht">Kreyòl</button>
@@ -168,13 +168,13 @@
             <header>
                 <h1>Zap DDD</h1>
                 <div>
-                    <p class="pt">Coloque abaixo o <strong>número inicial</strong> da sua lista.</p>
-                    <p class="ht hide">Mete anba <strong>premye nimewo</strong> nan lis ou genyen.</p>
+                    <p class="pt hide">Coloque abaixo o <strong>número inicial</strong> da sua lista.</p>
+                    <p class="ht">Mete anba <strong>premye nimewo</strong> nan lis ou genyen.</p>
                     <input id="phone" placeholder="(11) 9 xxxx-xxxx">
                 </div>
                 <div>
-                    <p class="pt">Insira <strong>quantos números</strong> deseja mostrar na lista abaixo.</p>
-                    <p class="ht hide">Mete anba <strong>konbyen nimewo</strong> ou vle travay.</p>
+                    <p class="pt hide">Insira <strong>quantos números</strong> deseja mostrar na lista abaixo.</p>
+                    <p class="ht">Mete anba <strong>konbyen nimewo</strong> ou vle travay.</p>
                     <input type="number" id="number" placeholder="0">
                 </div>
             </header>
@@ -5423,7 +5423,14 @@
         if(inputPhone.value.length < 15) {
             inputPhone.classList.add('danger')
         } else {
+            console.log('ok');
             inputPhone.classList.remove('danger')
+            const test = JSON.parse(localStorage.getItem(maskNumber(inputPhone.value)))
+            console.log(maskNumber(inputPhone.value));
+            if(test) {
+                console.log('Já existe');
+                renderPhones(maskNumber(inputPhone.value))
+            }
         }
     })
 
@@ -5563,7 +5570,6 @@
         if(localStorage.getItem('lang')) {
             // console.log(localStorage.getItem('lang'));
             if(localStorage.getItem('lang') == 'ht') {
-                languageSelected = 'ht'
                 btnHt.classList.add('active');
                 btnPt.classList.remove('active');
                 allHt.forEach(element => {
@@ -5574,11 +5580,19 @@
                 });
                 inputLang.value = 'ht'
             } else {
+                btnHt.classList.remove('active');
                 btnPt.classList.add('active');
+                allHt.forEach(element => {
+                    element.classList.add('hide')
+                });
+                allPt.forEach(element => {
+                    element.classList.remove('hide')
+                });
+                inputLang.value = 'pt'
             }
         } else {
             // console.log('sem lang');
-            btnPt.classList.add('active');
+            btnHt.classList.add('active');
         }
     }
     
@@ -5621,8 +5635,6 @@
         }
         
     }
-
-    
 
     function preloadCard() {
         phone = firsrPhoneSelected || currentCard;
