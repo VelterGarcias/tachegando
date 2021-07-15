@@ -118,6 +118,15 @@
         border: 2px solid red;
       }
     }
+    .wrap-cards, .wrap-pix  {
+      padding: 15px;
+      box-shadow: black 0px 0px 6px -2px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.36);
+      img {
+        height: 45px;
+      }
+    }
     .wrap-pix {
       input {
         width: 100%;

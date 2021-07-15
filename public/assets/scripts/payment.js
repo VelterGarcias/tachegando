@@ -132,7 +132,7 @@ if (payment) {
         msgPayment = 
   `............................................................%0A %0A %0A
   *Método de Pagamento:*%0A
-  💳 Máquininha de Cartão
+  💳 Máquininha de Cartão: *${dataForm.selectedCard}*
   `
       } else if (dataForm.payments == "pix") {
         msgPayment = 
@@ -165,6 +165,7 @@ if (payment) {
   ${dataForm.complement && dataForm.complement + '%0A'}
   ${dataForm.district} - ${dataForm.city}%0A
   ${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} %0A
+  ${dataForm.reference ? 'Ponto de referência: ' + dataForm.reference : ''} %0A
   `
       } else {
 
@@ -254,6 +255,7 @@ if (payment) {
         <input type="text" name="adress" placeholder="Endereço" required/>
         <input type="number" name="number" placeholder="Nº da Casa" required/>
         <input type="text" name="complement" placeholder="Complemento (não obrigatório)" />
+        <input type="text" name="reference" placeholder="Ponto de Referência (não obrigatório)" />
         <input type="text" name="district" placeholder="Bairro" required/>
         <input type="text" name="city" placeholder="Cidade" required/>
         <input type="text" name="UF" placeholder="Estado" required/>
@@ -317,6 +319,20 @@ if (payment) {
       const wrap = document.querySelector(`[name="payments"][value="${payment}"`).closest('.row')
       if(wrap) {
         wrap.classList.remove('hide')
+        if (payment == 'cartao') {
+          console.log("quais cartões");
+          const arrayCards = company.cards
+          if (arrayCards) {
+            arrayCards.forEach(card => {
+              console.log(card);
+              const wrapCards = document.querySelector('#cards')
+              appendTemplate(wrapCards, 'li class=row', `
+              <input type="radio" id="${card}" name="selectedCard" value="${card}"/>
+              <label for="${card}" ><img alt="${card}" src="assets/images/cards/${card}.svg"></label>
+              `)
+            });
+          }
+        }
         // if (!firtsValidRadioButtonChecked) document.querySelector(`[name="payments"][value="${payment}"`).checked = true;
         // firtsValidRadioButtonChecked = true;
       }

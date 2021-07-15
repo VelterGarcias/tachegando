@@ -19,6 +19,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
   const inputFileElement = document.querySelector("#file");
   const btnSubmit = form.querySelector("[type=submit]");
   const inputPix = form.querySelector("#pix");
+  const inputCard = form.querySelector("#card");
 
   const inputPhone = form.querySelector('[name="phone"]');
   const inputCep = form.querySelector('[name="cep"]');
@@ -50,19 +51,22 @@ document.querySelectorAll("#form-update").forEach((form) => {
 
   const bodyElement = document.body;
 
-  const hidePixOptions = () => {
+  const hideCheckboxOptions = (element, selector) => {
     // console.log("exec")
-    if(inputPix.checked) {
-      document.querySelector('.wrap-pix').style.display = 'block';
+    if(element.checked) {
+      document.querySelector(selector).style.display = 'block';
     } else {
-      document.querySelector('.wrap-pix').style.display = 'none';
+      document.querySelector(selector).style.display = 'none';
     }
   }
 
   inputPix.addEventListener('change', (e) => {
-    hidePixOptions();
+    hideCheckboxOptions(inputPix, '.wrap-pix');
   })
 
+  inputCard.addEventListener('change', (e) => {
+    hideCheckboxOptions(inputCard, '.wrap-cards');
+  })
 
   const uploadFile = (files) => {
     if (files) {
@@ -137,7 +141,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
           snapshot.forEach((item) => {
             userDate.push(item.data());
           });
-          // console.log("userDate", userDate);
+          console.log("userDate", userDate);
           if (userDate.length == 0 ) {
             userDate.push({
               name: user.displayName,
@@ -162,7 +166,8 @@ document.querySelectorAll("#form-update").forEach((form) => {
             btn.style = `background-color: ${userDate[0].second_color}`;
           });
           
-          hidePixOptions();
+          hideCheckboxOptions(inputPix, '.wrap-pix');
+          hideCheckboxOptions(inputCard, '.wrap-cards');
         });
       imageElement.src = user.photoURL || "./assets/images/user.svg";
     } else {

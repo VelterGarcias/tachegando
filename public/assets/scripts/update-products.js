@@ -356,9 +356,10 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     saveFormOptions.addEventListener('submit', (e) => {
       e.preventDefault();
+      const oldAditionals = Cookies.getJSON("aditionals")
       const {aditionals} = getFormValues(saveFormOptions)
       
-      // console.log(aditionals);
+      console.log(oldAditionals, oldAditionals.map(a => a.id) , aditionals);
 
       db.collection("products")
       .doc(produto)

@@ -737,6 +737,15 @@ input:checked + .slider:before {
 .auth main form input.danger {
   border: 2px solid red;
 }
+.auth main form .wrap-cards, .auth main form .wrap-pix {
+  padding: 15px;
+  box-shadow: black 0px 0px 6px -2px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.36);
+}
+.auth main form .wrap-cards img, .auth main form .wrap-pix img {
+  height: 45px;
+}
 .auth main form .wrap-pix input {
   width: 100%;
 }
@@ -1570,12 +1579,27 @@ input:checked + .slider:before {
   box-shadow: 0px 0px 8px -4px black;
   margin: 10px 0;
 }
+#app > section.page form #tax-delivery ul, #app > section.page form #msg-money ul, #app > section.page form #msg-pix ul, #app > section.page form #msg-card ul {
+  padding: 0;
+}
+#app > section.page form #tax-delivery ul li, #app > section.page form #msg-money ul li, #app > section.page form #msg-pix ul li, #app > section.page form #msg-card ul li {
+  list-style: none;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#app > section.page form #tax-delivery ul li input, #app > section.page form #msg-money ul li input, #app > section.page form #msg-pix ul li input, #app > section.page form #msg-card ul li input {
+  margin: 0;
+  margin-right: 10px;
+}
 #app > section.page form #tax-delivery input, #app > section.page form #msg-money input, #app > section.page form #msg-pix input, #app > section.page form #msg-card input {
   margin-top: 10px;
   background-color: white;
 }
 #app > section.page form #tax-delivery span, #app > section.page form #msg-money span, #app > section.page form #msg-pix span, #app > section.page form #msg-card span {
   font-weight: bold;
+}
+#app > section.page form #tax-delivery img, #app > section.page form #msg-money img, #app > section.page form #msg-pix img, #app > section.page form #msg-card img {
+  height: 45px;
 }
 #app > section.page form input,
 #app > section.page form select {
