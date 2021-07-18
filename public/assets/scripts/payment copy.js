@@ -73,12 +73,12 @@ if (payment) {
   
       const msgHeader = 
   `
-  🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾\n
-  *${name}*
-  ............................................................
-  𝓟𝓮𝓭𝓲𝓭𝓸 𝓯𝓮𝓲𝓽𝓸 𝓹𝓸𝓻:
-  *${dataForm.name}*
-  ............................................................
+  🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾%0A %0A
+  *${name}*%0A
+  ............................................................%0A
+  𝓟𝓮𝓭𝓲𝓭𝓸 𝓯𝓮𝓲𝓽𝓸 𝓹𝓸𝓻:%0A
+  *${dataForm.name}*%0A
+  ............................................................%0A
   `
       let messageBody = ''
   
@@ -86,10 +86,10 @@ if (payment) {
       
       let total = 0;
       order.forEach((item,i) => {
-      let msgItem = 
+        let msgItem = 
   `
-  
-  ❍ *${item.name}*: ${formatCurrency(item.total)}
+  %0A
+  ❍ *${item.name}*: ${formatCurrency(item.total)} %0A
   `
       if(item.details) {
         if(!item.details.empty) {
@@ -97,9 +97,9 @@ if (payment) {
             let items = ''
             detail.items.forEach(detailItem => {
               const [name] = detailItem.split('=')
-              items = items + `      - ${name}\n`
+              items = items + `      - ${name}%0A`
             })
-            msgItem = msgItem + `    ${detail.title}:\n${items}`
+            msgItem = msgItem + `    ${detail.title}:%0A${items}`
           });
         }
       }
@@ -112,7 +112,7 @@ if (payment) {
         // console.log('item', item.comments)
         let comments = '';
         if (item.comments) {
-          comments = `    _Observações: ${item.comments}_\n`
+          comments = `    _Observações: ${item.comments}_%0A`
         } 
   
   
@@ -121,23 +121,23 @@ if (payment) {
       });
   
       const msgFooter = 
-  `
-  ............................................................
-  𝙏𝙤𝙩𝙖𝙡 𝙙𝙤 𝙥𝙚𝙙𝙞𝙙𝙤: *${formatCurrency(total)}*
+  `%0A
+  ............................................................%0A
+  𝙏𝙤𝙩𝙖𝙡 𝙙𝙤 𝙥𝙚𝙙𝙞𝙙𝙤: *${formatCurrency(total)}*%0A
   `
       
       let msgPayment = ''
 
       if(dataForm.payments == "cartao") {
         msgPayment = 
-  `............................................................\n
-  *Método de Pagamento:*
+  `............................................................%0A %0A %0A
+  *Método de Pagamento:*%0A
   💳 Máquininha de Cartão: *${dataForm.selectedCard}*
   `
       } else if (dataForm.payments == "pix") {
         msgPayment = 
-  `............................................................\n
-  *Método de Pagamento:*
+  `............................................................%0A %0A %0A
+  *Método de Pagamento:*%0A
   💠 PIX
   `
       } else if (dataForm.payments == "dinheiro") {
@@ -145,27 +145,27 @@ if (payment) {
         // console.log(dataForm["money-change"]);
         
         msgPayment = 
-  `............................................................\n
-  *Método de Pagamento:*
+  `............................................................%0A %0A %0A
+  *Método de Pagamento:*%0A
   💵 Dinheiro (${dataForm["money-change"] ? `Troco para: ${formatCurrency(dataForm["money-change"])}` : 'Não precisa trazer troco'})
   `
       }
 
 
       let msgAdress = 
-  `\n
-  *O cliente irá buscar o pedido na loja.*\n
+  `%0A %0A %0A
+  *O cliente irá buscar o pedido na loja.*%0A
   `
 
       if(dataForm.adress) {
         msgAdress = 
-  `\n
-  *Endereço de Entrega:* 
-  ${dataForm.adress}, ${dataForm.number} 
-  ${dataForm.complement && dataForm.complement + ''}
-  ${dataForm.district} - ${dataForm.city}
-  ${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} 
-  ${dataForm.reference ? 'Ponto de referência: ' + dataForm.reference : ''} 
+  `%0A %0A %0A
+  *Endereço de Entrega:* %0A
+  ${dataForm.adress}, ${dataForm.number} %0A
+  ${dataForm.complement && dataForm.complement + '%0A'}
+  ${dataForm.district} - ${dataForm.city}%0A
+  ${dataForm.cep ? 'CEP: ' + dataForm.cep : ''} %0A
+  ${dataForm.reference ? 'Ponto de referência: ' + dataForm.reference : ''} %0A
   `
       } else {
 
