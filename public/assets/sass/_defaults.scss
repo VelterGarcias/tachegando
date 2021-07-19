@@ -57,13 +57,14 @@ label {
 #menu-categories {
   width: 100%;
   background: #ffffff9e;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 10;
   > div {
     overflow-x: scroll;
     max-width: 100%;
+    padding-bottom: 5px;
     // box-shadow: 1px 1px 4px #00000038;
     // &::-webkit-scrollbar {
     //   width: 0px;
@@ -81,6 +82,7 @@ label {
       letter-spacing: 0.5px;
       font-weight: bold;
       margin: 5px;
+      white-space: nowrap;
       &.active {
         background-color: #101d1d;
         color: var(--white);
@@ -92,7 +94,8 @@ label {
     }
   }
   @media (min-width: vars.$desktopStartWidth) {
-    position: relative;
+    display: none;
+    // position: relative;
     > div {
       max-width: calc(100vw - 350px);
       &::-webkit-scrollbar {

@@ -196,9 +196,13 @@ if (payment) {
 
   const user = Cookies.getJSON("user");
   const company = Cookies.getJSON("company");
-  // console.log(user);
+  console.log(user, company);
   if (user) {
     setFormValues(form, user)
+
+    // if () {
+
+    // }
   }
 
   new IMask(inputMoneyChange, {
@@ -216,9 +220,8 @@ if (payment) {
 
   const renderRadioButtons = () => {
     [...document.querySelectorAll('[name="payments"]')].forEach(radio => {
-      
-        // console.log(`msg-${radio.id}`);
         if(radio.checked) {
+          // console.log(`msg-${radio.id}`);
           document.querySelector(`#msg-${radio.id}`).classList.remove('hide');
         } else {
           document.querySelector(`#msg-${radio.id}`).classList.add('hide');
@@ -228,11 +231,17 @@ if (payment) {
 
   [...document.querySelectorAll('[name="payments"]')].forEach(radio => {
     radio.addEventListener('change', (e) => {
-      minRadioButtonChecked = true;
+      if (radio.id == 'card') {
+        minRadioButtonChecked = false;
+      } else {
+        minRadioButtonChecked = true;
+      }
+      
       wrapPayMethod.classList.remove('danger')
       renderRadioButtons();
     })
-  })
+  });
+  
 
   const renderAdress = () => {
     const wrapAdress = form.querySelector('#adress')
@@ -262,6 +271,18 @@ if (payment) {
         <input type="text" name="UF" placeholder="Estado" required/>
         `)
         if (user) setFormValues(form, user);
+        minRadioButtonChecked = false;
+        [...document.querySelectorAll('[name="payments"]')].forEach(radio => {
+          radio.checked = false;
+        });
+
+        [...document.querySelectorAll('[name="selectedCard"]')].forEach(radioCard => {
+          radioCard.checked = false;
+        });
+
+        [...document.querySelectorAll('[id^="msg-"]')].forEach(wrapMessage => {
+          wrapMessage.classList.add('hide');
+        });
   
         if (!cepIsReady) {
   
@@ -324,13 +345,22 @@ if (payment) {
           console.log("quais cartões");
           const arrayCards = company.cards
           if (arrayCards) {
-            arrayCards.forEach(card => {
+            arrayCards.forEach((card, indexCard) => {
               console.log(card);
               const wrapCards = document.querySelector('#cards')
               appendTemplate(wrapCards, 'li class=row', `
               <input type="radio" id="${card}" name="selectedCard" value="${card}"/>
               <label for="${card}" ><img alt="${card}" src="assets/images/cards/${card}.svg"></label>
               `)
+
+              if ((indexCard + 1) == card.length) {
+                [...document.querySelectorAll('[name="selectedCard"]')].forEach(radioCards => {
+                  radioCards.addEventListener('change', (e) => {
+                    minRadioButtonChecked = true;
+                    wrapPayMethod.classList.remove('danger')
+                  })
+                })
+              }
             });
           }
         }

@@ -13,7 +13,7 @@ import {
 const prod = true;
 
 const scrollToCategory = (id) => {
-  window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 20), behavior: 'smooth'})
+  window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 50), behavior: 'smooth'})
 }
 
 const renderProducts = (targetElement, productOptions) => {
@@ -74,14 +74,34 @@ const renderProducts = (targetElement, productOptions) => {
     );
 
     if(++indexCategory === array.length) {
-      // appendTemplate(wrapMenuCategories, 'div class=row', listMenucategories);
+      appendTemplate(wrapMenuCategories, 'div class=row', listMenucategories);
 
-      // [...document.querySelectorAll('.menu-cat')].forEach(btn => {
-      //   btn.addEventListener('click', () => {
-      //     const id = btn.id.split('-')[1]
-      //     scrollToCategory(id);
-      //   })
-      // })
+      [...document.querySelectorAll('.menu-cat')].forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.id.split('-')[1]
+          scrollToCategory(id);
+        })
+      })
+
+      let isFixed = false;
+      document.addEventListener('scroll', function(e) {
+      
+        if (window.scrollY > 100) {
+          if (!isFixed) {
+            document.querySelector('#shop').style = 'padding-top: 43px;'
+            wrapMenuCategories.style = 'position:fixed;'
+            isFixed = true;
+            console.log(window.scrollY);
+          }
+        } else {
+          if (isFixed) {
+            document.querySelector('#shop').style = 'padding-top: 0px;'
+            wrapMenuCategories.style = 'position:relative;'
+            isFixed = false;
+            console.log(window.scrollY);
+          }
+        }
+      });
 
     }
 

@@ -86,7 +86,7 @@ label {
 #menu-categories {
   width: 100%;
   background: #ffffff9e;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 10;
@@ -94,6 +94,7 @@ label {
 #menu-categories > div {
   overflow-x: scroll;
   max-width: 100%;
+  padding-bottom: 5px;
 }
 #menu-categories > div .menu-cat {
   background-color: white;
@@ -107,6 +108,7 @@ label {
   letter-spacing: 0.5px;
   font-weight: bold;
   margin: 5px;
+  white-space: nowrap;
 }
 #menu-categories > div .menu-cat.active {
   background-color: #101d1d;
@@ -118,7 +120,7 @@ label {
 }
 @media (min-width: 768px) {
   #menu-categories {
-    position: relative;
+    display: none;
   }
   #menu-categories > div {
     max-width: calc(100vw - 350px);
