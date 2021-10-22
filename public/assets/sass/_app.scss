@@ -70,6 +70,7 @@
       box-shadow: 1px 3px 9px -1px #00000087;
       min-height: 46px;
       align-items: center;
+      z-index: 11;
       #company {
         flex: 1;
         align-items: center;
@@ -135,7 +136,7 @@
       // }
       #avatar {
         position: absolute;
-        top: var(--space);
+        top: 0;
         right: var(--space);
         @include components.avatar;
         z-index: 3;
@@ -172,6 +173,21 @@
         // max-height: calc(100vh - 304px);
         padding-bottom: 100px;
         @include components.scrollbar;
+      }
+      .categories {
+        margin: var(--space);
+        p {
+          text-align: center;
+        }
+        h2 {
+          margin: 0;
+          font-size: 22px;
+          font-weight: bold;
+          border-bottom: 1px dotted;
+          max-width: 500px;
+          width: 100%;
+          margin: 0 auto;
+        }
       }
       .category {
         @include components.category-list;

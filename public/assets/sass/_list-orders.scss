@@ -2,10 +2,11 @@
 @use "vars";
 @use "components";
 
-#list-products {
+.list-products {
   @include mixins.reset-list;
   @include components.scrollbar;
-  padding: var(--space);
+  padding: 20px 5px;
+  max-width: 500px;
   max-width: 500px;
   max-width: 100%;
   margin: 0 auto;

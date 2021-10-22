@@ -8,9 +8,13 @@ import {
   getFormValues,
   renderOrderList,
   showAlert,
+  getQueryString,
 } from "./utils";
 
-const prod = true;
+
+const params = getQueryString();
+const prod = !params.test ? true : false;
+
 
 const scrollToCategory = (id) => {
   window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 50), behavior: 'smooth'})
@@ -443,6 +447,25 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     // addOrder(productData);
 
     if(Cookies.getJSON("order")) renderOrderList();
+    console.log(company.is_AppOnline);
+    if(company.is_AppOnline || company.is_AppOnline === undefined) {
+      console.log("O App está online!");
+    } else {
+      Object.keys(Cookies.get()).forEach(function(cookie) {
+        Cookies.remove(cookie);
+      });
+
+      const btnPay = document.querySelector('#btn-pay');
+      btnPay.disabled = true;
+      btnPay.style = 'background: #686868;';
+      showModal(`
+      <div style="margin: 10px 25px;background: #ff00009e;padding: 15px;border-radius: 10px;">
+        <h3>Nós não estamos atendendo no momento!</h3>
+        <p>Mas você pode continuar montando o seu pedido e assim que estivermos em nosso horário de atendimento você poderá nos enviar o seu pedido.</p>
+        <p>Para verificar se já estamos online novamente recarregue a página.</p>
+      </div>
+      `)
+    }
 
   } else {
     // console.log("sem hash");

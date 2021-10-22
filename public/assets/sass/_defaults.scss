@@ -45,6 +45,7 @@ label {
   border-radius: 10px;
   transition: top 0.3s ease-in-out;
   &.hide {
+    display: flex;
     top: -100%;
     transition: top 0.3s ease-in-out;
   }

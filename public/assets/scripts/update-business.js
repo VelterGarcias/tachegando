@@ -227,9 +227,9 @@ document.querySelectorAll("#form-update").forEach((form) => {
   buttonElement.addEventListener("click", (e) => {
     // console.log(cropper);
     if (cropper) {
-      imageElement.src = cropper.getCroppedCanvas().toDataURL("image/png");
+      imageElement.src = cropper.getCroppedCanvas({'width': 350, 'height': 350}).toDataURL("image/png");
 
-      cropper.getCroppedCanvas().toBlob((blob) => {
+      cropper.getCroppedCanvas({'width': 350, 'height': 350}).toBlob((blob) => {
         const storage = firebase.storage();
 
         const fileRef = storage.ref().child(`photos/${userGlobal.uid}.png`);

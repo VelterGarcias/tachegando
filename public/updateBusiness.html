@@ -39,11 +39,20 @@
   </header>
 
   <main>
+    
     <ul id="form-tabs">
       <li class="active main-color"><a href="updateBusiness.html">Empresa</a></li>
       <li><a href="products.html">Voltar</a></li>
     </ul>
     <form id="form-update" class="main-color">
+      <h3>Status do App</h3>
+      <div class="row ali-center" style="margin-top: 20px;">
+        <label class="switch" style="margin-right: 10px;">
+          <input type="checkbox" id="appStatus" name="is_AppOnline" value="1" >
+          <span class="slider round"></span>
+        </label>
+        <label for="appStatus" class="big">Pedidos ON/OFF</label>
+      </div>
       <h3>Link do App da Empresa</h3>
       <a id="link-shop"></a>
       <h3>Logotipo da Empresa</h3>

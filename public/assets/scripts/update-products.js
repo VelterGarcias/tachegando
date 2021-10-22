@@ -69,7 +69,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     btnRemoveOption.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const optionRemoved = e.currentTarget
+        const optionRemoved = e.currentTarget;
         optionRemoved.closest('li').remove();
       });
     });
@@ -197,7 +197,6 @@ document.querySelectorAll("#form-product").forEach((form) => {
       const  oldAditionals = Cookies.getJSON("aditionals")
       let newAditionals = oldAditionals ? oldAditionals : []
       
-
       if (dataAditional.id == 0) {
         delete dataAditional.id;
         dataAditional.companyId = userGlobal.uid;
@@ -359,11 +358,19 @@ document.querySelectorAll("#form-product").forEach((form) => {
       const oldAditionals = Cookies.getJSON("aditionals")
       const {aditionals} = getFormValues(saveFormOptions)
       
-      console.log(oldAditionals, oldAditionals.map(a => a.id) , aditionals);
+      // console.log(oldAditionals, oldAditionals.map(a => a.id) , aditionals);
+      console.log(aditionals);
 
       db.collection("products")
       .doc(produto)
       .update({ aditionals: aditionals })
+      .then(() => {
+        if (!aditionals.length) {
+          renderProductOptions(aditionals);
+          Cookies.set("aditionals", aditionals, { expires: 1 });
+        }
+        showAlert("Alterações salvas com sucesso!");
+      })
       .catch((err) => {
         // console.log(err);
         showAlert(err.message, true);
@@ -519,9 +526,18 @@ document.querySelectorAll("#form-product").forEach((form) => {
           });
     
           btnDelete.addEventListener("click", () => {
+            // console.log(produto, aditionalsFilter);
+            // console.log(productDate);
             db.collection("products")
             .doc(produto)
             .update({ aditionals: aditionalsFilter })
+            .then(()=>{
+              // console.log("renderProductOptions");
+              if(!aditionalsFilter.length) {
+                renderProductOptions(aditionalsFilter);
+                Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+              }
+            })
             .catch((err) => {
               // console.log(err);
               showAlert(err.message, true);
@@ -533,7 +549,11 @@ document.querySelectorAll("#form-product").forEach((form) => {
             db.collection("aditionals")
             .doc(id)
             .delete()
-            .then(() => showAlert("Opção EXCLUIDA com sucesso"))
+            .then(() => {
+              showAlert("Opção EXCLUIDA com sucesso")
+              renderProductOptions(aditionalsFilter);
+              Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+            })
             .catch((err) => {
               // console.log(err);
               showAlert(err.message, true);
@@ -557,7 +577,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
           productDate.push(snapshot.data());
 
-          imageElement.src = productDate[0].photo || "./assets/images/user.svg";
+          imageElement.src = productDate[0].photo || "./assets/images/product.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
           // console.log("productDate", productDate);
           let aditionals = []
@@ -641,9 +661,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
   buttonElement.addEventListener("click", (e) => {
     if (cropper) {
-      imageElement.src = cropper.getCroppedCanvas().toDataURL("image/png");
+      imageElement.src = cropper.getCroppedCanvas({'width': 350, 'height': 350}).toDataURL("image/png");
 
-      cropper.getCroppedCanvas().toBlob((blob) => {
+      cropper.getCroppedCanvas({'width': 350, 'height': 350}).toBlob((blob) => {
         const storage = firebase.storage();
 
         const fileRef = storage
