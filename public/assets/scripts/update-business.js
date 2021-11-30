@@ -141,7 +141,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
           snapshot.forEach((item) => {
             userDate.push(item.data());
           });
-          console.log("userDate", userDate);
+          // console.log("userDate", userDate);
           if (userDate.length == 0 ) {
             userDate.push({
               name: user.displayName,

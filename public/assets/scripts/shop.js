@@ -27,14 +27,14 @@ const renderProducts = (targetElement, productOptions) => {
   // console.log("productOptions", productOptions);
 
   let categories = [...new Set(productOptions.map(item => item.category))];
-  console.log("categories", categories);
+  // console.log("categories", categories);
 
   const wrapMenuCategories = document.querySelector('#menu-categories')
   
   let listMenucategories = ''
   categories.forEach((category, indexCategory, array) => {
     const productsInCategory = productOptions.filter((product) => product.category === category)
-    console.log("productsInCategory", productsInCategory);
+    // console.log("productsInCategory", productsInCategory);
 
     listMenucategories = listMenucategories + `<button id="menu-${indexCategory}" class="menu-cat" >${category}</button>`
 
@@ -95,14 +95,14 @@ const renderProducts = (targetElement, productOptions) => {
             document.querySelector('#shop').style = 'padding-top: 43px;'
             wrapMenuCategories.style = 'position:fixed;'
             isFixed = true;
-            console.log(window.scrollY);
+            // console.log(window.scrollY);
           }
         } else {
           if (isFixed) {
             document.querySelector('#shop').style = 'padding-top: 0px;'
             wrapMenuCategories.style = 'position:relative;'
             isFixed = false;
-            console.log(window.scrollY);
+            // console.log(window.scrollY);
           }
         }
       });
@@ -220,7 +220,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         }
         // console.log("product", product.is_online, productData);
       });
-      console.log("productData", productData);
+      // console.log("productData", productData);
       // localStorage.setItem("products", JSON.stringify(productData));
       Cookies.set("products", productData, { expires: 0.041 });
 
@@ -449,9 +449,9 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     // addOrder(productData);
 
     if(Cookies.getJSON("order")) renderOrderList();
-    console.log(company.is_AppOnline);
+    // console.log(company.is_AppOnline);
     if(company.is_AppOnline || company.is_AppOnline === undefined) {
-      console.log("O App está online!");
+      // console.log("O App está online!");
     } else {
       Object.keys(Cookies.get()).forEach(function(cookie) {
         Cookies.remove(cookie);

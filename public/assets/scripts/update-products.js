@@ -364,7 +364,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
       const {aditionals} = getFormValues(saveFormOptions)
       
       // console.log(oldAditionals, oldAditionals.map(a => a.id) , aditionals);
-      console.log(aditionals);
+      // console.log(aditionals);
 
       db.collection("products")
       .doc(produto)
@@ -393,7 +393,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
 
   const renderProductOptions = (product) => {
-    console.log("product", product);
+    // console.log("product", product);
     const divOptions = document.querySelector("#options");
     divOptions.innerHTML = ""
     
@@ -466,7 +466,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     const aditionals = JSON.parse(sessionStorage.getItem('aditionals'))
     // console.log("session",JSON.parse(sessionStorage.getItem('aditionals')));
     if (aditionals) {
-      console.log("renderProductValue-aditionals", aditionals);
+      // console.log("renderProductValue-aditionals", aditionals);
       renderProductOptions(aditionals);
 
       [...document.querySelectorAll(".btn-edit")].forEach(btn => {
@@ -577,7 +577,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
   }
 
   auth.onAuthStateChanged(async (user) => {
-    console.log(user);
+    // console.log(user);
     if (user) {
       userGlobal = user;
 
@@ -591,7 +591,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
           imageElement.src = productDate[0].photo || "./assets/images/product.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
           sessionStorage.setItem("product", JSON.stringify(...productDate));
-          console.log("productDate", productDate);
+          // console.log("productDate", productDate);
           let aditionals = []
           if (productDate[0].aditionals) {
 
@@ -612,7 +612,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
                   } else {
                     aditionals[indexExistis] = dataAditional
                   }
-                  console.log("aditionals", aditionals);
+                  // console.log("aditionals", aditionals);
                   // Cookies.set("aditionals", aditionals, { expires: 1 });
                   sessionStorage.setItem("aditionals", JSON.stringify(aditionals));
                 } else {
