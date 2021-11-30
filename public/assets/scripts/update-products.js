@@ -194,7 +194,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
       delete dataAditional.option;
       delete dataAditional.price;
 
-      const  oldAditionals = Cookies.getJSON("aditionals")
+      // const  oldAditionals = Cookies.getJSON("aditionals")
+      const  oldAditionals = JSON.parse(sessionStorage.getItem('aditionals'))
+      // console.log(sessionStorage.getItem('aditionals'));
       let newAditionals = oldAditionals ? oldAditionals : []
       
       if (dataAditional.id == 0) {
@@ -308,7 +310,9 @@ document.querySelectorAll("#form-product").forEach((form) => {
     //           </li>
     //           `
     // } else {
-      let aditionals = Cookies.getJSON("aditionals")
+      // let aditionals = Cookies.getJSON("aditionals")
+      let aditionals = JSON.parse(sessionStorage.getItem('aditionals'))
+      // console.log("session",sessionStorage.getItem('aditionals'));
       if (!aditionals) aditionals = []
 
       // console.log("allAditionals", allAditionals);
@@ -355,7 +359,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
     saveFormOptions.addEventListener('submit', (e) => {
       e.preventDefault();
-      const oldAditionals = Cookies.getJSON("aditionals")
+      // const oldAditionals = Cookies.getJSON("aditionals")
+      const oldAditionals = JSON.parse(sessionStorage.getItem('aditionals'))
       const {aditionals} = getFormValues(saveFormOptions)
       
       // console.log(oldAditionals, oldAditionals.map(a => a.id) , aditionals);
@@ -367,7 +372,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
       .then(() => {
         if (!aditionals.length) {
           renderProductOptions(aditionals);
-          Cookies.set("aditionals", aditionals, { expires: 1 });
+          // Cookies.set("aditionals", aditionals, { expires: 1 });
+          sessionStorage.setItem("aditionals", JSON.stringify(aditionals));
         }
         showAlert("Alterações salvas com sucesso!");
       })
@@ -387,6 +393,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
 
   const renderProductOptions = (product) => {
+    console.log("product", product);
     const divOptions = document.querySelector("#options");
     divOptions.innerHTML = ""
     
@@ -455,9 +462,11 @@ document.querySelectorAll("#form-product").forEach((form) => {
     const productData = Cookies.getJSON("product")
     setFormValues(form, productData);  
 
-    const aditionals = Cookies.getJSON("aditionals")
+    // const aditionals = Cookies.getJSON("aditionals")
+    const aditionals = JSON.parse(sessionStorage.getItem('aditionals'))
+    // console.log("session",JSON.parse(sessionStorage.getItem('aditionals')));
     if (aditionals) {
-
+      console.log("renderProductValue-aditionals", aditionals);
       renderProductOptions(aditionals);
 
       [...document.querySelectorAll(".btn-edit")].forEach(btn => {
@@ -535,7 +544,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
               // console.log("renderProductOptions");
               if(!aditionalsFilter.length) {
                 renderProductOptions(aditionalsFilter);
-                Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+                // Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+                sessionStorage.setItem("aditionals", JSON.stringify(aditionalsFilter));
               }
             })
             .catch((err) => {
@@ -552,7 +562,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
             .then(() => {
               showAlert("Opção EXCLUIDA com sucesso")
               renderProductOptions(aditionalsFilter);
-              Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+              // Cookies.set("aditionals", aditionalsFilter, { expires: 1 });
+              sessionStorage.setItem("aditionals", JSON.stringify(aditionalsFilter));
             })
             .catch((err) => {
               // console.log(err);
@@ -566,7 +577,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
   }
 
   auth.onAuthStateChanged(async (user) => {
-    // console.log(user);
+    console.log(user);
     if (user) {
       userGlobal = user;
 
@@ -579,7 +590,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
 
           imageElement.src = productDate[0].photo || "./assets/images/product.svg";
           Cookies.set("product", ...productDate, { expires: 1 });
-          // console.log("productDate", productDate);
+          sessionStorage.setItem("product", JSON.stringify(...productDate));
+          console.log("productDate", productDate);
           let aditionals = []
           if (productDate[0].aditionals) {
 
@@ -600,8 +612,11 @@ document.querySelectorAll("#form-product").forEach((form) => {
                   } else {
                     aditionals[indexExistis] = dataAditional
                   }
-                  Cookies.set("aditionals", aditionals, { expires: 1 });
+                  console.log("aditionals", aditionals);
+                  // Cookies.set("aditionals", aditionals, { expires: 1 });
+                  sessionStorage.setItem("aditionals", JSON.stringify(aditionals));
                 } else {
+                  // console.log("passou aqui");
                   deleteAditional(aditionalId, productDate[0].aditionals, true)
                 }
                 renderProductValue();
@@ -609,7 +624,8 @@ document.querySelectorAll("#form-product").forEach((form) => {
             });
 
           } else {
-            Cookies.remove("aditionals");
+            // Cookies.remove("aditionals");
+            sessionStorage.removeItem('aditionals');
             renderProductValue();
           }
 
@@ -626,6 +642,7 @@ document.querySelectorAll("#form-product").forEach((form) => {
     e.preventDefault();
     uploadFile(e.dataTransfer.files);
   });
+  
   bodyElement.addEventListener("dragover", (e) => e.preventDefault());
 
   //================== Salvando os dados =================

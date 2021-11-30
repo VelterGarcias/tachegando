@@ -1,11 +1,51 @@
 import firebase from "./firebase-app";
 import { getFormValues, getQueryString, showAlert } from "./utils";
+import axios from "axios";
 
 document.querySelectorAll(".auth").forEach((page) => {
   const auth = firebase.auth();
 
   //==================   Login  =====================
   const formAuthLogin = document.querySelector("#form-login");
+
+  const sendMail = async (values) =>{
+      
+      // console.log(values)
+
+      const mail = {
+          company: "tahChegando",
+          email: "weads.velter@gmail.com",
+          contactEmail: values.email,
+          message: "",
+          name: values.name,
+          phone: "",
+          subject: "Novo cadastro no App ",
+      }
+
+      await axios({
+          method: 'post',
+          headers: {    
+              // 'crossDomain': true,
+              // 'Access-Control-Allow-Origin' : '*',
+              // 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+
+              // 'Content-Type': 'application/json',
+              'Content-Type': 'text/plain;charset=utf-8',
+          },
+          url: 'https://script.google.com/macros/s/AKfycbwW0szWxfvsz3Sg9mrsMn2aHoroMxTsX0xFgcJwlFgDspLfEj4/exec',
+          data: mail,
+      })
+      .then(
+          (res)=> {
+              // const tokenData = res.data.token
+              // cookies.set('token', tokenData)
+              // console.log('Usuário autenticado!')
+              // alert(JSON.stringify(res.data))
+              // window.location.href=("/contact")
+          }
+      )
+      .catch(err => console.log('Deu ruim', err.message))
+  }
 
   if (formAuthLogin) {
     formAuthLogin.addEventListener("submit", (e) => {
@@ -39,7 +79,7 @@ document.querySelectorAll(".auth").forEach((page) => {
   const formAuthRegister = document.querySelector("#form-register");
 
   if (formAuthRegister) {
-    formAuthRegister.addEventListener("submit", (e) => {
+    formAuthRegister.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const btnSubmitForm = formAuthRegister.querySelector('footer button[type=submit]');
@@ -48,6 +88,8 @@ document.querySelectorAll(".auth").forEach((page) => {
 
       btnSubmitForm.innerHTML = "Criando conta...";
       btnSubmitForm.disabled = true;
+
+      await sendMail(values);
 
       auth
         .createUserWithEmailAndPassword(values.email, values.password)
@@ -62,6 +104,7 @@ document.querySelectorAll(".auth").forEach((page) => {
               showAlert(
                 `Bem-vindo ${values.name}, Usuário Cadastrado com Sucesso!`
               );
+                
             });
           setTimeout(() => {
             window.location.href = "/products.html";

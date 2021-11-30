@@ -220,6 +220,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
         }
         // console.log("product", product.is_online, productData);
       });
+      console.log("productData", productData);
+      // localStorage.setItem("products", JSON.stringify(productData));
       Cookies.set("products", productData, { expires: 0.041 });
 
       
