@@ -89,8 +89,6 @@ document.querySelectorAll(".auth").forEach((page) => {
       btnSubmitForm.innerHTML = "Criando conta...";
       btnSubmitForm.disabled = true;
 
-      await sendMail(values);
-
       auth
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((response) => {
@@ -100,15 +98,21 @@ document.querySelectorAll(".auth").forEach((page) => {
             .updateProfile({
               displayName: values.name,
             })
-            .then((res) => {
+            .then(async (res) => {
               showAlert(
                 `Bem-vindo ${values.name}, Usuário Cadastrado com Sucesso!`
               );
+              axios({
+                method: 'post',
+                url: `https://api.telegram.org/bot5036731801:AAF0kNL7h9uzyoNeVYGGQQ_qyEoXr27AdFA/sendMessage?chat_id=-1001524221132&text=Ola%20${encodeURI(values.name)},%20seja%20bem-vindo%20ao%20App%20TahChegando!%20%20E-mail:%20${encodeURI(values.email)}`,
+            })
+              await sendMail(values);
+              window.location.href = "/products.html";
                 
             });
-          setTimeout(() => {
-            window.location.href = "/products.html";
-          }, 2000);
+          // setTimeout(() => {
+            
+          // }, 2000);
         })
         .catch((error) => {
           showAlert(error.message, true)
