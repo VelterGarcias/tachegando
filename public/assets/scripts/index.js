@@ -7,3 +7,4 @@ import "./order";
 import "./payment";
 import "./update-business";
 import "./update-products";
+import "./CategoriesOrder";

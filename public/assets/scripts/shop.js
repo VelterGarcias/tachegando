@@ -27,7 +27,7 @@ const renderProducts = (targetElement, productOptions) => {
   // console.log("productOptions", productOptions);
 
   let categories = [...new Set(productOptions.map(item => item.category))];
-  // console.log("categories", categories);
+  console.log("categories", categories);
 
   const wrapMenuCategories = document.querySelector('#menu-categories')
   
