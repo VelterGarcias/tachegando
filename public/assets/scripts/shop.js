@@ -30,6 +30,12 @@ const renderProducts = (targetElement, productOptions) => {
   console.log("categories", categories);
 
   const wrapMenuCategories = document.querySelector('#menu-categories')
+
+  categories.sort(function(a, b){
+      if(a < b) { return -1; }
+      if(a > b) { return 1; }
+      return 0;
+  })
   
   let listMenucategories = ''
   categories.forEach((category, indexCategory, array) => {

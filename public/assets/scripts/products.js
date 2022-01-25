@@ -18,6 +18,8 @@ document.querySelectorAll(".categories").forEach((page) => {
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  
+
   // const renderProductsAdmin2 = (targetElement, productOptions) => {
   //   targetElement.innerHTML = "";
   
@@ -122,12 +124,13 @@ document.querySelectorAll(".categories").forEach((page) => {
 
   // ----------------------
   
-  
+  const companyTest = {}
+  // companyTest.categoriesOrder = ["Sorveteria", "Lanches" ];
   
   const renderProductsAdmin = (targetElement, productOptions) => {
 
     // ========================
-
+    
     targetElement.innerHTML = "";
     const categoryWrapper = document.querySelector('div.categories')
     categoryWrapper.innerHTML = "";
@@ -137,6 +140,24 @@ document.querySelectorAll(".categories").forEach((page) => {
     console.log("categories", categories);
   
     const wrapMenuCategories = document.querySelector('#menu-categories')
+
+    if (!companyTest.hasOwnProperty('categoriesOrder')) {
+      categories.sort(function(a, b){
+          if(a < b) { return -1; }
+          if(a > b) { return 1; }
+          return 0;
+      })
+    } else {
+      const allCategoriesOrdened = Array.from(new Set(companyTest.categoriesOrder.concat(categories)));
+      // console.log("allCategoriesOrdened", allCategoriesOrdened);
+    }
+    
+
+    // console.log("categories-sorted", categories);
+    // const objCategory = {...categories};
+    // console.log("categories-obj", objCategory);
+    // const array2 = ["teste", "teste2", "Lanches", "Sorveteria"];
+    // console.log(Array.from(new Set(categories.concat(array2))));
     
     let listMenucategories = ''
     categories.forEach((category, indexCategory, array) => {
