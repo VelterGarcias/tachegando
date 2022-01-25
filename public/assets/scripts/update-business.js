@@ -1,5 +1,6 @@
 import Cropper from "cropperjs";
 import IMask from "imask";
+import axios from "axios";
 
 import firebase from "./firebase-app";
 import { showAlert, getFormValues, setFormValues } from "./utils";
@@ -191,6 +192,18 @@ document.querySelectorAll("#form-update").forEach((form) => {
       inputHash.focus();
       showAlert('ERRO: Escolha um link válido antes de salvar!', true)
     } else {
+        if(userDate[0].hash) {
+          if (userDate[0].hash != inputHash.value) {
+            // console.log("Vou avisar no telegram");
+            axios({
+                method: 'post',
+                url: `https://api.telegram.org/bot5036731801:AAF0kNL7h9uzyoNeVYGGQQ_qyEoXr27AdFA/sendMessage?chat_id=-1001524221132&text=Hash:%20${encodeURI(inputHash.value)},%20Conheca%20a%20nova%20empresa%20no%20App%20TahChegando!`,
+            })
+            
+            
+          }
+        }
+        
         console.log("bom");
         btnSubmit.disabled = true;
         btnSubmit.innerHTML = "Salvando...";
