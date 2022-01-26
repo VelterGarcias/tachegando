@@ -46,7 +46,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
     // // console.log("productOptions", productOptions);
   
     let categories = [...new Set(productOptions.map(item => item.category))];
-    console.log("categories", categories);
+    // console.log("categories", categories);
   
     // const wrapMenuCategories = document.querySelector('#menu-categories')
 
@@ -57,7 +57,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
           return 0;
       })
     } else {
-      console.log("Empresa já possui categorias organizadas");
+      // console.log("Empresa já possui categorias organizadas");
       categories = Array.from(new Set(companyData.categoriesOrder.concat(categories)));
       // console.log("allCategoriesOrdened", allCategoriesOrdened);
     }
@@ -90,7 +90,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
 
   auth.onAuthStateChanged(async (user) => {
-    console.log(user);
+    // console.log(user);
     if (user) {
       userGlobal = user;
 
@@ -101,7 +101,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
       companyData = snapshotCompany.data();
 
-      console.log("companyData", companyData);
+      // console.log("companyData", companyData);
 
       const products = [];
 
@@ -116,7 +116,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
             products.push(productData);
           });
           
-          console.log(products);
+          // console.log(products);
 
           const ulProducts = document.querySelector(".sorteable-ul");
           renderCategoriesOrder(ulProducts, products);
@@ -138,7 +138,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = "Salvando...";
 
-    console.log("finalOrder",newOrder);
+    // console.log("finalOrder",newOrder);
 
     db.collection("companies")
       .doc(userGlobal.uid)
@@ -167,7 +167,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
         // Executa somente após o fim do loop
         if(++i === liOrdened.length) {
-          console.log("newOrder",newOrder);
+          // console.log("newOrder",newOrder);
 
         }
       });
@@ -184,7 +184,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
           
           // Executa somente após o fim do loop
           if(++i === liOrdened.length) {
-            console.log("newOrder",newOrder);
+            // console.log("newOrder",newOrder);
 
           }
                     

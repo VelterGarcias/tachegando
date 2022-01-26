@@ -30,7 +30,7 @@ const renderProducts = (targetElement, productOptions) => {
   // console.log("productOptions", productOptions);
 
   let categories = [...new Set(productOptions.map(item => item.category))];
-  console.log("categories", categories);
+  // console.log("categories", categories);
 
   const wrapMenuCategories = document.querySelector('#menu-categories')
 
@@ -47,7 +47,7 @@ const renderProducts = (targetElement, productOptions) => {
         return 0;
     })
   } else {
-    console.log("Empresa já possui categorias organizadas");
+    // console.log("Empresa já possui categorias organizadas");
     categories = Array.from(new Set(company.categoriesOrder.concat(categories)));
     // console.log("allCategoriesOrdened", allCategoriesOrdened);
   }
@@ -281,7 +281,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
       btn.style = `background-color: ${company.second_color}`;
     });
 
-    console.log("company", company);
+    // console.log("company", company);
 
 
     // ============  click nos produtos e mostrar modal ==============
