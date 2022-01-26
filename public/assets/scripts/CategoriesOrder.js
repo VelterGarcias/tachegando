@@ -173,6 +173,34 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
       });
   });
 
+  document.addEventListener('touchend', function(event) {
+      if(event.target.closest('ul.sorteable-ul')) {
+        const liOrdened = [...document.querySelectorAll('ul.sorteable-ul li')];
+        newOrder.length = 0;
+        liOrdened.forEach((categ, i) => {
+          if (++i != liOrdened.length) {
+            newOrder.push(categ.innerHTML);
+          }
+          
+          // Executa somente após o fim do loop
+          if(++i === liOrdened.length) {
+            console.log("newOrder",newOrder);
+
+          }
+                    
+        });
+      }
+      
+  });
+
+// Object.keys(window).forEach(key => {  
+//   if (/^on/.test(key)) {  
+//     window.addEventListener(key.slice(2), event => {  
+//       console.log(event);  
+//     });  
+//   }  
+// });
+
 
   var el = document.querySelector('.sorteable-ul');
   // var sortable = Sortable.create(el);

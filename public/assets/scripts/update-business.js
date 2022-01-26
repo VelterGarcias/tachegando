@@ -197,7 +197,7 @@ document.querySelectorAll("#form-update").forEach((form) => {
             // console.log("Vou avisar no telegram");
             axios({
                 method: 'post',
-                url: `https://api.telegram.org/bot5036731801:AAF0kNL7h9uzyoNeVYGGQQ_qyEoXr27AdFA/sendMessage?chat_id=-1001524221132&text=Hash:%20${encodeURI(inputHash.value)},%20Conheca%20a%20nova%20empresa%20no%20App%20TahChegando!`,
+                url: `https://api.telegram.org/bot5036731801:AAF0kNL7h9uzyoNeVYGGQQ_qyEoXr27AdFA/sendMessage?chat_id=-1001524221132&text=Conhe%C3%A7a%20a%20nova%20empresa%20no%20App%20TahChegando%3A%0A%0Ahttps%3A%2F%2Ftahchegando.web.app%2F%23${encodeURI(inputHash.value)}`,
             })
             
             
