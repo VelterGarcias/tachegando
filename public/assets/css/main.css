@@ -135,6 +135,9 @@ label {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 10px;
   }
+  #menu-categories.not-aside > div {
+    max-width: 100vw;
+  }
 }
 
 #modal {

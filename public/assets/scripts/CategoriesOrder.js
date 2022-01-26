@@ -23,7 +23,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
   const btnSubmit = form.querySelector("[type=submit]");
 
-  const newOrder = [];
+  let newOrder = [];
   let companyData = {}
   // companyData.categoriesOrder = ["Sorveteria", "Lanches", "Teste" ];
 
@@ -57,8 +57,17 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
           return 0;
       })
     } else {
-      // console.log("Empresa já possui categorias organizadas");
+      categories.sort(function(a, b){
+          if(a < b) { return -1; }
+          if(a > b) { return 1; }
+          return 0;
+      })
+      const oldCategories = categories;
       categories = Array.from(new Set(companyData.categoriesOrder.concat(categories)));
+     
+      categories = categories.filter(cat => oldCategories.includes(cat));
+      // console.log(categories);
+      newOrder = categories;
       // console.log("allCategoriesOrdened", allCategoriesOrdened);
     }
     
@@ -101,7 +110,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
       companyData = snapshotCompany.data();
 
-      // console.log("companyData", companyData);
+      console.log("companyData", companyData);
 
       const products = [];
 

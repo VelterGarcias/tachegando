@@ -47,8 +47,16 @@ const renderProducts = (targetElement, productOptions) => {
         return 0;
     })
   } else {
-    // console.log("Empresa já possui categorias organizadas");
+    categories.sort(function(a, b){
+        if(a < b) { return -1; }
+        if(a > b) { return 1; }
+        return 0;
+    })
+    const oldCategories = categories;
     categories = Array.from(new Set(company.categoriesOrder.concat(categories)));
+   
+    categories = categories.filter(cat => oldCategories.includes(cat));
+    // console.log(categories);
     // console.log("allCategoriesOrdened", allCategoriesOrdened);
   }
   

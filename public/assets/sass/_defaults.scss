@@ -112,6 +112,11 @@ label {
         border-radius: 10px;
       }
     }
+    &.not-aside {
+      > div {
+        max-width: 100vw;
+      }
+    }
   }
 }
 
