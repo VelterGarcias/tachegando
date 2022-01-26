@@ -1,7 +1,10 @@
+import Cookies from "js-cookie";
+
 export function getFormValues(form) {
   const values = {};
 
   form.querySelectorAll("[name]").forEach((field) => {
+    // console.log(field.name, field.value, field.type);
     switch (field.type) {
       case "select":
         values[field.name] = field.querySelector("option:selected")?.value;
@@ -14,12 +17,20 @@ export function getFormValues(form) {
         break;
 
       case "checkbox":
-        values[field.name] = [];
-        form
-          .querySelectorAll(`[name=${field.name}]:checked`)
-          .forEach((checkbox) => {
-            values[field.name].push(checkbox.value);
-          });
+        if (field.name.startsWith("is")) {
+          if (form.querySelector(`[name=${field.name}]:checked`)) {
+            values[field.name] = true;
+          } else {
+            values[field.name] = false;
+          }
+        } else {
+          values[field.name] = [];
+          form
+            .querySelectorAll(`[name=${field.name}]:checked`)
+            .forEach((checkbox) => {
+              values[field.name].push(checkbox.value);
+            });
+        }
         break;
 
       default:
@@ -29,6 +40,48 @@ export function getFormValues(form) {
   });
   //console.log(values);
   return values;
+}
+
+export function setFormValues(form, values) {
+  Object.keys(values).forEach((key) => {
+    const field = form.querySelector(`[name=${key}]`);
+    if (field) {
+      switch (field.type) {
+        case "select":
+          field.querySelector(`option[value=${values[key]}]`).selected = true;
+          break;
+
+        case "radio":
+          form.querySelector(
+                `[name="${key}"][value="${values[key]}"]`
+              ).checked = true;
+          break;
+        case "checkbox":
+          // console.log(field.name)
+          // console.log(values[key])
+          
+          if (field.name.startsWith("is")) {
+            form.querySelector(`[name=${key}]`).checked = values[key];
+          } else {
+            if (values[key] != '') {
+              values[key].forEach(check => {
+                form.querySelector(
+                  `[name="${key}"][value="${check}"]`
+                ).checked = true;
+              });
+            }
+            
+          }
+
+          break;
+        case "file":
+          break;
+        default:
+          field.value = values[key];
+          break;
+      }
+    }
+  });
 }
 
 export function showAlertError() {
@@ -90,10 +143,18 @@ export function getQueryString() {
   return queryString;
 }
 
-export function appendTemplate(element, tagName, html) {
+export function appendTemplate(element, tag, html) {
+  const [tagName, ...tagAtribute] = tag.split(" ");
   const wrapElement = document.createElement(tagName);
 
   wrapElement.innerHTML = html;
+  tagAtribute.forEach((atribute) => {
+    const [atributeName, atributeValue] = atribute.split("=");
+    let atributeValueFormated = atributeValue
+      .replace(/^"|"$/g, "")
+      .replace(/^'|'$/g, "");
+    wrapElement.setAttribute(atributeName, atributeValueFormated);
+  });
 
   element.append(wrapElement);
 
@@ -104,7 +165,7 @@ export function onSnapshotError(err) {
   showAlertError()(err);
   // console.error(err);
   setTimeout(() => {
-    window.location.href = "/login.html";
+    // window.location.href = "/login.html";
   }, 2000);
 }
 
@@ -149,12 +210,19 @@ export function showModal(content) {
   const modal = document.querySelector("#modal");
   modal.innerHTML = "";
   modal.classList.add("open");
-  appendTemplate(modal, "div", content);
+  appendTemplate(
+    modal,
+    "div",
+    `<div id="overlay" class="close"></div><div class="modal-content"><img class="close" src="assets/images/close.svg" alt="Fechar" />${content}</div>`
+  );
 
-  const closeBtn = modal.querySelector("img");
+  const closeBtn = modal.querySelectorAll(".close");
 
-  closeBtn.addEventListener("click", () => {
-    modal.classList.remove("open");
+  [...closeBtn].forEach((close) => {
+    close.addEventListener("click", () => {
+      modal.classList.remove("open");
+      modal.innerHTML = "";
+    });
   });
 }
 
@@ -175,3 +243,107 @@ export function getOrderId(btn) {
   const cardOrder = btn.closest(".actions");
   return cardOrder.id;
 }
+
+export function  renderOrderList() {
+  // console.log(order);
+  const menu = document.querySelector("#menu");
+  const targetElement = menu.querySelector("#orderList");
+
+  targetElement.innerHTML = "";
+
+  let total = 0;
+
+  const currentOrder = Cookies.getJSON("order")
+  // console.log("currentOrder", currentOrder)
+
+  currentOrder.forEach((item) => {
+    // console.log("orderList", item);
+    total += Number(item.total);
+    let details = ''
+
+    if(item.details) {
+      if(!item.details.empty) {
+        // console.log(item.details);
+        item.details.forEach(detail => {
+          let items = ''
+          // console.log(detail);
+          detail.items.forEach(detailItem => {
+            // console.log(detailItem);
+            const [name, price] = detailItem.split('=')
+            items = items + `<span>&emsp;${name} ${price ? `<small> (+ ${formatCurrency(price)})</small>` : ''}</span>`
+          })
+          // console.log(details);
+          details = details + `<span><strong>${detail.title}</strong></span>${items}`
+        });
+      }
+    }
+    if(item.comments) {
+      details = details + `<small><strong>Observações: </strong>${item.comments}</small>`
+    }
+    
+
+    appendTemplate(
+      targetElement,
+      "details",
+      `
+        <summary>
+          <div>${item.name}</div>
+          <div>${formatCurrency(item.total)}</div>
+          <button type="button" aria-label="Remover ${
+            item.name
+          }" data-orderid="${item.id}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="black" />
+            </svg>
+          </button>
+        </summary>
+        <div>${details}</div>
+      `
+    );
+  });
+
+  setRemoveBuguerButtonEvent(targetElement);
+
+  menu.querySelector("footer .price span").innerHTML = formatCurrency(total);
+
+  menu.querySelector("header strong small").innerHTML =
+  currentOrder.length < 2
+      ? `${currentOrder.length} produto`
+      : `${currentOrder.length} produtos`;
+};
+
+export function setRemoveBuguerButtonEvent(list) {
+  const buttons = list.querySelectorAll("button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const removeBurguerId = e.currentTarget.dataset.orderid
+
+      // console.log(removeBurguerId);
+      let order =  Cookies.getJSON("order")
+      order = order.filter((x) => {
+        if (x.name != 'Taxa de Entrega') {
+          if (+x.id !== +removeBurguerId) return true;
+        } else {
+          showAlert('Para remover a taxa de entrega DESATIVE a opção entrega na sua casa.', true)
+          return true;
+        }
+      });
+
+      // console.log(order);
+
+      Cookies.set("order", order, { expires: 15 });
+
+      renderOrderList();
+    });
+  });
+};
+
+export function changeColors(main, second) {
+  document.querySelectorAll(".main-color").forEach((btn) => {
+    btn.style = `background-color: ${main}`;
+  });
+  document.querySelectorAll(".second").forEach((btn) => {
+    btn.style = `background-color: ${second}`;
+  });
+}
+

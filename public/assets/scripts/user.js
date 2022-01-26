@@ -1,19 +1,20 @@
 import firebase from "./firebase-app";
 import { showMenu } from "./utils";
 
-document.querySelectorAll("#app").forEach((page) => {
+document.querySelectorAll("#menu-admin").forEach((page) => {
   const auth = firebase.auth();
 
   auth.onAuthStateChanged((user) => {
-    const userName = document.querySelector("#userName");
-    const avatar = document.querySelector("#avatar");
 
-    userName.innerHTML = user.displayName;
+    if (!user) return
+    const avatar = document.querySelector("#avatar");
+    
 
     const photoURL = user.photoURL;
     const photoAvatar = "./assets/images/user.svg";
 
     avatar.src = photoURL || photoAvatar;
+    
 
     //console.log(user);
 
@@ -22,9 +23,9 @@ document.querySelectorAll("#app").forEach((page) => {
         <h3>${user.displayName}</h3>
         <img src="assets/images/close.svg" alt="" />
         <ul>
-            <li><a href="./updateUser.html">Editar Dados</a></li>
-            <li><a href="./orders.html">Pedidos Realizados</a></li>
-            <li>${user.email}</li>
+        <li><a href="./products.html">Produtos</a></li>
+        <li><a href="./categories.html">Ordenar Categorias</a></li>
+        <li><a href="./updateBusiness.html">Dados da Empresa</a></li>
         </ul>
         <button type="button" id="logout">Deslogar</button>
     `);

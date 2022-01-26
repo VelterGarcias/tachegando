@@ -3,71 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Projeto Hburger do Hcode Lab" />
-    <title>OBurguer</title>
+    <meta name="description" content="tahChegando - um app pra facilitar o seu pedido." />
+    <title>tahChegando App</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="assets/images/logo-favicon-blue.svg"
-      type="image/x-icon"
-    />
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#9c9c9c5b">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#9c9c9c5b">
   </head>
-  <body id="app">
+  <body id="app" class="loading">
+    <div id="modal"></div>
+    <div id="loading">
+      <span>🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾</span>
+    </div>
     <section>
-      <header>
+      <header >
         <a href="index.html">
           <img
-            src="assets/images/logo-icon-blue.svg"
             alt="Logo Icone"
             id="logo-icon"
           />
-          <img
-            src="assets/images/logo-text-blue.svg"
-            alt="Logo Texto"
-            id="logo-text"
-          />
         </a>
-        <small id="userName"></small>
-        <div id="userMenu"></div>
-        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+        <div id="company">
+          <h1>tahChegando <span>App</span></h1>
+          <span>O melhor app de Delivery!</span>
+        </div>
       </header>
 
-      <main id="burguer">
-        <header>
+      <nav id="menu-categories"></nav>
+
+      <main id="shop">
+        <!-- <header >
           <h1>Monte o seu <span>Oburger</span></h1>
-        </header>
+          <span>O melhor burger da cidade!</span>
+        </header> -->
         <section>
           <div class="category">
-            <h2>Escolha o pão <small>(escolha apenas um)</small></h2>
-            <ul id="breads">
-              <!-- <li>
-                <label>
-                  <input type="radio" name="item" />
-                  <span></span>
-                  <h3>Pão de Batata</h3>
-                  <div>R$ 2,50</div>
-                </label>
-              </li> -->
-            </ul>
-          </div>
-          <div class="category">
-            <h2>Ingredientes</h2>
-            <ul id="ingredients">
-              <!-- <li>
-                <label>
-                  <input type="checkbox" name="item" />
-                  <span></span>
-                  <h3>Carne Bovina 125g</h3>
-                  <div>R$ 3,00</div>
-                </label>
-              </li>               -->
-            </ul>
+            <h2>Escolha o seu...</h2>
+            <ul id="products"></ul>
+            <!-- <ul>
+              <li>
+                <img class="image-product" src="assets/images/a.png" alt="">
+                <div class="content-product" >
+                  <h3>Hamburguer de Calabresa</h3>
+                  <span>R$ 25,00</span>
+                </div>
+                <div class="options-product" >
+                  <button>+</button>
+                  <input type="number" name="qtd">
+                  <button>-</button>
+                </div>
+              </li>
+            </ul> -->
           </div>
         </section>
       </main>
 
       <!--<footer class="show">-->
-      <footer>
+      <!-- <footer>
         <button
           type="button"
           aria-label="Salvar Hamburguer"
@@ -75,7 +81,7 @@
         >
           Adicionar a bandeja
         </button>
-      </footer>
+      </footer> -->
     </section>
 
     <!--<aside class="open">-->
@@ -96,26 +102,7 @@
         <strong>Bandeja<small></small></strong>
       </header>
       <section>
-        <ul id="orderList">
-          <!-- <li>
-            <div>Hamburguer 2</div>
-            <div>R$ 15,00</div>
-            <button type="button" aria-label="Remover Hamburguer 2">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
-                  fill="black"
-                />
-              </svg>
-            </button>
-          </li> -->
-        </ul>
+        <ul id="orderList"></ul>
       </section>
       <footer>
         <div class="close">
@@ -136,7 +123,7 @@
 
         <div class="price"><small>Subtotal</small><span>R$ 0,00</span></div>
 
-        <button type="button" aria-label="Pagar" id="btn-pay">
+        <button type="button" class="second" aria-label="Finalizar" id="btn-pay">
           <svg
             width="24"
             height="24"
@@ -149,12 +136,10 @@
               fill="white"
             />
           </svg>
-          Pagar
+          Finalizar
         </button>
       </footer>
     </aside>
-    <div id="alert" class="hide"></div>
-
     <div id="alert" class="hide"></div>
 
     <script src="bundle.js"></script>

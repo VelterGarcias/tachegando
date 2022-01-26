@@ -3,76 +3,125 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Projeto Hburger do Hcode Lab" />
-    <title>OBurguer</title>
+    <meta name="description" content="Projeto tahChegando para o Hcode Lab" />
+    <title>Entrega - tahChegando</title>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="assets/images/logo-favicon-blue.svg"
-      type="image/x-icon"
-    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#9c9c9c5b">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#9c9c9c5b">
   </head>
   <body id="app">
+    <div id="modal"></div>
     <section id="payment" class="page">
-      <header>
-        <a href="index.html">
-          <img
-            src="assets/images/logo-icon-blue.svg"
-            alt="Logo Icone"
-            id="logo-icon"
-          />
-          <img
-            src="assets/images/logo-text-blue.svg"
-            alt="Logo Texto"
-            id="logo-text"
-          />
+      <header >
+        <a class="second" href="javascript:history.back()">
+          <img class="undo" src="assets/images/undo.svg" alt="Voltar" />
         </a>
-        <small id="userName"></small>
-        <div id="userMenu"></div>
-        <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+        <div id="company">
+          <h1>Dados para entrega</h1>
+        </div>
       </header>
 
       <main>
-        <header>
-          <h1>Pagamento</h1>
-        </header>
         <section>
           <form>
-            <input type="text" name="number" placeholder="Número do Cartão" />
-
-            <div class="fields">
-              <div class="field">
-                <input type="text" name="validate" placeholder="Validade" />
-              </div>
-              <div class="field">
-                <input
-                  type="text"
-                  name="code"
-                  placeholder="Código de Segurança"
-                />
-              </div>
+            <h3>Seu nome</h3>
+            <input type="text" name="name" placeholder="Seu nome" required/>
+            <br />
+            <br />
+            <div class="row ali-center">
+              <label class="switch">
+                <input type="checkbox" id="delivery" name="delivery" value="1" autocomplete="off">
+                <span class="slider round"></span>
+              </label>
+              <label class="label-delivery" for="delivery" >Entregar na sua casa</label>
             </div>
+            <small class="msg-delivery">Ative essa opção se desejar receber o seu pedido em casa.</small>
+            
+            <p id="tax-delivery" class="hide">Para entregar o seu pedido na sua casa cobramos uma taxa de entrega de <strong>R$0,00</strong>.</p>
+            <div id="adress"></div>
+            
+            <br />
+            <div id="pay-method">
 
-            <input type="text" name="name" placeholder="Nome" />
-
-            <select name="bank">
-              <option>Nubank</option>
-              <option>C6 Bank</option>
-              <option>BS2 Bank</option>
-            </select>
-
-            <select name="installments">
-              <option value="1">1 parcela de R$ 100,00 (R$ 100,00)</option>
-              <option value="2">2 parcelas de R$ 52,26 (R$ 104,52)</option>
-            </select>
+              <h3 id="payment-title">Método de Pagamento</h3>
+              <div class="row ali-center hide">
+                <input type="radio" id="card" name="payments" value="cartao">
+                <label for="card">No Cartão</label>
+              </div>
+              <div id="msg-card" class="hide">
+                <span>Ok! O motoboy vai levar a máquininha.</span>
+                <small>Informe a bandeira do seu cartão.</small>
+                <ul id="cards"></ul>
+              </div>
+  
+              <div class="row ali-center hide">
+                <input type="radio" id="pix" name="payments" value="pix">
+                <label for="pix">Por Pix</label>
+              </div>
+              <p id="msg-pix" class="hide">
+                <small>Nossa chave pix:</small><br/>
+                <strong id="pix-company"></strong>
+                <br/>
+                <br/>
+                <small>Após realizar o pagamento com o PIX nos envie o <strong>comprovante</strong> para ficar mais fácil identificar o seu pagamento.</small>
+              </p>
+  
+              <div class="row ali-center hide">
+                <input type="radio" id="money" name="payments" value="dinheiro">
+                <label for="money">Com Dinheiro</label>
+              </div>
+              <div id="msg-money" class="hide">
+                <span>Precisa de Troco para quanto?</span>
+                <small>Informe abaixo caso necessário.</small>
+                <input type="text" id="money-change" name="money-change" placeholder="R$"/>
+              </div>
+            
+            </div>
+            
 
             <button type="submit" style="display: none">Send</button>
           </form>
         </section>
       </main>
+    </section>
 
-      <footer>
-        <button type="button" id="btn-pay-order">
+    <aside id="menu">
+      <header id="open-menu">
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M50.6667 8H13.3067C10.3467 8 8.02667 10.3733 8.02667 13.3333L8 50.6667C8 53.6 10.3467 56 13.3067 56H50.6667C53.6 56 56 53.6 56 50.6667V13.3333C56 10.3733 53.6 8 50.6667 8ZM50.6667 40H40C40 44.4267 36.4 48 32 48C27.6 48 24 44.4267 24 40H13.3067V13.3333H50.6667V40Z"
+            fill="#070D0D"
+          />
+        </svg>
+        <strong>Bandeja<small></small></strong>
+      </header>
+      <section>
+        <ul id="orderList"></ul>
+      </section>
+      <footer class="payment" >
+        <div class="close">
           <svg
             width="24"
             height="24"
@@ -81,14 +130,20 @@
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M17 2H7C5.9 2 5 2.9 5 4V6C5 7.1 5.9 8 7 8H17C18.1 8 19 7.1 19 6V4C19 2.9 18.1 2 17 2ZM17 6H7V4H17V6ZM20 22H4C2.9 22 2 21.1 2 20V19H22V20C22 21.1 21.1 22 20 22ZM18.53 10.19C18.21 9.47 17.49 9 16.7 9H7.3C6.51 9 5.79 9.47 5.47 10.19L2 18H22L18.53 10.19ZM9.5 16H8.5C8.22 16 8 15.78 8 15.5C8 15.22 8.22 15 8.5 15H9.5C9.78 15 10 15.22 10 15.5C10 15.78 9.78 16 9.5 16ZM9.5 14H8.5C8.22 14 8 13.78 8 13.5C8 13.22 8.22 13 8.5 13H9.5C9.78 13 10 13.22 10 13.5C10 13.78 9.78 14 9.5 14ZM9.5 12H8.5C8.22 12 8 11.78 8 11.5C8 11.22 8.22 11 8.5 11H9.5C9.78 11 10 11.22 10 11.5C10 11.78 9.78 12 9.5 12ZM12.5 16H11.5C11.22 16 11 15.78 11 15.5C11 15.22 11.22 15 11.5 15H12.5C12.78 15 13 15.22 13 15.5C13 15.78 12.78 16 12.5 16ZM12.5 14H11.5C11.22 14 11 13.78 11 13.5C11 13.22 11.22 13 11.5 13H12.5C12.78 13 13 13.22 13 13.5C13 13.78 12.78 14 12.5 14ZM12.5 12H11.5C11.22 12 11 11.78 11 11.5C11 11.22 11.22 11 11.5 11H12.5C12.78 11 13 11.22 13 11.5C13 11.78 12.78 12 12.5 12ZM15.5 16H14.5C14.22 16 14 15.78 14 15.5C14 15.22 14.22 15 14.5 15H15.5C15.78 15 16 15.22 16 15.5C16 15.78 15.78 16 15.5 16ZM15.5 14H14.5C14.22 14 14 13.78 14 13.5C14 13.22 14.22 13 14.5 13H15.5C15.78 13 16 13.22 16 13.5C16 13.78 15.78 14 15.5 14ZM15.5 12H14.5C14.22 12 14 11.78 14 11.5C14 11.22 14.22 11 14.5 11H15.5C15.78 11 16 11.22 16 11.5C16 11.78 15.78 12 15.5 12Z"
-              fill="white"
+              d="M16.59 8.59L12 13.17L7.41 8.59L6 10L12 16L18 10L16.59 8.59Z"
+              fill="black"
             />
           </svg>
-          Fazer Pedido
+          <span>Esconder Bandeja</span>
+        </div>
+
+        <div class="price"><small>TOTAL</small><span>R$ 0,00</span></div>
+        <button type="button" id="btn-pay-order">
+          <img src="assets/images/whatsapp.svg" alt="Enviar Pedido">
+          Enviar Pedido
         </button>
       </footer>
-    </section>
+    </aside>
 
     <div id="alert" class="hide"></div>
 

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projeto tahChegando para o Hcode Lab" />
+  <title>Cadastro - tahChegando</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/cropper.min.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#9c9c9c5b">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#9c9c9c5b">
+</head>
+
+<body id="admin" class="auth">
+  <header>
+    <span>🆃🅰🅲🅷🅴🅶🅰🅽🅳🅾</span>
+    <div id="menu-admin">
+      <div id="userMenu"></div>
+      <img src="./assets/images/user.svg" alt="Avatar" id="avatar" />
+      <nav></nav>
+    </div>
+  </header>
+
+  <main>
+    
+    <ul id="form-tabs">
+      <li class="active main-color"><a href="updateBusiness.html">Empresa</a></li>
+      <li><a href="products.html">Voltar</a></li>
+    </ul>
+    <form id="form-update" class="main-color">
+      <h3>Status do App</h3>
+      <div class="row ali-center" style="margin-top: 20px;">
+        <label class="switch" style="margin-right: 10px;">
+          <input type="checkbox" id="appStatus" name="is_AppOnline" value="1" >
+          <span class="slider round"></span>
+        </label>
+        <label for="appStatus" class="big">Pedidos ON/OFF</label>
+      </div>
+      <h3>Link do App da Empresa</h3>
+      <a id="link-shop"></a>
+      <h3>Logotipo da Empresa</h3>
+      <div class="wrap-photo">
+        <img src="assets/images/user.svg" alt="photo" id="photo-preview" style="max-width: 300px; max-height: 300px" />
+        <input type="file" name="photo" id="file" />
+
+        <button type="button" class="choose-photo second">Alterar Logotipo</button>
+        <br/>
+      </div>
+      <h3>Escolha as cores do App</h3>
+      <div class="colors row">
+        <input type="color" id="main-color" name="main_color" value="#dbdbdb">
+        <label for="main-color">Cor do Fundo da Página</label>
+      </div>
+
+      <div class="colors row">
+        <input type="color" id="second-color" name="second_color" value="#101d1d">
+        <label for="second-color">Cor dos Botões</label>
+      </div>
+
+      <h3>Edite os dados da Empresa</h3>
+      <label for="name">Nome da Empresa</label>
+      <input type="text" id="name" name="name" placeholder="Nome da Empresa" required />
+      <label for="category">Categoria da Empresa</label>
+      <input type="text" id="category" name="category" placeholder="Categoria da Empresa" />
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="E-mail" required />
+      <label for="phone">WhatsApp Comercial</label>
+      <input type="tel" id="phone" name="phone" placeholder="WhatsApp Comercial" required />
+      <label for="message">Slogam</label>
+      <input type="text" id="message" name="message" placeholder="Slogam" />
+
+      <div style="position: relative;">
+        <span id="hash-success" class="hide">✅</span>
+        <span id="hash-error" class="hide">🚫</span>
+        <label for="hash">Link único da empresa</label>
+        <input type="text" id="hash" name="hash" placeholder="Link único da empresa" />
+      </div>
+      
+      <label for="delivery">Taxa de Entrega Padrão</label>
+      <input type="text" id="delivery"name="delivery" placeholder="R$ taxa padrão" />
+
+      <h3>Informações para pagamento</h3>
+      <small>Escolha as opções que a sua empresa aceita:</small>
+      <div class="row ali-center">
+        <label class="switch">
+          <input type="checkbox" id="money" name="payments" value="dinheiro" >
+          <span class="slider round"></span>
+        </label>
+        <label for="money" class="big">Dinheiro</label>
+      </div>
+      <div class="row ali-center">
+        <label class="switch">
+          <input type="checkbox" id="card" name="payments" value="cartao" >
+          <span class="slider round"></span>
+        </label>
+        <label for="card" class="big">Cartões</label>
+      </div>
+
+      <div class="wrap-cards" style="display: none;">
+        <small>Escolha os cartões que sua empresa aceita:</small>
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="mastercard" name="cards" value="mastercard" >
+            <span class="slider round"></span>
+          </label>
+          <label for="mastercard" class="big"><img alt="mastercard" src="assets/images/cards/mastercard.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="visa" name="cards" value="visa" >
+            <span class="slider round"></span>
+          </label>
+          <label for="visa" class="big"><img alt="visa" src="assets/images/cards/visa.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="banricompras" name="cards" value="banricompras" >
+            <span class="slider round"></span>
+          </label>
+          <label for="banricompras" class="big"><img alt="banricompras" src="assets/images/cards/banricompras.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="elo" name="cards" value="elo" >
+            <span class="slider round"></span>
+          </label>
+          <label for="elo" class="big"><img alt="elo" src="assets/images/cards/elo.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="hipercard" name="cards" value="hipercard" >
+            <span class="slider round"></span>
+          </label>
+          <label for="hipercard" class="big"><img alt="hipercard" src="assets/images/cards/hipercard.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="hiper" name="cards" value="hiper" >
+            <span class="slider round"></span>
+          </label>
+          <label for="hiper" class="big"><img alt="hiper" src="assets/images/cards/hiper.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="cabal" name="cards" value="cabal" >
+            <span class="slider round"></span>
+          </label>
+          <label for="cabal" class="big"><img alt="cabal" src="assets/images/cards/cabal.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="dinersclub" name="cards" value="dinersclub" >
+            <span class="slider round"></span>
+          </label>
+          <label for="dinersclub" class="big"><img alt="dinersclub" src="assets/images/cards/dinersclub.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="americanexpress" name="cards" value="americanexpress" >
+            <span class="slider round"></span>
+          </label>
+          <label for="americanexpress" class="big"><img alt="americanexpress" src="assets/images/cards/americanexpress.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="queroquero" name="cards" value="queroquero" >
+            <span class="slider round"></span>
+          </label>
+          <label for="queroquero" class="big"><img alt="queroquero" src="assets/images/cards/queroquero.svg"></label>
+        </div>
+
+        <div class="row ali-center">
+          <label class="switch">
+            <input type="checkbox" id="refeisul" name="cards" value="refeisul" >
+            <span class="slider round"></span>
+          </label>
+          <label for="refeisul" class="big"><img alt="refeisul" src="assets/images/cards/refeisul.svg"></label>
+        </div>
+        
+        <br />
+      </div>
+      <div class="row ali-center">
+        <label class="switch">
+          <input type="checkbox" id="pix" name="payments" value="pix" >
+          <span class="slider round"></span>
+        </label>
+        <label for="pix" class="big">Pix</label>
+      </div>
+
+      <div class="wrap-pix" style="display: none;">
+        <label for="pix-code">Chave Pix da Empresa</label>
+        <input type="text" id="pix-code" name="pix" placeholder="Chave Pix da Empresa" />
+      </div>
+      
+
+      <h3>Endereço da Empresa</h3>
+      <label for="adress">Rua</label>
+      <input type="text" name="adress" placeholder="Rua" />
+      <label for="number">Número</label>
+      <input type="number" name="number" placeholder="Número" />
+      <label for="district">Bairro</label>
+      <input type="text" name="district" placeholder="Bairro" />
+      <label for="city">Cidade</label>
+      <input type="text" name="city" placeholder="Cidade" />
+      <label for="cep">CEP</label>
+      <input type="text" name="cep" placeholder="CEP" />
+
+      <footer>
+        <button class="second"type="submit">Atualizar</button>
+      </footer>
+
+    </form>
+  </main>
+
+  <div id="alert" class="hide"></div>
+  <script src="bundle.js"></script>
+</body>
+
+</html>

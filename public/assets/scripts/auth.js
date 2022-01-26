@@ -1,59 +1,51 @@
 import firebase from "./firebase-app";
 import { getFormValues, getQueryString, showAlert } from "./utils";
+import axios from "axios";
 
-document.querySelectorAll("#auth").forEach((page) => {
+document.querySelectorAll(".auth").forEach((page) => {
   const auth = firebase.auth();
-
-  
-  //==================   Tratamento das informações após o Redirect do Facebook  =====================
-  // auth
-  //   .getRedirectResult()
-  //   .then(async (result) => {
-  //     if (result.user) {
-  //       const user = result.user;
-  //       const credential = result.credential;
-  //       const token = credential.accessToken;
-
-  //       if (user.photoURL.indexOf("firebasestorage") === -1) {
-  //         const urlPhotoFace =
-  //           result.user.providerData[0].photoURL + `?access_token=${token}`;
-
-  //         // console.log(urlPhotoFace);
-
-  //         const blob = await fetch(urlPhotoFace).then((r) => r.blob());
-
-  //         // console.log("blob", blob);
-
-  //         const storage = firebase.storage();
-
-  //         const fileRef = storage.ref().child(`photos/${user.uid}.png`);
-
-  //         fileRef
-  //           .put(blob)
-  //           .then((snapshot) => snapshot.ref.getDownloadURL())
-  //           .then((photoURL) => user.updateProfile({ photoURL }));
-  //         // .then(() => {
-  //         //   console.log("foto atualizada");
-  //         // });
-  //       }
-
-  //       showAlert(`Bem-vindo ${user.displayName}!`);
-
-  //       setTimeout(() => {
-  //         window.location.href = "/";
-  //       }, 4000);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     const errorMessage = error.message;
-  //     showAlert(errorMessage, true);
-  //   });
-
-
-
 
   //==================   Login  =====================
   const formAuthLogin = document.querySelector("#form-login");
+
+  const sendMail = async (values) =>{
+      
+      // console.log(values)
+
+      const mail = {
+          company: "tahChegando",
+          email: "weads.velter@gmail.com",
+          contactEmail: values.email,
+          message: "",
+          name: values.name,
+          phone: "",
+          subject: "Novo cadastro no App ",
+      }
+
+      await axios({
+          method: 'post',
+          headers: {    
+              // 'crossDomain': true,
+              // 'Access-Control-Allow-Origin' : '*',
+              // 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+
+              // 'Content-Type': 'application/json',
+              'Content-Type': 'text/plain;charset=utf-8',
+          },
+          url: 'https://script.google.com/macros/s/AKfycbwW0szWxfvsz3Sg9mrsMn2aHoroMxTsX0xFgcJwlFgDspLfEj4/exec',
+          data: mail,
+      })
+      .then(
+          (res)=> {
+              // const tokenData = res.data.token
+              // cookies.set('token', tokenData)
+              // console.log('Usuário autenticado!')
+              // alert(JSON.stringify(res.data))
+              // window.location.href=("/contact")
+          }
+      )
+      .catch(err => console.log('Deu ruim', err.message))
+  }
 
   if (formAuthLogin) {
     formAuthLogin.addEventListener("submit", (e) => {
@@ -72,7 +64,7 @@ document.querySelectorAll("#auth").forEach((page) => {
         .then((response) => {
           showAlert("Logado com Sucesso!");
           setTimeout(() => {
-            window.location.href = "/";
+            window.location.href = "/products.html";
           }, 3000);
         })
         .catch((err) => {
@@ -83,11 +75,11 @@ document.querySelectorAll("#auth").forEach((page) => {
     });
   }
 
-  //==================   Cadastro  =====================
+  //==================   Cadastro  ======================
   const formAuthRegister = document.querySelector("#form-register");
 
   if (formAuthRegister) {
-    formAuthRegister.addEventListener("submit", (e) => {
+    formAuthRegister.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const btnSubmitForm = formAuthRegister.querySelector('footer button[type=submit]');
@@ -101,18 +93,26 @@ document.querySelectorAll("#auth").forEach((page) => {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then((response) => {
           const { user } = response;
+          // console.log(values);
           user
             .updateProfile({
               displayName: values.name,
             })
-            .then((res) => {
+            .then(async (res) => {
               showAlert(
                 `Bem-vindo ${values.name}, Usuário Cadastrado com Sucesso!`
               );
+              axios({
+                method: 'post',
+                url: `https://api.telegram.org/bot5036731801:AAF0kNL7h9uzyoNeVYGGQQ_qyEoXr27AdFA/sendMessage?chat_id=-1001524221132&text=Ola%20${encodeURI(values.name)},%20seja%20bem-vindo%20ao%20App%20TahChegando!%20%20E-mail:%20${encodeURI(values.email)}`,
+            })
+              await sendMail(values);
+              window.location.href = "/products.html";
+                
             });
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2000);
+          // setTimeout(() => {
+            
+          // }, 2000);
         })
         .catch((error) => {
           showAlert(error.message, true)
@@ -184,35 +184,5 @@ document.querySelectorAll("#auth").forEach((page) => {
         });
     });
   }
-
-  //==================   Login com Facebook  =====================
-
-  // const btnFacebook = document.querySelector("#login-facebook");
-
-  // if (btnFacebook) {
-  //   btnFacebook.addEventListener("click", (e) => {
-  //     //console.log("clicou");
-
-  //     const provider = new firebase.auth.FacebookAuthProvider();
-
-  //     auth.signInWithRedirect(provider);
-
-  //     // auth
-  //     //   .signInWithPopup(provider)
-  //     //   .then((res)=> {
-  //     //     showAlert(`Bem-vindo ${res.user.displayName}!`)
-
-  //     //     setTimeout(() => {
-  //     //       window.location.href = "/"
-  //     //     }, 4000);
-
-  //     //   })
-  //     //   .catch((err) => showAlert(err, true));
-  //   });
-  // }
-
- 
-
-
 
 });

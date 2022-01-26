@@ -1,8 +1,10 @@
 import "./auth";
 import "./user";
 import "./main";
-import "./ingredients";
-import "./orders";
-import "./burger";
+import "./shop";
+import "./products";
+import "./order";
 import "./payment";
-import "./update-profile";
+import "./update-business";
+import "./update-products";
+import "./CategoriesOrder";

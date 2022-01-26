@@ -5,7 +5,8 @@
 @use "form";
 @use "sass:color";
 
-#auth {
+.auth {
+
   #form-update {
     #photo-preview {
       margin-top: var(--space);
@@ -14,6 +15,8 @@
       height: 150px;
       border-radius: 50%;
     }
+  }
+  #form-update, #form-product {
     #file {
       display: none;
     }

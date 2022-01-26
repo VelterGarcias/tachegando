@@ -5,10 +5,11 @@
 
 @mixin scrollbar {
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   &::-webkit-scrollbar-track {
-    background: colors.$dark;
+    background: colors.$white;
+    margin: 10px 0;
   }
   &::-webkit-scrollbar-thumb {
     background: rgba(colors.$primary, 0.25);
@@ -27,14 +28,14 @@
 }
 
 @mixin horizontalTitle {
-  background-color: var(--white10);
-  height: 60px;
   justify-content: center;
   align-items: center;
   h1 {
-    font-weight: 100;
-    font-size: 32px;
+    font-weight: 500;
+    font-size: 30px;
     margin: 0;
+    text-align: center;
+    line-height: 1;
     span {
       color: var(--primary);
       font-weight: bold;
@@ -59,6 +60,10 @@
     margin: 0;
     font-size: 22px;
     font-weight: bold;
+    border-bottom: 1px dotted;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
   }
   ul {
     @include mixins.reset-list;
@@ -67,12 +72,11 @@
 
 @mixin logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   #logo-icon {
     width: 100px;
-    height: 127px;
   }
   #logo-text {
     margin-top: var(--space);
@@ -82,7 +86,7 @@
   @media (min-width: vars.$desktopStartWidth) {
     flex-direction: row;
     #logo-icon {
-      width: initial;
+      width: 100px;
     }
     #logo-text {
       margin-left: var(--space);
@@ -94,7 +98,7 @@
 @mixin header {
   justify-content: center;
   align-items: center;
-  height: 180px;
+  height: 48px;
   a {
     @include logo;
   }
@@ -112,7 +116,7 @@
   li {
     @include mixins.flex-center;
     height: 64px;
-    background-color: rgba(colors.$primary, 0.25);
+    background-color: rgba(colors.$bgTabs, 0.75);
     border-top-left-radius: var(--radius);
     border-top-right-radius: var(--radius);
     color: var(--dark);
@@ -121,11 +125,11 @@
     font-size: 22px;
     cursor: pointer;
     &:hover {
-      background-color: rgba(colors.$primary, 0.5);
+      background-color: rgba(colors.$bgTabs, 0.5);
     }
     &.active {
-      background-color: var(--primary);
       cursor: default;
+      background-color: rgb(219, 219, 219);
     }
   }
 }
@@ -133,7 +137,7 @@
 @mixin input {
   height: 50px;
   border-radius: var(--radius);
-  border: none;
+  border: 1px solid #cccc;
   font-size: 16px;
   padding: var(--space);
   outline: none;
@@ -142,6 +146,12 @@
   }
   + input {
     margin-top: var(--space);
+  }
+  &[type=color] {
+    padding: 3px;
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
   }
 }
 
