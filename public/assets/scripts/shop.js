@@ -15,9 +15,12 @@ import {
 const params = getQueryString();
 const prod = !params.test ? true : false;
 
+let company = {};
+
 
 const scrollToCategory = (id) => {
-  window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 50), behavior: 'smooth'})
+  // window.scrollTo({top: (document.querySelector(`#cat-${id}`).offsetTop - 50), behavior: 'smooth'})
+  document.querySelector(`#cat-${id}`).scrollIntoView({behavior: "smooth"});
 }
 
 const renderProducts = (targetElement, productOptions) => {
@@ -31,11 +34,23 @@ const renderProducts = (targetElement, productOptions) => {
 
   const wrapMenuCategories = document.querySelector('#menu-categories')
 
-  categories.sort(function(a, b){
-      if(a < b) { return -1; }
-      if(a > b) { return 1; }
-      return 0;
-  })
+  // categories.sort(function(a, b){
+  //     if(a < b) { return -1; }
+  //     if(a > b) { return 1; }
+  //     return 0;
+  // })
+  
+  if (!company.hasOwnProperty('categoriesOrder')) {
+    categories.sort(function(a, b){
+        if(a < b) { return -1; }
+        if(a > b) { return 1; }
+        return 0;
+    })
+  } else {
+    console.log("Empresa já possui categorias organizadas");
+    categories = Array.from(new Set(company.categoriesOrder.concat(categories)));
+    // console.log("allCategoriesOrdened", allCategoriesOrdened);
+  }
   
   let listMenucategories = ''
   categories.forEach((category, indexCategory, array) => {
@@ -156,7 +171,7 @@ document.querySelectorAll("#shop").forEach(async (page) => {
   if (hashName) {
     let timeout = 1000;
     hashName = hashName.substring(1);
-    let company = Cookies.getJSON("company");
+    company = Cookies.getJSON("company");
 
     let download = true;
 
@@ -265,6 +280,8 @@ document.querySelectorAll("#shop").forEach(async (page) => {
     document.querySelectorAll(".second").forEach((btn) => {
       btn.style = `background-color: ${company.second_color}`;
     });
+
+    console.log("company", company);
 
 
     // ============  click nos produtos e mostrar modal ==============

@@ -124,8 +124,7 @@ document.querySelectorAll(".categories").forEach((page) => {
 
   // ----------------------
   
-  const companyTest = {}
-  // companyTest.categoriesOrder = ["Sorveteria", "Lanches" ];
+  let companyData = {};
   
   const renderProductsAdmin = (targetElement, productOptions) => {
 
@@ -141,14 +140,16 @@ document.querySelectorAll(".categories").forEach((page) => {
   
     const wrapMenuCategories = document.querySelector('#menu-categories')
 
-    if (!companyTest.hasOwnProperty('categoriesOrder')) {
+    if (!companyData.hasOwnProperty('categoriesOrder')) {
+      console.log("Empresa não possui categorias organizadas, A-Z");
       categories.sort(function(a, b){
           if(a < b) { return -1; }
           if(a > b) { return 1; }
           return 0;
       })
     } else {
-      const allCategoriesOrdened = Array.from(new Set(companyTest.categoriesOrder.concat(categories)));
+      console.log("Empresa já possui categorias organizadas");
+      categories = Array.from(new Set(companyData.categoriesOrder.concat(categories)));
       // console.log("allCategoriesOrdened", allCategoriesOrdened);
     }
     
@@ -332,6 +333,17 @@ document.querySelectorAll(".categories").forEach((page) => {
         window.location.href = "/login.html";
       }, 3000);
     }
+
+    const snapshotCompany = await db
+        .collection("companies")
+        .doc(user.uid)
+        .get();
+
+    companyData = snapshotCompany.data();
+
+    console.log("companyData", companyData);
+
+
     const products = [];
     db.collection("products")
       .where("companyId", "==", user.uid)
@@ -354,6 +366,9 @@ document.querySelectorAll(".categories").forEach((page) => {
 
 
       }, onSnapshotError);
+
+
+      
       
 
       btnNewProduct.addEventListener("click", (e) => {

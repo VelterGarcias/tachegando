@@ -11,6 +11,9 @@ import {
   appendTemplate
 } from "./utils";
 
+import Sortable from 'sortablejs';
+
+
 //======================== Atualizar Dados ====================================
 document.querySelectorAll("#form-categories").forEach(async (form) => {
   const auth = firebase.auth();
@@ -20,10 +23,9 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
 
   const btnSubmit = form.querySelector("[type=submit]");
 
-  const productDate = [];
-
-  const companyData = {}
-  // companyData.categoriesOrder = ["Sorveteria", "Lanches" ];
+  const newOrder = [];
+  let companyData = {}
+  // companyData.categoriesOrder = ["Sorveteria", "Lanches", "Teste" ];
 
   // new IMask(inputPhone, {
   //   mask: "(00) [0]0000-0000)",
@@ -55,6 +57,7 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
           return 0;
       })
     } else {
+      console.log("Empresa já possui categorias organizadas");
       categories = Array.from(new Set(companyData.categoriesOrder.concat(categories)));
       // console.log("allCategoriesOrdened", allCategoriesOrdened);
     }
@@ -91,24 +94,17 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
     if (user) {
       userGlobal = user;
 
-      // const products = await db
-      //   .collection("products")
-      //   .where("companyId", "==", user.uid)
-      //   .get();
+      const snapshotCompany = await db
+        .collection("companies")
+        .doc(userGlobal.uid)
+        .get();
 
-       
-      // products.forEach((item) => {
-        
-      //   const product = item.data();
-      //   if (product.is_online) {
-      //     product.id = item.id;
-      //     productDate.push(product);
-      //   }
-        
-      // });
-      // console.log("product", productDate);
+      companyData = snapshotCompany.data();
+
+      console.log("companyData", companyData);
 
       const products = [];
+
       db.collection("products")
         .where("companyId", "==", user.uid)
         .onSnapshot((getProducts) => {
@@ -120,13 +116,10 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
             products.push(productData);
           });
           
-          // page.querySelector('p').innerHTML = products[0].name
           console.log(products);
 
           const ulProducts = document.querySelector(".sorteable-ul");
           renderCategoriesOrder(ulProducts, products);
-
-          // renderProductsAdmin2(page, products);
 
 
         }, onSnapshotError);
@@ -145,16 +138,12 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = "Salvando...";
 
-    const productData = getFormValues(form);
-    // console.log("productData", productData)
-    productData.photo = imageElement.src;
-    productData.companyId = userGlobal.uid;
-    productData.price = productData.price.replace(",", ".");
+    console.log("finalOrder",newOrder);
 
-    db.collection("products")
-      .doc(produto)
-      .update(productData)
-      .then(() => showAlert("Produto salvo com sucesso"))
+    db.collection("companies")
+      .doc(userGlobal.uid)
+      .update({categoriesOrder: newOrder})
+      .then(() => showAlert("Ordem das Categorias salva com sucesso"))
       .catch((err) => {
         // console.log(err);
         showAlert(err.message, true);
@@ -166,38 +155,31 @@ document.querySelectorAll("#form-categories").forEach(async (form) => {
   });
 
 
-  var dragging = null;
-
-  document.addEventListener('dragstart', function(event) {
-      dragging = event.target;
-      event.dataTransfer.setData('text/html', dragging);
-  });
-
-  document.addEventListener('dragover', function(event) {
-      event.preventDefault();
-  });
-
-  document.addEventListener('dragenter', function(event) {
-      if (event.target.closest('ul.sorteable-ul')) {
-        event.target.style['border-bottom'] = 'solid 4px blue';
-      }
-      
-  });
-
-  document.addEventListener('dragleave', function(event) {
-      event.target.style['border-bottom'] = '';
-  });
-
+  
   document.addEventListener('drop', function(event) {
       event.preventDefault();
-      // console.log(event.target);
-      if (event.target.closest('ul.sorteable-ul')) {
-        event.target.style['border-bottom'] = '';
-        event.target.parentNode.insertBefore(dragging, event.target.nextSibling);
-      }
+      
+      
+      const liOrdened = [...document.querySelectorAll('ul.sorteable-ul li')];
+      newOrder.length = 0;
+      liOrdened.forEach((categ, i) => {
+        newOrder.push(categ.innerHTML);
+
+        // Executa somente após o fim do loop
+        if(++i === liOrdened.length) {
+          console.log("newOrder",newOrder);
+
+        }
+      });
   });
 
 
+  var el = document.querySelector('.sorteable-ul');
+  // var sortable = Sortable.create(el);
+  var sortable = new Sortable(el, {
+      animation: 150,
+      ghostClass: 'blue-background-class'
+  });
 
 
 });

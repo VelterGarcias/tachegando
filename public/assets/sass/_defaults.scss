@@ -95,13 +95,21 @@ label {
     }
   }
   @media (min-width: vars.$desktopStartWidth) {
-    display: none;
+    // display: none;
     // position: relative;
     > div {
       max-width: calc(100vw - 350px);
       &::-webkit-scrollbar {
-        width: 5px;
-        height: 2px;
+        height: 7px;
+        background: transparent;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 10px 0;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(black, 0.9);
+        border-radius: 10px;
       }
     }
   }

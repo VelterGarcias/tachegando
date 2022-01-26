@@ -189,6 +189,23 @@
       }
     }
 
+    ul.sorteable-ul {
+      margin:10px 0;
+      padding:0;
+      padding-left: 10px;
+      list-style:none;
+      li {
+        padding: 5px;
+        background: white;
+        margin: 7px 0;
+        border-radius: 5px;
+      }
+      .blue-background-class {
+        opacity: .5;
+        background: #C8EBFB;
+      }
+    }
+
   }
   #options {
     background-color: #ffffff;

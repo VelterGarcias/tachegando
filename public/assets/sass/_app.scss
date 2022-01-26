@@ -146,7 +146,7 @@
       flex: 1;
       width: 100%;
       @media (min-width: vars.$desktopStartWidth) {
-        max-height: calc(100vh - 100px);
+        max-height: calc(100vh - 150px);
         overflow-y: scroll;
         @include components.scrollbar;
         &::-webkit-scrollbar-track {
@@ -192,6 +192,14 @@
       .category {
         @include components.category-list;
         margin: var(--space);
+       > div {
+         margin-top: -70px;
+         padding-top: 70px;      
+          @media (min-width: vars.$desktopStartWidth) {
+            margin-top: -30px;
+            padding-top: 30px; 
+          }
+       }
         ul {
           margin-top: var(--space);
           color: rgba(colors.$secondary, 0.7);

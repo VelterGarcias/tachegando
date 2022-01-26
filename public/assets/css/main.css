@@ -120,15 +120,20 @@ label {
   color: var(--white);
 }
 @media (min-width: 768px) {
-  #menu-categories {
-    display: none;
-  }
   #menu-categories > div {
     max-width: calc(100vw - 350px);
   }
   #menu-categories > div::-webkit-scrollbar {
-    width: 5px;
-    height: 2px;
+    height: 7px;
+    background: transparent;
+  }
+  #menu-categories > div::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px 0;
+  }
+  #menu-categories > div::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
   }
 }
 
@@ -877,6 +882,22 @@ input:checked + .slider:before {
   background-color: var(--light);
   cursor: progress;
 }
+.auth main form ul.sorteable-ul {
+  margin: 10px 0;
+  padding: 0;
+  padding-left: 10px;
+  list-style: none;
+}
+.auth main form ul.sorteable-ul li {
+  padding: 5px;
+  background: white;
+  margin: 7px 0;
+  border-radius: 5px;
+}
+.auth main form ul.sorteable-ul .blue-background-class {
+  opacity: 0.5;
+  background: #C8EBFB;
+}
 .auth #options {
   background-color: #ffffff;
   padding: var(--space);
@@ -1262,7 +1283,7 @@ input:checked + .slider:before {
 }
 @media (min-width: 768px) {
   #app > section main {
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 150px);
     overflow-y: scroll;
   }
   #app > section main::-webkit-scrollbar {
@@ -1392,6 +1413,16 @@ input:checked + .slider:before {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+#app > section main .category > div {
+  margin-top: -70px;
+  padding-top: 70px;
+}
+@media (min-width: 768px) {
+  #app > section main .category > div {
+    margin-top: -30px;
+    padding-top: 30px;
+  }
 }
 #app > section main .category ul {
   margin-top: var(--space);
